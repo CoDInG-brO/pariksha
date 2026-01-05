@@ -220,10 +220,10 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-gradient-to-br from-surface to-elevated p-6 rounded-2xl border border-white/10 hover:border-accent/50 transition-all group"
+                className="bg-gradient-to-br from-surface to-elevated p-8 rounded-2xl border border-white/10 hover:border-accent/50 transition-all group"
               >
-                <div className="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                  {feature.icon}
+                <div className="w-20 h-20 bg-accent/20 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <span style={{ fontSize: '2.5rem' }}>{feature.icon}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
                 <p className="text-gray-400">{feature.description}</p>
