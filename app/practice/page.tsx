@@ -7,6 +7,11 @@ import {
   clearPracticeProgress,
   PracticeProgress
 } from "@/lib/testStorage";
+import {
+  playCorrectSound,
+  playIncorrectSound,
+  isSoundEnabled
+} from "@/lib/sounds";
 
 // Sample question banks
 const catQuestions = [
@@ -780,7 +785,16 @@ export default function Practice() {
     }));
   };
 
-  const handleOptionSelect = (questionId: number, option: string) => {
+  const handleOptionSelect = (questionId: number, option: string, correctAnswer: string) => {
+    // Only play sound if this question hasn't been answered yet
+    if (!selectedOptions[questionId] && isSoundEnabled()) {
+      if (option === correctAnswer) {
+        playCorrectSound();
+      } else {
+        playIncorrectSound();
+      }
+    }
+    
     setSelectedOptions(prev => ({
       ...prev,
       [questionId]: option
@@ -911,7 +925,7 @@ export default function Practice() {
                 return (
                   <div
                     key={optIndex}
-                    onClick={() => !showAnswers[q.id] && handleOptionSelect(q.id, option)}
+                    onClick={() => !showAnswers[q.id] && handleOptionSelect(q.id, option, q.answer)}
                     className={optionClass}
                   >
                     <span className="mr-3 text-gray-500">{String.fromCharCode(65 + optIndex)}.</span>

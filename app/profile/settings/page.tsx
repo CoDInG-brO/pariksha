@@ -1,13 +1,15 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { isSoundEnabled, setSoundEnabled } from "@/lib/sounds";
 
 export default function SettingsPage() {
   const router = useRouter();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [settings, setSettings] = useState({
     emailNotifications: true,
     pushNotifications: false,
@@ -20,17 +22,70 @@ export default function SettingsPage() {
     timezone: "Asia/Kolkata"
   });
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch and load saved settings
   useEffect(() => {
     setMounted(true);
+    // Load sound setting from localStorage
+    setSettings(prev => ({
+      ...prev,
+      soundEffects: isSoundEnabled()
+    }));
   }, []);
 
+  // Update sound setting in localStorage when it changes
+  const handleSoundEffectsChange = (enabled: boolean) => {
+    setSettings(prev => ({ ...prev, soundEffects: enabled }));
+    setSoundEnabled(enabled);
+  };
+
   const handleSave = () => {
-    alert("Settings saved successfully!");
+    setShowSuccessToast(true);
+  };
+
+  const handleToastClose = () => {
+    setShowSuccessToast(false);
+    router.back();
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12">
+      {/* Success Dialog */}
+      <AnimatePresence>
+        {showSuccessToast && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleToastClose}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            />
+            {/* Dialog */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+            >
+              <div className="bg-elevated rounded-2xl border border-white/10 shadow-2xl p-6 text-center w-full max-w-sm pointer-events-auto">
+                <div className="w-14 h-14 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-green-400 text-2xl">✓</span>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Settings Saved!</h3>
+                <p className="text-gray-400 text-sm mb-5">Your preferences have been updated successfully.</p>
+                <button
+                  onClick={handleToastClose}
+                  className="w-full px-4 py-2.5 bg-accent hover:bg-accent/90 rounded-lg text-white text-sm font-medium transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -140,7 +195,7 @@ export default function SettingsPage() {
                 label="Sound Effects"
                 description="Play sounds for correct/incorrect answers"
                 checked={settings.soundEffects}
-                onChange={(checked) => setSettings({ ...settings, soundEffects: checked })}
+                onChange={handleSoundEffectsChange}
               />
             </div>
           </motion.div>
@@ -216,19 +271,19 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex gap-4"
+            className="flex justify-end gap-3"
           >
             <button
-              onClick={handleSave}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white font-semibold transition-all"
-            >
-              💾 Save Settings
-            </button>
-            <button
               onClick={() => router.back()}
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-white font-semibold transition-all"
+              className="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-lg text-white text-sm font-medium transition-all"
             >
               Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="px-5 py-2.5 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white text-sm font-medium transition-all"
+            >
+              Save Changes
             </button>
           </motion.div>
         </div>

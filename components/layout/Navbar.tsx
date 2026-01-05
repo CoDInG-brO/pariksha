@@ -6,6 +6,9 @@ import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 
+const PROFILE_PHOTO_KEY = "pariksha_profile_photo";
+const PROFILE_STORAGE_KEY = "pariksha_user_profile";
+
 const tabs = [
   { name: "Dashboard", href: "/dashboard", icon: "📊" },
   { name: "CAT", href: "/cat", icon: "📈" },
@@ -21,17 +24,31 @@ export function Navbar() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [profileName, setProfileName] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Prevent hydration mismatch for theme
+  // Prevent hydration mismatch for theme and load profile data
   useEffect(() => {
     setMounted(true);
+    // Load profile photo from localStorage
+    const savedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
+    if (savedPhoto) {
+      setProfilePhoto(savedPhoto);
+    }
+    // Load profile name from localStorage
+    const savedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (savedProfile) {
+      try {
+        const parsed = JSON.parse(savedProfile);
+        if (parsed.name) {
+          setProfileName(parsed.name);
+        }
+      } catch (e) {
+        console.error("Failed to parse profile:", e);
+      }
+    }
   }, []);
-
-  // Hide navbar on auth pages and landing page
-  if (pathname === "/signup" || pathname === "/login" || pathname === "/") {
-    return null;
-  }
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -44,6 +61,11 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Hide navbar on auth pages and landing page
+  if (pathname === "/signup" || pathname === "/login" || pathname === "/") {
+    return null;
+  }
+
   const handleLogout = async () => {
     setShowProfileMenu(false);
     await signOut({ callbackUrl: "/login" });
@@ -51,15 +73,27 @@ export function Navbar() {
 
   // Get user initials for avatar
   const getInitials = (name: string | null | undefined) => {
-    if (!name) return "👤";
-    return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+    // Prioritize localStorage name, then session name
+    const displayName = profileName || name;
+    if (!displayName) return "👤";
+    return displayName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+  };
+
+  // Get display name (localStorage first, then session)
+  const getDisplayName = () => {
+    return profileName || session?.user?.name || "User";
+  };
+
+  // Get profile image (localStorage first, then session)
+  const getProfileImage = () => {
+    return profilePhoto || session?.user?.image || null;
   };
 
   return (
     <header className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between mb-4">
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/dashboard" className="flex items-center gap-2 group">
             {/* Logo - Book Stack SVG */}
             <svg 
               width="28" 
@@ -110,8 +144,8 @@ export function Navbar() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold hover:scale-105 transition-transform border-2 border-white/20 overflow-hidden"
               >
-                {session.user?.image ? (
-                  <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+                {getProfileImage() ? (
+                  <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-sm">{getInitials(session.user?.name)}</span>
                 )}
@@ -124,13 +158,13 @@ export function Navbar() {
                   <div className="bg-gradient-to-br from-accent/20 to-blue-600/20 p-3 border-b border-white/10">
                     <div className="flex items-center gap-3">
                       <div className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold text-base overflow-hidden">
-                        {session.user?.image ? (
-                          <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+                        {getProfileImage() ? (
+                          <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
                         ) : (
                           <span>{getInitials(session.user?.name)}</span>
                         )}
                       </div>
-                      <p className="text-white font-medium text-sm">{session.user?.name?.split(' ')[0] || "User"}</p>
+                      <p className="text-white font-medium text-sm">{getDisplayName().split(' ')[0]}</p>
                     </div>
                   </div>
 

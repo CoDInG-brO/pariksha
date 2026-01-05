@@ -1,26 +1,126 @@
 "use client";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+
+const PROFILE_STORAGE_KEY = "pariksha_user_profile";
+const PROFILE_PHOTO_KEY = "pariksha_profile_photo";
+
+const defaultProfile = {
+  name: "Student Name",
+  email: "student@email.com",
+  phone: "+91 9876543210",
+  address: "Mumbai, Maharashtra",
+  dateOfBirth: "2000-01-01",
+  targetExam: "CAT"
+};
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: "Student Name",
-    email: "student@email.com",
-    phone: "+91 9876543210",
-    address: "Mumbai, Maharashtra",
-    dateOfBirth: "2000-01-01",
-    targetExam: "CAT"
-  });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [formData, setFormData] = useState(defaultProfile);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+
+  // Load profile from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setFormData({ ...defaultProfile, ...parsed });
+      } catch (e) {
+        console.error("Failed to parse saved profile:", e);
+      }
+    }
+    // Load profile photo
+    const savedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
+    if (savedPhoto) {
+      setProfilePhoto(savedPhoto);
+    }
+  }, []);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Check file size (max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Image size should be less than 2MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setProfilePhoto(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    setProfilePhoto(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Profile updated successfully!");
+    // Save to localStorage
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(formData));
+    // Save photo to localStorage
+    if (profilePhoto) {
+      localStorage.setItem(PROFILE_PHOTO_KEY, profilePhoto);
+    } else {
+      localStorage.removeItem(PROFILE_PHOTO_KEY);
+    }
+    setShowSuccessDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setShowSuccessDialog(false);
+    router.back();
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12">
+      {/* Success Dialog */}
+      <AnimatePresence>
+        {showSuccessDialog && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleDialogClose}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            />
+            {/* Dialog */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+            >
+              <div className="bg-elevated rounded-2xl border border-white/10 shadow-2xl p-6 text-center w-full max-w-sm pointer-events-auto">
+                <div className="w-14 h-14 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-green-400 text-2xl">✓</span>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">Profile Updated!</h3>
+                <p className="text-gray-400 text-sm mb-5">Your profile has been updated successfully.</p>
+                <button
+                  onClick={handleDialogClose}
+                  className="w-full px-4 py-2.5 bg-accent hover:bg-accent/90 rounded-lg text-white text-sm font-medium transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -47,15 +147,41 @@ export default function EditProfilePage() {
             <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10 sticky top-28">
               <h3 className="text-white font-bold mb-4">Profile Picture</h3>
               <div className="flex flex-col items-center">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold text-4xl mb-4 border-4 border-white/20">
-                  👤
-                </div>
-                <button className="px-4 py-2 bg-accent/20 hover:bg-accent/30 rounded-lg text-accent font-medium transition-colors mb-2">
-                  Change Photo
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
+                    alt="Profile"
+                    className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-white/20"
+                  />
+                ) : (
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold text-4xl mb-4 border-4 border-white/20">
+                    {formData.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handlePhotoChange}
+                  accept="image/*"
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-4 py-2 bg-accent/20 hover:bg-accent/30 rounded-lg text-accent font-medium transition-colors mb-2"
+                >
+                  {profilePhoto ? "Change Photo" : "Upload Photo"}
                 </button>
-                <button className="px-4 py-2 text-red-400 hover:text-red-300 text-sm transition-colors">
-                  Remove Photo
-                </button>
+                {profilePhoto && (
+                  <button
+                    type="button"
+                    onClick={handleRemovePhoto}
+                    className="px-4 py-2 text-red-400 hover:text-red-300 text-sm transition-colors"
+                  >
+                    Remove Photo
+                  </button>
+                )}
+                <p className="text-gray-500 text-xs mt-2 text-center">Max size: 2MB</p>
               </div>
             </div>
           </motion.div>
