@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   calculateCATPercentile,
@@ -8,11 +8,32 @@ import {
   estimateCollegeCategory,
   estimateIIMCategory
 } from "@/lib/percentileCalculator";
+import {
+  getTestAttempts,
+  formatTimestamp,
+  formatTimeSpent,
+  deleteTestAttempt,
+  TestAttempt
+} from "@/lib/testStorage";
 
 export default function Analytics() {
   const router = useRouter();
   const [examType, setExamType] = useState<"CAT" | "NEET">("CAT");
   const [score, setScore] = useState<number>(150);
+  const [attempts, setAttempts] = useState<TestAttempt[]>([]);
+  const [showAttempts, setShowAttempts] = useState(true);
+
+  // Load attempts from localStorage on mount
+  useEffect(() => {
+    setAttempts(getTestAttempts());
+  }, []);
+
+  const handleDeleteAttempt = (id: string) => {
+    if (confirm("Are you sure you want to delete this attempt?")) {
+      deleteTestAttempt(id);
+      setAttempts(getTestAttempts());
+    }
+  };
 
   const CATResult = calculateCATPercentile(score);
   const NEETResult = calculateNEETPercentile(score * 4); // Convert CAT-like input to NEET
@@ -37,16 +58,152 @@ export default function Analytics() {
             <h1 className="text-4xl font-bold text-white mb-4">Percentile & Performance Analytics</h1>
             <p className="text-gray-400">See how your performance compares against other candidates</p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => router.push("/analytics/review")}
-            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-lg text-white font-semibold transition-all flex items-center gap-2"
-          >
-            📝 Review Test Questions
-          </motion.button>
         </div>
       </motion.div>
+
+      {/* Past Attempts Section */}
+      {attempts.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="max-w-7xl mx-auto px-6 mb-12"
+        >
+          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                📋 Your Test Attempts
+                <span className="text-sm font-normal text-gray-400 bg-black/30 px-3 py-1 rounded-full">
+                  {attempts.length} {attempts.length === 1 ? "attempt" : "attempts"}
+                </span>
+              </h2>
+              <button
+                onClick={() => setShowAttempts(!showAttempts)}
+                className="text-accent hover:text-accent/80 text-sm font-semibold"
+              >
+                {showAttempts ? "Hide" : "Show"}
+              </button>
+            </div>
+
+            {showAttempts && (
+              <div className="space-y-4">
+                {attempts.map((attempt, idx) => (
+                  <motion.div
+                    key={attempt.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className={`bg-black/30 rounded-xl p-5 border ${
+                      attempt.examType === "CAT"
+                        ? "border-blue-500/30 hover:border-blue-500/50"
+                        : "border-green-500/30 hover:border-green-500/50"
+                    } transition-all`}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      {/* Left: Info */}
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${
+                          attempt.examType === "CAT"
+                            ? "bg-blue-500/20"
+                            : "bg-green-500/20"
+                        }`}>
+                          {attempt.examType === "CAT" ? "📊" : "🔬"}
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-white">
+                            {attempt.examType} Full Mock Test
+                          </h3>
+                          <p className="text-sm text-gray-400">
+                            {formatTimestamp(attempt.timestamp)} • {formatTimeSpent(attempt.timeSpent)}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Middle: Stats */}
+                      <div className="flex items-center gap-6 text-center">
+                        <div>
+                          <p className="text-2xl font-bold text-accent">{attempt.percentage}%</p>
+                          <p className="text-xs text-gray-400">Score</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-green-400">{attempt.correct}</p>
+                          <p className="text-xs text-gray-400">Correct</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-red-400">{attempt.incorrect}</p>
+                          <p className="text-xs text-gray-400">Wrong</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-gray-400">{attempt.unanswered}</p>
+                          <p className="text-xs text-gray-400">Skipped</p>
+                        </div>
+                      </div>
+
+                      {/* Right: Actions */}
+                      <div className="flex items-center gap-3">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
+                          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                            attempt.examType === "CAT"
+                              ? "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
+                              : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+                          }`}
+                        >
+                          📝 Review
+                        </motion.button>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleDeleteAttempt(attempt.id)}
+                          className="px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30 transition-all text-sm"
+                        >
+                          🗑️
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* No Attempts Message */}
+      {attempts.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="max-w-7xl mx-auto px-6 mb-12"
+        >
+          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl text-center">
+            <p className="text-6xl mb-4">📝</p>
+            <h3 className="text-xl font-bold text-white mb-2">No Test Attempts Yet</h3>
+            <p className="text-gray-400 mb-6">Take a full mock test to see your results here</p>
+            <div className="flex justify-center gap-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/cat/full-mock")}
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold"
+              >
+                📊 Take CAT Mock
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/neet/full-mock")}
+                className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-lg text-white font-semibold"
+              >
+                🔬 Take NEET Mock
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Exam Selector */}
       <motion.div
@@ -171,10 +328,10 @@ export default function Analytics() {
               transition={{ duration: 0.5 }}
               className="text-6xl font-bold text-purple-300 mb-2"
             >
-              #{result.rank.toLocaleString()}
+              #{result.rank.toLocaleString("en-US")}
             </motion.p>
             <p className="text-gray-300 text-sm">
-              Out of {result.totalCandidates.toLocaleString()} candidates
+              Out of {result.totalCandidates.toLocaleString("en-US")} candidates
             </p>
           </motion.div>
         </div>

@@ -1,22 +1,29 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [settings, setSettings] = useState({
     emailNotifications: true,
     pushNotifications: false,
     testReminders: true,
     weeklyReport: true,
-    darkMode: true,
     soundEffects: false,
     autoSubmit: true,
     showTimer: true,
     language: "English",
     timezone: "Asia/Kolkata"
   });
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSave = () => {
     alert("Settings saved successfully!");
@@ -89,12 +96,46 @@ export default function SettingsPage() {
               🎨 Appearance
             </h3>
             <div className="space-y-4">
-              <ToggleSetting
-                label="Dark Mode"
-                description="Use dark theme for the application"
-                checked={settings.darkMode}
-                onChange={(checked) => setSettings({ ...settings, darkMode: checked })}
-              />
+              {/* Theme Selector */}
+              <div className="py-2">
+                <p className="text-white font-medium mb-1">Theme</p>
+                <p className="text-gray-400 text-sm mb-4">Choose your preferred color scheme</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setTheme("light")}
+                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                      mounted && resolvedTheme === "light"
+                        ? "border-accent bg-accent/10"
+                        : "border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    <span className="text-3xl">☀️</span>
+                    <span className="text-white font-medium">Light</span>
+                  </button>
+                  <button
+                    onClick={() => setTheme("dark")}
+                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                      mounted && resolvedTheme === "dark"
+                        ? "border-accent bg-accent/10"
+                        : "border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    <span className="text-3xl">🌙</span>
+                    <span className="text-white font-medium">Dark</span>
+                  </button>
+                  <button
+                    onClick={() => setTheme("system")}
+                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                      mounted && theme === "system"
+                        ? "border-accent bg-accent/10"
+                        : "border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    <span className="text-3xl">💻</span>
+                    <span className="text-white font-medium">System</span>
+                  </button>
+                </div>
+              </div>
               <ToggleSetting
                 label="Sound Effects"
                 description="Play sounds for correct/incorrect answers"
@@ -208,20 +249,20 @@ function ToggleSetting({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between py-2">
+    <div className="flex items-center justify-between py-1.5">
       <div>
-        <p className="text-white font-medium">{label}</p>
-        <p className="text-gray-400 text-sm">{description}</p>
+        <p className="text-white font-medium text-sm">{label}</p>
+        <p className="text-gray-400 text-xs">{description}</p>
       </div>
       <button
         onClick={() => onChange(!checked)}
-        className={`relative w-12 h-6 rounded-full transition-colors ${
+        className={`relative w-10 h-5 rounded-full transition-colors ${
           checked ? "bg-accent" : "bg-white/20"
         }`}
       >
         <span
-          className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${
-            checked ? "left-7" : "left-1"
+          className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
+            checked ? "left-5" : "left-0.5"
           }`}
         />
       </button>

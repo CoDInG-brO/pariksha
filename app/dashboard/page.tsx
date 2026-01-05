@@ -1,48 +1,57 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-interface ExamHistory {
-  id: number;
-  name: string;
-  score: number;
-  date: string;
-  attempts: number;
-}
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import {
+  getTestAttempts,
+  getAttemptsByExamType,
+  formatTimestamp,
+  formatTimeSpent,
+  TestAttempt,
+  getPracticeProgress,
+  PracticeProgress
+} from "@/lib/testStorage";
 
 export default function Dashboard() {
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const router = useRouter();
+  const [attempts, setAttempts] = useState<TestAttempt[]>([]);
+  const [catAttempts, setCatAttempts] = useState<TestAttempt[]>([]);
+  const [neetAttempts, setNeetAttempts] = useState<TestAttempt[]>([]);
+  const [practiceProgress, setPracticeProgress] = useState<PracticeProgress | null>(null);
 
-  const stats = {
-    lastScore: 72,
-    totalExams: 8,
-    averageScore: 68,
-    strongArea: "Data Structures",
-    weakArea: "Database Design",
-    totalAttempts: 15,
-    streak: 3
+  useEffect(() => {
+    const allAttempts = getTestAttempts();
+    setAttempts(allAttempts);
+    setCatAttempts(getAttemptsByExamType("CAT"));
+    setNeetAttempts(getAttemptsByExamType("NEET"));
+    setPracticeProgress(getPracticeProgress());
+  }, []);
+
+  // Calculate stats for each exam type
+  const calculateStats = (attempts: TestAttempt[]) => {
+    if (attempts.length === 0) return null;
+    
+    const totalAttempts = attempts.length;
+    const avgPercentage = attempts.reduce((sum, a) => sum + parseFloat(a.percentage), 0) / totalAttempts;
+    const bestAttempt = attempts.reduce((best, a) => 
+      parseFloat(a.percentage) > parseFloat(best.percentage) ? a : best
+    , attempts[0]);
+    const latestAttempt = attempts[0]; // Already sorted by most recent
+    
+    return {
+      totalAttempts,
+      avgPercentage: avgPercentage.toFixed(1),
+      bestScore: bestAttempt.percentage,
+      bestPercentile: bestAttempt.estimatedPercentile,
+      latestScore: latestAttempt.percentage,
+      latestPercentile: latestAttempt.estimatedPercentile,
+      totalCorrect: attempts.reduce((sum, a) => sum + a.correct, 0),
+      totalQuestions: attempts.reduce((sum, a) => sum + a.totalQuestions, 0),
+    };
   };
 
-  const recentExams: ExamHistory[] = [
-    { id: 1, name: "Database Fundamentals", score: 72, date: "Today", attempts: 1 },
-    { id: 2, name: "Web Development Basics", score: 85, date: "Yesterday", attempts: 2 },
-    { id: 3, name: "Algorithm Analysis", score: 65, date: "2 days ago", attempts: 1 },
-    { id: 4, name: "Data Structures", score: 90, date: "3 days ago", attempts: 1 }
-  ];
-
-  const topicPerformance = [
-    { topic: "Data Structures", percentage: 90, color: "from-green-500 to-green-600" },
-    { topic: "Algorithms", percentage: 75, color: "from-blue-500 to-blue-600" },
-    { topic: "Web Development", percentage: 82, color: "from-purple-500 to-purple-600" },
-    { topic: "Databases", percentage: 55, color: "from-orange-500 to-orange-600" },
-    { topic: "System Design", percentage: 68, color: "from-pink-500 to-pink-600" }
-  ];
-
-  const suggestedTopics = [
-    { name: "SQL Joins", difficulty: "Medium", estimatedTime: "30 min", priority: "High" },
-    { name: "Database Indexing", difficulty: "Hard", estimatedTime: "45 min", priority: "High" },
-    { name: "Normalization", difficulty: "Medium", estimatedTime: "25 min", priority: "Medium" }
-  ];
+  const catStats = calculateStats(catAttempts);
+  const neetStats = calculateStats(neetAttempts);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -65,238 +74,382 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background">
-      {/* Header Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-12"
-      >
-        <h1 className="text-4xl font-bold text-white mb-2">Welcome Back!</h1>
-        <p className="text-gray-400">Here's your exam performance overview</p>
-      </motion.div>
-
-      {/* Key Stats Grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
-      >
-        {/* Last Score */}
-        <motion.div variants={itemVariants} className="group">
-          <div className="bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl p-6 border border-accent/30 hover:border-accent/60 transition-all duration-300 shadow-lg hover:shadow-accent/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 text-sm font-medium">Last Score</span>
-              <span className="text-2xl">📊</span>
-            </div>
-            <p className="text-4xl font-bold text-accent mb-2">{stats.lastScore}%</p>
-            <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${stats.lastScore}%` }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                className="h-full bg-gradient-to-r from-accent to-accent/60"
-              />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Total Exams */}
-        <motion.div variants={itemVariants} className="group">
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-2xl p-6 border border-blue-500/30 hover:border-blue-500/60 transition-all duration-300 shadow-lg hover:shadow-blue-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 text-sm font-medium">Total Exams</span>
-              <span className="text-2xl">📝</span>
-            </div>
-            <p className="text-4xl font-bold text-blue-400 mb-2">{stats.totalExams}</p>
-            <p className="text-xs text-gray-500">{stats.totalAttempts} total attempts</p>
-          </div>
-        </motion.div>
-
-        {/* Average Score */}
-        <motion.div variants={itemVariants} className="group">
-          <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 rounded-2xl p-6 border border-green-500/30 hover:border-green-500/60 transition-all duration-300 shadow-lg hover:shadow-green-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 text-sm font-medium">Average Score</span>
-              <span className="text-2xl">📈</span>
-            </div>
-            <p className="text-4xl font-bold text-green-400 mb-2">{stats.averageScore}%</p>
-            <p className="text-xs text-green-400/60">Across all exams</p>
-          </div>
-        </motion.div>
-
-        {/* Current Streak */}
-        <motion.div variants={itemVariants} className="group">
-          <div className="bg-gradient-to-br from-orange-500/20 to-orange-500/5 rounded-2xl p-6 border border-orange-500/30 hover:border-orange-500/60 transition-all duration-300 shadow-lg hover:shadow-orange-500/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-gray-400 text-sm font-medium">Current Streak</span>
-              <span className="text-2xl">🔥</span>
-            </div>
-            <p className="text-4xl font-bold text-orange-400 mb-2">{stats.streak}</p>
-            <p className="text-xs text-orange-400/60">Days active</p>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        {/* Topic Performance */}
+    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="lg:col-span-2"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10"
         >
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
-            <h2 className="text-2xl font-bold text-white mb-6">Topic Performance</h2>
-            <div className="space-y-5">
-              {topicPerformance.map((item, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ x: 4 }}
-                  onClick={() => setSelectedTopic(item.topic)}
-                  className={`cursor-pointer transition-all duration-300 p-4 rounded-lg ${
-                    selectedTopic === item.topic ? "bg-white/10 border border-accent/50" : "hover:bg-white/5"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-white font-semibold">{item.topic}</p>
-                    <span className={`text-lg font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
-                      {item.percentage}%
-                    </span>
+          <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
+          <p className="text-gray-400">Track your CAT & NEET preparation progress</p>
+        </motion.div>
+
+        {/* Exam Performance Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10"
+        >
+          {/* CAT Performance Card */}
+          <motion.div variants={itemVariants}>
+            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-2xl p-6 border border-blue-500/20 h-full">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">📊</span>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">CAT Performance</h2>
+                    <p className="text-gray-400 text-sm">Common Admission Test</p>
+                  </div>
+                </div>
+                {catStats && (
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold">
+                    {catStats.totalAttempts} Attempt{catStats.totalAttempts > 1 ? "s" : ""}
+                  </span>
+                )}
+              </div>
+
+              {catStats ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Best Score</p>
+                      <p className="text-3xl font-bold text-blue-400">{catStats.bestScore}%</p>
+                      <p className="text-blue-300/60 text-xs">{catStats.bestPercentile}%ile</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Latest Score</p>
+                      <p className="text-3xl font-bold text-white">{catStats.latestScore}%</p>
+                      <p className="text-gray-400 text-xs">{catStats.latestPercentile}%ile</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Average</p>
+                      <p className="text-2xl font-bold text-gray-300">{catStats.avgPercentage}%</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Accuracy</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {((catStats.totalCorrect / catStats.totalQuestions) * 100).toFixed(1)}%
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => router.push("/cat/full-mock")}
+                      className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-semibold transition-all"
+                    >
+                      Take New Test
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => router.push(`/analytics/review?id=${catAttempts[0]?.id}`)}
+                      className="px-4 py-3 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-xl text-blue-300 font-semibold transition-all"
+                    >
+                      Review Last
+                    </motion.button>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 mb-4">No CAT tests attempted yet</p>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => router.push("/cat/full-mock")}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-semibold transition-all"
+                  >
+                    Take Your First CAT Mock →
+                  </motion.button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          {/* NEET Performance Card */}
+          <motion.div variants={itemVariants}>
+            <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-2xl p-6 border border-green-500/20 h-full">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">🔬</span>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">NEET Performance</h2>
+                    <p className="text-gray-400 text-sm">National Eligibility cum Entrance Test</p>
+                  </div>
+                </div>
+                {neetStats && (
+                  <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm font-semibold">
+                    {neetStats.totalAttempts} Attempt{neetStats.totalAttempts > 1 ? "s" : ""}
+                  </span>
+                )}
+              </div>
+
+              {neetStats ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Best Score</p>
+                      <p className="text-3xl font-bold text-green-400">{neetStats.bestScore}%</p>
+                      <p className="text-green-300/60 text-xs">{neetStats.bestPercentile}%ile</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Latest Score</p>
+                      <p className="text-3xl font-bold text-white">{neetStats.latestScore}%</p>
+                      <p className="text-gray-400 text-xs">{neetStats.latestPercentile}%ile</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Average</p>
+                      <p className="text-2xl font-bold text-gray-300">{neetStats.avgPercentage}%</p>
+                    </div>
+                    <div className="bg-black/20 rounded-xl p-4">
+                      <p className="text-gray-400 text-xs mb-1">Accuracy</p>
+                      <p className="text-2xl font-bold text-green-400">
+                        {((neetStats.totalCorrect / neetStats.totalQuestions) * 100).toFixed(1)}%
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => router.push("/neet/full-mock")}
+                      className="flex-1 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-semibold transition-all"
+                    >
+                      Take New Test
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => router.push(`/analytics/review?id=${neetAttempts[0]?.id}`)}
+                      className="px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-xl text-green-300 font-semibold transition-all"
+                    >
+                      Review Last
+                    </motion.button>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 mb-4">No NEET tests attempted yet</p>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => router.push("/neet/full-mock")}
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-semibold transition-all"
+                  >
+                    Take Your First NEET Mock →
+                  </motion.button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Practice Mode & Recent Tests - 50/50 Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10"
+        >
+          {/* Practice Mode Card */}
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-2xl p-6 border border-purple-500/20 h-full">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">✏️</span>
+                <div>
+                  <h2 className="text-xl font-bold text-white">Practice Mode</h2>
+                  <p className="text-gray-400 text-sm">
+                    {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions
+                      ? `${practiceProgress.examType} Session`
+                      : "CAT & NEET Questions"}
+                  </p>
+                </div>
+              </div>
+              {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions && (
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold">
+                  In Progress
+                </span>
+              )}
+            </div>
+
+            {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions ? (
+              <>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <div className="bg-black/20 rounded-xl p-3 text-center">
+                    <p className="text-gray-400 text-xs mb-1">Answered</p>
+                    <p className="text-xl font-bold text-purple-400">
+                      {practiceProgress.answeredQuestions.length}/{practiceProgress.totalQuestions}
+                    </p>
+                  </div>
+                  <div className="bg-black/20 rounded-xl p-3 text-center">
+                    <p className="text-gray-400 text-xs mb-1">Correct</p>
+                    <p className="text-xl font-bold text-green-400">{practiceProgress.correctAnswers}</p>
+                  </div>
+                  <div className="bg-black/20 rounded-xl p-3 text-center">
+                    <p className="text-gray-400 text-xs mb-1">Remaining</p>
+                    <p className="text-xl font-bold text-gray-300">
+                      {practiceProgress.totalQuestions - practiceProgress.answeredQuestions.length}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="mb-4">
+                  <div className="flex justify-between text-sm text-gray-400 mb-2">
+                    <span>Progress</span>
+                    <span>{Math.round((practiceProgress.answeredQuestions.length / practiceProgress.totalQuestions) * 100)}%</span>
                   </div>
                   <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: `${item.percentage}%` }}
-                      transition={{ duration: 1.2, delay: index * 0.1 }}
-                      className={`h-full bg-gradient-to-r ${item.color}`}
+                      animate={{ width: `${(practiceProgress.answeredQuestions.length / practiceProgress.totalQuestions) * 100}%` }}
+                      transition={{ duration: 1 }}
+                      className="h-full bg-gradient-to-r from-purple-500 to-purple-600"
                     />
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Strong vs Weak Areas */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl h-full">
-            <h2 className="text-2xl font-bold text-white mb-6">Your Insights</h2>
-            <div className="space-y-6">
-              {/* Strong Area */}
-              <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">💪</span>
-                  <p className="text-gray-400 text-sm">Strong Area</p>
                 </div>
-                <p className="text-xl font-bold text-green-400">{stats.strongArea}</p>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => router.push("/practice")}
+                  className="w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-xl text-white font-semibold transition-all"
+                >
+                  Continue Practice →
+                </motion.button>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-6">
+                <p className="text-gray-400 text-center mb-4">Practice with random CAT & NEET questions</p>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => router.push("/practice")}
+                  className="w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-xl text-white font-semibold transition-all"
+                >
+                  Start Practice →
+                </motion.button>
               </div>
-
-              {/* Weak Area */}
-              <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">⚡</span>
-                  <p className="text-gray-400 text-sm">Needs Work</p>
-                </div>
-                <p className="text-xl font-bold text-orange-400">{stats.weakArea}</p>
-              </div>
-
-              {/* Next Practice */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3 px-4 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg hover:shadow-accent/20"
-              >
-                Start Practice ✨
-              </motion.button>
-            </div>
+            )}
           </div>
-        </motion.div>
-      </div>
 
-      {/* Recent Exams */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="mb-12"
-      >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
-          <h2 className="text-2xl font-bold text-white mb-6">Recent Exams</h2>
-          <div className="space-y-3">
-            {recentExams.map((exam, index) => (
-              <motion.div
-                key={exam.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                whileHover={{ x: 4, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                className="flex items-center justify-between p-4 rounded-xl bg-black/20 border border-white/5 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex-1">
-                  <p className="text-white font-semibold">{exam.name}</p>
-                  <p className="text-gray-400 text-sm">{exam.date} • {exam.attempts} attempt(s)</p>
-                </div>
-                <div className="text-right">
-                  <p className={`text-2xl font-bold ${exam.score >= 80 ? "text-green-400" : exam.score >= 70 ? "text-yellow-400" : "text-red-400"}`}>
-                    {exam.score}%
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Suggested Topics */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-      >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
-          <h2 className="text-2xl font-bold text-white mb-6">Recommended Topics to Practice</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {suggestedTopics.map((topic, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="bg-black/30 border border-white/10 rounded-xl p-6 hover:border-accent/50 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-bold text-white">{topic.name}</h3>
-                  {topic.priority === "High" && (
-                    <span className="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-semibold">
-                      High Priority
-                    </span>
-                  )}
-                </div>
-                <div className="space-y-2 mb-4">
-                  <p className="text-sm text-gray-400">
-                    <span className="text-gray-500">Difficulty:</span> {topic.difficulty}
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    <span className="text-gray-500">Time:</span> {topic.estimatedTime}
-                  </p>
-                </div>
-                <button className="w-full py-2 px-3 bg-accent/20 hover:bg-accent/30 text-accent rounded-lg font-medium transition-all duration-200">
-                  Start Now
+          {/* Recent Tests Card */}
+          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10 h-full">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-white">Recent Tests</h2>
+              {attempts.length > 0 && (
+                <button
+                  onClick={() => router.push("/analytics")}
+                  className="text-accent hover:text-accent/80 text-sm font-semibold transition-all"
+                >
+                  View All →
                 </button>
-              </motion.div>
-            ))}
+              )}
+            </div>
+            
+            {attempts.length > 0 ? (
+              <div className="space-y-3">
+                {attempts.slice(0, 4).map((attempt, index) => (
+                  <motion.div
+                    key={attempt.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                    className="flex items-center justify-between p-3 bg-black/20 rounded-xl border border-white/5 hover:border-white/10 transition-all cursor-pointer"
+                    onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xl ${attempt.examType === "CAT" ? "text-blue-400" : "text-green-400"}`}>
+                        {attempt.examType === "CAT" ? "📊" : "🔬"}
+                      </span>
+                      <div>
+                        <p className="text-white font-semibold text-sm">{attempt.examType} Mock</p>
+                        <p className="text-gray-400 text-xs">
+                          {formatTimestamp(attempt.timestamp)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className={`text-xl font-bold ${
+                        parseFloat(attempt.percentage) >= 70 ? "text-green-400" : 
+                        parseFloat(attempt.percentage) >= 50 ? "text-yellow-400" : "text-red-400"
+                      }`}>
+                        {attempt.percentage}%
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-6">
+                <p className="text-gray-400 text-center mb-4">No tests attempted yet</p>
+                <div className="flex gap-3">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => router.push("/cat/full-mock")}
+                    className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-lg text-blue-300 text-sm font-semibold transition-all"
+                  >
+                    📊 CAT Mock
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => router.push("/neet/full-mock")}
+                    className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-lg text-green-300 text-sm font-semibold transition-all"
+                  >
+                    🔬 NEET Mock
+                  </motion.button>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+
+        {/* Empty State */}
+        {attempts.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-center py-16"
+          >
+            <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 max-w-2xl mx-auto">
+              <span className="text-6xl mb-6 block">🎯</span>
+              <h2 className="text-2xl font-bold text-white mb-4">Start Your Preparation Journey!</h2>
+              <p className="text-gray-400 mb-8">
+                Take your first mock test to see your performance analytics here.
+                Track your progress, identify weak areas, and ace your exams!
+              </p>
+              <div className="flex gap-4 justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/cat/full-mock")}
+                  className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-semibold transition-all"
+                >
+                  📊 Start CAT Mock
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push("/neet/full-mock")}
+                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-semibold transition-all"
+                >
+                  🔬 Start NEET Mock
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }

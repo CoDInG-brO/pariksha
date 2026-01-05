@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { saveTestAttempt } from "@/lib/testStorage";
 
 interface Question {
   id: number;
@@ -29,6 +30,7 @@ export default function CATFullMock() {
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [markedForReview, setMarkedForReview] = useState<Set<number>>(new Set());
   const [testStarted, setTestStarted] = useState(false);
+  const startTimeRef = useRef<number>(0);
 
   const allQuestions: Question[] = [
     // QUANT SECTION (22 questions)
@@ -658,7 +660,36 @@ export default function CATFullMock() {
     }
   };
 
+  const [savedAttemptId, setSavedAttemptId] = useState<string | null>(null);
+
   const handleSubmitTest = () => {
+    const timeSpent = startTimeRef.current ? Math.floor((Date.now() - startTimeRef.current) / 1000) : 120 * 60 - timeRemaining;
+    const score = calculateScore();
+    
+    // Save to localStorage
+    const savedAttempt = saveTestAttempt({
+      examType: "CAT",
+      timeSpent,
+      totalQuestions: allQuestions.length,
+      correct: score.correct,
+      incorrect: score.incorrect,
+      unanswered: score.unanswered,
+      rawScore: score.rawScore,
+      maxScore: allQuestions.length * 3,
+      percentage: score.percentage,
+      estimatedPercentile: score.estimated_percentile,
+      questions: allQuestions.map(q => ({
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        correctAnswer: q.correctAnswer,
+        explanation: q.explanation,
+        section: q.section,
+      })),
+      selectedAnswers: [...selectedAnswers],
+    });
+    
+    setSavedAttemptId(savedAttempt.id);
     setTestSubmitted(true);
   };
 
@@ -727,7 +758,10 @@ export default function CATFullMock() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setTestStarted(true)}
+              onClick={() => {
+                startTimeRef.current = Date.now();
+                setTestStarted(true);
+              }}
               className="px-12 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl text-white font-bold text-lg transition-all shadow-lg hover:shadow-blue-500/20"
             >
               Start Full Mock →
@@ -788,14 +822,26 @@ export default function CATFullMock() {
               </p>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/cat")}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all"
-            >
-              Back to Dashboard →
-            </motion.button>
+            <div className="flex gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/cat")}
+                className="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 rounded-lg text-white font-semibold transition-all"
+              >
+                ← Back to Dashboard
+              </motion.button>
+              {savedAttemptId && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push(`/analytics/review?id=${savedAttemptId}`)}
+                  className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-lg text-white font-semibold transition-all"
+                >
+                  📝 Review Answers →
+                </motion.button>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>

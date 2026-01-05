@@ -78,8 +78,8 @@ export default function CATDashboard() {
         </div>
         <p className="text-gray-400 text-lg">Choose a section to practice. Each section has 40 minutes time limit - just like the real exam.</p>
         
-        <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-          <p className="text-blue-200 text-sm">
+        <div className="mt-5 px-3 py-2.5 rounded-md bg-amber-500/10 border border-amber-500/20">
+          <p className="text-amber-700 dark:text-amber-200 text-[12px] leading-relaxed">
             <strong>⚠️ Important:</strong> In actual CAT, you cannot switch sections once you start. Practice with the same mindset!
           </p>
         </div>

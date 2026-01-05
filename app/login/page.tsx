@@ -49,30 +49,40 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background flex items-center justify-center px-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-background dark:via-surface dark:to-background flex flex-col items-center justify-center px-6 py-8">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-3xl" />
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative w-full max-w-md"
+        className="relative w-full max-w-sm"
       >
         {/* Logo & Title */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-5">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", delay: 0.1 }}
-            className="w-20 h-20 bg-gradient-to-br from-accent to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-accent/30"
+            className="w-16 h-16 bg-gradient-to-br from-accent to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-accent/30"
           >
-            <span className="text-4xl">📚</span>
+            {/* Book Stack SVG Logo */}
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="6" width="6" height="20" rx="1" transform="rotate(-12 4 6)" fill="#FB923C" />
+              <rect x="5.5" y="8" width="3" height="14" rx="0.5" transform="rotate(-12 5.5 8)" fill="#FDBA74" />
+              <rect x="11" y="4" width="6" height="22" rx="1" fill="#22C55E" />
+              <rect x="12.5" y="6" width="3" height="16" rx="0.5" fill="#86EFAC" />
+              <rect x="18" y="8" width="5" height="18" rx="1" fill="#EAB308" />
+              <rect x="19.2" y="10" width="2.5" height="12" rx="0.5" fill="#FDE047" />
+              <rect x="24" y="10" width="5" height="16" rx="1" fill="#06B6D4" />
+              <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
+            </svg>
           </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">MockExam AI</h1>
-          <p className="text-gray-400">Your AI-powered exam preparation partner</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Pariksha</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Your AI-powered exam preparation partner</p>
         </div>
 
         {/* Login Card */}
@@ -80,9 +90,9 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-2xl"
+          className="bg-white dark:bg-gradient-to-br dark:from-surface dark:to-elevated rounded-xl p-6 border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl"
         >
-          <h2 className="text-xl font-bold text-white mb-6 text-center">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 text-center">
             {showEmailLogin ? "Sign in with Email" : "Welcome Back"}
           </h2>
 
@@ -99,7 +109,7 @@ export default function LoginPage() {
               <button
                 onClick={handleGoogleLogin}
                 disabled={isGoogleLoading}
-                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white hover:bg-gray-100 rounded-xl text-gray-800 font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+                className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-white hover:bg-gray-100 rounded-lg text-gray-800 font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-3"
               >
                 {isGoogleLoading ? (
                   <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -127,49 +137,49 @@ export default function LoginPage() {
               </button>
 
               {/* Divider */}
-              <div className="flex items-center gap-4 my-6">
-                <div className="flex-1 h-px bg-white/10" />
-                <span className="text-gray-500 text-sm">or</span>
-                <div className="flex-1 h-px bg-white/10" />
+              <div className="flex items-center gap-4 my-4">
+                <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
+                <span className="text-gray-400 dark:text-gray-500 text-xs">or</span>
+                <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
               </div>
 
               {/* Email Sign In Button */}
               <button
                 onClick={() => setShowEmailLogin(true)}
-                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white/10 hover:bg-white/20 rounded-xl text-white font-semibold transition-all border border-white/10"
+                className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-lg text-gray-700 dark:text-white font-semibold transition-all border border-gray-200 dark:border-white/10"
               >
                 <span className="text-xl">✉️</span>
                 Continue with Email
               </button>
             </>
           ) : (
-            <form onSubmit={handleEmailLogin} className="space-y-4">
+            <form onSubmit={handleEmailLogin} className="space-y-3">
               <div>
-                <label className="block text-gray-300 font-medium mb-2">Email</label>
+                <label className="block text-gray-600 dark:text-gray-300 font-medium mb-1.5 text-sm">Email</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-4 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors text-sm"
                 />
               </div>
               <div>
-                <label className="block text-gray-300 font-medium mb-2">Password</label>
+                <label className="block text-gray-600 dark:text-gray-300 font-medium mb-1.5 text-sm">Password</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-4 py-2.5 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors text-sm"
                 />
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 text-gray-400">
-                  <input type="checkbox" className="rounded bg-white/10 border-white/20" />
+                <label className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                  <input type="checkbox" className="rounded bg-gray-100 dark:bg-white/10 border-gray-300 dark:border-white/20" />
                   Remember me
                 </label>
                 <button type="button" className="text-accent hover:text-accent/80 transition-colors">
@@ -180,7 +190,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full px-6 py-4 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-xl text-white font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-5 py-3 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
@@ -195,7 +205,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowEmailLogin(false)}
-                className="w-full text-gray-400 hover:text-white text-sm transition-colors"
+                className="w-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white text-sm transition-colors"
               >
                 ← Back to other options
               </button>
@@ -203,8 +213,8 @@ export default function LoginPage() {
           )}
 
           {/* Sign Up Link */}
-          <div className="mt-6 pt-6 border-t border-white/10 text-center">
-            <p className="text-gray-400">
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/10 text-center">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
               Don&apos;t have an account?{" "}
               <button
                 onClick={() => router.push("/signup")}
@@ -221,24 +231,24 @@ export default function LoginPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-8 grid grid-cols-3 gap-4 text-center"
+          className="mt-5 grid grid-cols-3 gap-3 text-center"
         >
-          <div className="p-3">
-            <span className="text-2xl">📊</span>
-            <p className="text-gray-400 text-xs mt-1">CAT Prep</p>
+          <div className="p-2 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
+            <span className="text-xl">📊</span>
+            <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">CAT Prep</p>
           </div>
-          <div className="p-3">
-            <span className="text-2xl">🔬</span>
-            <p className="text-gray-400 text-xs mt-1">NEET Prep</p>
+          <div className="p-2 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
+            <span className="text-xl">🔬</span>
+            <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">NEET Prep</p>
           </div>
-          <div className="p-3">
-            <span className="text-2xl">🤖</span>
-            <p className="text-gray-400 text-xs mt-1">AI-Powered</p>
+          <div className="p-2 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
+            <span className="text-xl">🤖</span>
+            <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">AI-Powered</p>
           </div>
         </motion.div>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-xs mt-8">
+        <p className="text-center text-gray-500 text-xs mt-5">
           By signing in, you agree to our{" "}
           <a href="#" className="text-accent hover:underline">Terms of Service</a>
           {" "}and{" "}

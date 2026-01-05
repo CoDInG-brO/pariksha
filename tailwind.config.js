@@ -8,11 +8,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+      },
       colors: {
-        background: "#0B0F19",
-        surface: "#111827",
-        elevated: "#0F172A",
-        accent: "#6366F1"
+        background: "var(--background)",
+        surface: "var(--surface)",
+        elevated: "var(--elevated)",
+        accent: "var(--accent)",
+        "text-primary": "var(--text-primary)",
+        "text-secondary": "var(--text-secondary)",
+        "border-color": "var(--border-color)"
       }
     }
   },

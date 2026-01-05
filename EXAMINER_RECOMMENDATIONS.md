@@ -21,7 +21,7 @@ As an examiner perspective, here are the critical architectural changes needed t
 ## 2. PROPOSED STRUCTURE
 
 ```
-MockExam AI
+Pariksha
 ├── Dashboard (Exam-specific)
 │   ├── CAT Dashboard
 │   │   ├── Section-wise Performance
@@ -132,7 +132,7 @@ Question Type        MCQ only         MCQ only
 
 ### **Navbar Restructure** ✅ (Already implemented)
 ```
-MockExam AI [LOGO] | [CAT/NEET SELECTOR] | Profile
+Pariksha [LOGO] | [CAT/NEET SELECTOR] | Profile
 ─────────────────────────────────────────────────
 Dashboard | Take Test | Practice | Analytics | Resources
 ```

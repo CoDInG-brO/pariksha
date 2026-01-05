@@ -3,10 +3,258 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark theme (default) */
+:root {
+  --background: #0B0F19;
+  --surface: #111827;
+  --elevated: #0F172A;
+  --accent: #6366F1;
+  --text-primary: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(0, 0, 0, 0.4);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* Light theme */
+.light {
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --elevated: #F1F5F9;
+  --accent: #4F46E5;
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
 html, body {
   height: 100%;
 }
 
 body {
-  @apply bg-background text-gray-200 antialiased;
+  @apply bg-background antialiased;
+  color: var(--text-primary);
+}
+
+/* Slightly smaller text sizes globally (text only, not layout) */
+h1, .text-4xl, .text-5xl { font-size: 0.9em; }
+h2, .text-3xl { font-size: 0.92em; }
+h3, .text-2xl { font-size: 0.93em; }
+.text-xl { font-size: 0.94em; }
+.text-lg { font-size: 0.95em; }
+p, span, a, button, label, .text-base, .text-sm, .text-xs { 
+  font-size: inherit; 
+  letter-spacing: -0.01em;
+}
+
+/* Light theme specific overrides */
+.light .text-white {
+  color: var(--text-primary);
+}
+
+.light .text-gray-200,
+.light .text-gray-300 {
+  color: var(--text-secondary);
+}
+
+.light .text-gray-400 {
+  color: #94A3B8;
+}
+
+/* Navbar light theme fix */
+.light .bg-black\/40 {
+  background-color: var(--navbar-bg);
+}
+
+.light .bg-black\/20,
+.light .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.light .bg-white\/5,
+.light .bg-white\/10,
+.light .bg-white\/20 {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.light .border-white\/5,
+.light .border-white\/10,
+.light .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .hover\:bg-white\/10:hover,
+.light .hover\:bg-white\/20:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Card and elevated surfaces in light mode */
+.light .bg-elevated {
+  background-color: #FFFFFF;
+  box-shadow: var(--card-shadow);
+}
+
+.light .from-surface {
+  --tw-gradient-from: #FFFFFF;
+}
+
+.light .to-elevated {
+  --tw-gradient-to: #F8FAFC;
+}
+
+.light .from-background {
+  --tw-gradient-from: #F1F5F9;
+}
+
+.light .to-background {
+  --tw-gradient-to: #F8FAFC;
+}
+
+.light .via-surface {
+  --tw-gradient-via: #FFFFFF;
+}
+
+/* Better gradients for light mode */
+.light .bg-gradient-to-br.from-surface {
+  background: #FFFFFF;
+  box-shadow: var(--card-shadow);
+}
+
+/* Accent color backgrounds in light mode */
+.light .from-accent\/20 {
+  --tw-gradient-from: rgba(79, 70, 229, 0.08);
+}
+
+.light .to-blue-600\/20 {
+  --tw-gradient-to: rgba(37, 99, 235, 0.08);
+}
+
+/* Select/Input backgrounds */
+.light select,
+.light input {
+  background-color: #F8FAFC !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: var(--text-primary) !important;
+}
+
+.light select option {
+  background-color: #FFFFFF;
+  color: var(--text-primary);
+}
+
+/* Shadow overrides for light mode */
+.light .shadow-xl,
+.light .shadow-2xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Dropdown menu in light mode */
+.light .bg-elevated {
+  background-color: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Gradient text colors that need to stay colorful */
+.light .text-blue-400 { color: #3B82F6; }
+.light .text-green-400 { color: #22C55E; }
+.light .text-purple-400 { color: #A855F7; }
+.light .text-yellow-400 { color: #EAB308; }
+.light .text-red-400 { color: #EF4444; }
+.light .text-accent { color: var(--accent); }
+
+/* Button colors remain vibrant */
+.light .bg-accent { background-color: var(--accent); }
+.light .from-accent { --tw-gradient-from: var(--accent); }
+.light .to-blue-600 { --tw-gradient-to: #2563EB; }
+
+/* Special colored backgrounds stay colorful */
+.light .from-blue-500\/10 { --tw-gradient-from: rgba(59, 130, 246, 0.1); }
+.light .to-blue-600\/5 { --tw-gradient-to: rgba(37, 99, 235, 0.05); }
+.light .from-green-500\/10 { --tw-gradient-from: rgba(34, 197, 94, 0.1); }
+.light .to-green-600\/5 { --tw-gradient-to: rgba(22, 163, 74, 0.05); }
+.light .from-purple-500\/10 { --tw-gradient-from: rgba(168, 85, 247, 0.1); }
+.light .to-purple-600\/5 { --tw-gradient-to: rgba(147, 51, 234, 0.05); }
+
+.light .border-blue-500\/20 { border-color: rgba(59, 130, 246, 0.2); }
+.light .border-green-500\/20 { border-color: rgba(34, 197, 94, 0.2); }
+.light .border-purple-500\/20 { border-color: rgba(168, 85, 247, 0.2); }
+
+/* Blue/Green/Purple accent text colors */
+.light .text-blue-300 { color: #3B82F6; }
+.light .text-green-300 { color: #22C55E; }
+.light .text-purple-300 { color: #9333EA; }
+
+/* Badge backgrounds */
+.light .bg-blue-500\/20 { background-color: rgba(59, 130, 246, 0.15); }
+.light .bg-green-500\/20 { background-color: rgba(34, 197, 94, 0.15); }
+.light .bg-purple-500\/20 { background-color: rgba(168, 85, 247, 0.15); }
+.light .bg-red-500\/20 { background-color: rgba(239, 68, 68, 0.15); }
+
+/* Make sure colored stat numbers stay vibrant */
+.light .text-blue-400,
+.light .text-green-400,
+.light .text-purple-400,
+.light .text-yellow-400,
+.light .text-red-400 {
+  font-weight: 600;
+}
+
+/* Navbar tab hover in light mode */
+.light .hover\:text-white:hover {
+  color: var(--accent) !important;
+}
+
+.light .text-gray-400 {
+  color: #64748B;
+}
+
+.light .text-gray-500 {
+  color: #64748B;
+}
+
+/* Important note / alert boxes in light mode */
+.light .bg-blue-500\/10 {
+  background-color: rgba(59, 130, 246, 0.06);
+}
+
+.light .text-blue-200 {
+  color: #1E40AF;
+}
+
+.light .border-blue-500\/30 {
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+/* Amber/Warning alerts */
+.light .bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+.light .border-amber-500\/20 {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+/* Yellow/warning alerts */
+.light .bg-yellow-500\/10 {
+  background-color: rgba(234, 179, 8, 0.06);
+}
+
+.light .text-yellow-200 {
+  color: #A16207;
+}
+
+/* Active tab indicator in light mode */
+.light .border-accent {
+  border-color: var(--accent);
+}
+
+/* Gray text values for light mode */
+.light .text-gray-300 {
+  color: #475569;
+}
+
+.light .text-gray-500 {
+  color: #64748B;
 }

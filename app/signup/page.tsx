@@ -13,8 +13,7 @@ export default function SignUpPage() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    targetExam: "CAT"
+    confirmPassword: ""
   });
 
   const handleGoogleSignUp = async () => {
@@ -64,11 +63,11 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-background dark:via-surface dark:to-background flex items-center justify-center px-6 py-12">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-3xl" />
       </div>
 
       <motion.div
@@ -84,10 +83,20 @@ export default function SignUpPage() {
             transition={{ type: "spring", delay: 0.1 }}
             className="w-20 h-20 bg-gradient-to-br from-accent to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-accent/30"
           >
-            <span className="text-4xl">📚</span>
+            {/* Book Stack SVG Logo */}
+            <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="6" width="6" height="20" rx="1" transform="rotate(-12 4 6)" fill="#FB923C" />
+              <rect x="5.5" y="8" width="3" height="14" rx="0.5" transform="rotate(-12 5.5 8)" fill="#FDBA74" />
+              <rect x="11" y="4" width="6" height="22" rx="1" fill="#22C55E" />
+              <rect x="12.5" y="6" width="3" height="16" rx="0.5" fill="#86EFAC" />
+              <rect x="18" y="8" width="5" height="18" rx="1" fill="#EAB308" />
+              <rect x="19.2" y="10" width="2.5" height="12" rx="0.5" fill="#FDE047" />
+              <rect x="24" y="10" width="5" height="16" rx="1" fill="#06B6D4" />
+              <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
+            </svg>
           </motion.div>
-          <h1 className="text-3xl font-bold text-white mb-2">Join MockExam AI</h1>
-          <p className="text-gray-400">Start your exam preparation journey</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Join Pariksha</h1>
+          <p className="text-gray-500 dark:text-gray-400">Start your exam preparation journey</p>
         </div>
 
         {/* Sign Up Card */}
@@ -95,9 +104,9 @@ export default function SignUpPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-2xl"
+          className="bg-white dark:bg-gradient-to-br dark:from-surface dark:to-elevated rounded-2xl p-8 border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl"
         >
-          <h2 className="text-xl font-bold text-white mb-6 text-center">Create Account</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">Create Account</h2>
 
           {/* Error Message */}
           {error && (
@@ -139,52 +148,39 @@ export default function SignUpPage() {
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-gray-500 text-sm">or sign up with email</span>
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
+            <span className="text-gray-400 dark:text-gray-500 text-sm">or sign up with email</span>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
           </div>
 
           {/* Email Sign Up Form */}
           <form onSubmit={handleEmailSignUp} className="space-y-4">
             <div>
-              <label className="block text-gray-300 font-medium mb-2">Full Name</label>
+              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-2">Full Name</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="John Doe"
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-gray-300 font-medium mb-2">Email</label>
+              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-2">Email</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="your@email.com"
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-gray-300 font-medium mb-2">Target Exam</label>
-              <select
-                value={formData.targetExam}
-                onChange={(e) => setFormData({ ...formData, targetExam: e.target.value })}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
-              >
-                <option value="CAT">CAT (Management)</option>
-                <option value="NEET">NEET (Medical)</option>
-                <option value="BOTH">Both CAT & NEET</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-gray-300 font-medium mb-2">Password</label>
+              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-2">Password</label>
               <input
                 type="password"
                 value={formData.password}
@@ -192,25 +188,25 @@ export default function SignUpPage() {
                 placeholder="••••••••"
                 required
                 minLength={8}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-gray-300 font-medium mb-2">Confirm Password</label>
+              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-2">Confirm Password</label>
               <input
                 type="password"
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
               />
             </div>
 
             <div className="flex items-start gap-2">
-              <input type="checkbox" required className="mt-1 rounded bg-white/10 border-white/20" />
-              <label className="text-gray-400 text-sm">
+              <input type="checkbox" required className="mt-1 rounded bg-gray-100 dark:bg-white/10 border-gray-300 dark:border-white/20" />
+              <label className="text-gray-500 dark:text-gray-400 text-sm">
                 I agree to the{" "}
                 <a href="#" className="text-accent hover:underline">Terms of Service</a>
                 {" "}and{" "}
@@ -235,8 +231,8 @@ export default function SignUpPage() {
           </form>
 
           {/* Sign In Link */}
-          <div className="mt-6 pt-6 border-t border-white/10 text-center">
-            <p className="text-gray-400">
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-white/10 text-center">
+            <p className="text-gray-500 dark:text-gray-400">
               Already have an account?{" "}
               <button
                 onClick={() => router.push("/login")}
