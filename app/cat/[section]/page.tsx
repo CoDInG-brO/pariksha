@@ -76,8 +76,48 @@ export default function CATSectionTest() {
           id: 5,
           question: "If a number is multiplied by 3 and then 5 is added, the result is 26. What is the number?",
           options: ["5", "6", "7", "8"],
+          correctAnswer: 2,
+          explanation: "3x + 5 = 26 → 3x = 21 → x = 7",
+          section: "quant"
+        },
+        {
+          id: 6,
+          question: "A train travels 360 km in 4 hours. What is its speed in km/hr?",
+          options: ["80", "90", "100", "85"],
           correctAnswer: 1,
-          explanation: "3x + 5 = 26 → 3x = 21 → x = 7. Wait, let me recalculate: 3(6) + 5 = 23 (not 26). 3(7) + 5 = 26 ✓",
+          explanation: "Speed = Distance/Time = 360/4 = 90 km/hr",
+          section: "quant"
+        },
+        {
+          id: 7,
+          question: "If the compound interest on ₹1000 for 2 years at 10% p.a. is:",
+          options: ["₹200", "₹210", "₹220", "₹230"],
+          correctAnswer: 1,
+          explanation: "CI = P(1+r/100)^n - P = 1000(1.1)² - 1000 = 1210 - 1000 = ₹210",
+          section: "quant"
+        },
+        {
+          id: 8,
+          question: "The average of 5 consecutive odd numbers is 25. Find the largest number.",
+          options: ["27", "29", "31", "33"],
+          correctAnswer: 1,
+          explanation: "If average is 25, middle number is 25. Consecutive odd: 21, 23, 25, 27, 29. Largest = 29",
+          section: "quant"
+        },
+        {
+          id: 9,
+          question: "A shopkeeper sells an item at 20% profit. If the cost price is ₹500, what is the selling price?",
+          options: ["₹550", "₹600", "₹650", "₹700"],
+          correctAnswer: 1,
+          explanation: "SP = CP × (1 + Profit%) = 500 × 1.2 = ₹600",
+          section: "quant"
+        },
+        {
+          id: 10,
+          question: "What is the HCF of 24 and 36?",
+          options: ["6", "8", "12", "18"],
+          correctAnswer: 2,
+          explanation: "24 = 2³ × 3, 36 = 2² × 3². HCF = 2² × 3 = 12",
           section: "quant"
         }
       ]
@@ -127,6 +167,46 @@ export default function CATSectionTest() {
           correctAnswer: 2,
           explanation: "Total work = 5 × 12 = 60 worker-days. For 3 workers: 60 ÷ 3 = 20 days",
           section: "dilr"
+        },
+        {
+          id: 6,
+          question: "If all roses are flowers and some flowers fade quickly, which statement must be true?",
+          options: ["All roses fade quickly", "Some roses fade quickly", "No roses fade quickly", "Cannot be determined"],
+          correctAnswer: 3,
+          explanation: "We only know roses are flowers and SOME flowers fade. We cannot determine if roses are among those that fade.",
+          section: "dilr"
+        },
+        {
+          id: 7,
+          question: "In a row of children, Ravi is 7th from the left and 12th from the right. How many children are in the row?",
+          options: ["17", "18", "19", "20"],
+          correctAnswer: 1,
+          explanation: "Total = Position from left + Position from right - 1 = 7 + 12 - 1 = 18",
+          section: "dilr"
+        },
+        {
+          id: 8,
+          question: "Complete the pattern: B, D, G, K, ?",
+          options: ["N", "O", "P", "Q"],
+          correctAnswer: 2,
+          explanation: "Differences between letters: +2, +3, +4, +5. K + 5 = P",
+          section: "dilr"
+        },
+        {
+          id: 9,
+          question: "A cube is painted red on all sides and cut into 27 smaller cubes. How many small cubes have exactly 2 painted faces?",
+          options: ["6", "8", "12", "16"],
+          correctAnswer: 2,
+          explanation: "Cubes with 2 painted faces are on the edges (not corners). Each edge has 1 such cube, and a cube has 12 edges = 12 cubes",
+          section: "dilr"
+        },
+        {
+          id: 10,
+          question: "If COMPUTER is coded as RFUVQNPC, how is PRINTER coded?",
+          options: ["QSJOUFQ", "SFUOJSQ", "QSJOUFS", "SFUOQSJ"],
+          correctAnswer: 2,
+          explanation: "Each letter is shifted: +1, -1, +1, -1... Pattern applied to PRINTER gives QSJOUFS",
+          section: "dilr"
         }
       ]
     },
@@ -174,6 +254,46 @@ export default function CATSectionTest() {
           options: ["but", "and", "yet", "nor"],
           correctAnswer: 2,
           explanation: "'Yet' works best to show contrast. 'Although' already sets up the contrast, so 'but' would be redundant.",
+          section: "verbal"
+        },
+        {
+          id: 6,
+          question: "Choose the word opposite in meaning to 'Ephemeral'",
+          options: ["Transient", "Permanent", "Fleeting", "Brief"],
+          correctAnswer: 1,
+          explanation: "Ephemeral means short-lived. Permanent is the opposite.",
+          section: "verbal"
+        },
+        {
+          id: 7,
+          question: "Which sentence is grammatically correct?",
+          options: ["He don't know nothing", "He doesn't know anything", "He don't know anything", "He doesn't know nothing"],
+          correctAnswer: 1,
+          explanation: "'He doesn't know anything' is correct. 'Doesn't' for third person singular, 'anything' avoids double negative.",
+          section: "verbal"
+        },
+        {
+          id: 8,
+          question: "What does 'Burning the midnight oil' mean?",
+          options: ["Wasting resources", "Working late into the night", "Starting a fire", "Being very angry"],
+          correctAnswer: 1,
+          explanation: "'Burning the midnight oil' means working or studying late into the night.",
+          section: "verbal"
+        },
+        {
+          id: 9,
+          question: "Fill in the blank: 'The committee _____ divided in their opinion.'",
+          options: ["is", "are", "was", "were"],
+          correctAnswer: 3,
+          explanation: "When committee members are acting individually (divided opinion), use plural verb 'were'.",
+          section: "verbal"
+        },
+        {
+          id: 10,
+          question: "Choose the correctly spelled word:",
+          options: ["Accomodate", "Accommodate", "Acommodate", "Acomodate"],
+          correctAnswer: 1,
+          explanation: "'Accommodate' is correct with double 'c' and double 'm'.",
           section: "verbal"
         }
       ]
