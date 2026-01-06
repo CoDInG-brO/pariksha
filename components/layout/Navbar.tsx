@@ -61,8 +61,8 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Hide navbar on auth pages and landing page
-  if (pathname === "/signup" || pathname === "/login" || pathname === "/") {
+  // Hide navbar on auth pages, landing page, and full-mock exam pages
+  if (pathname === "/signup" || pathname === "/login" || pathname === "/" || pathname === "/cat/full-mock" || pathname === "/neet/full-mock") {
     return null;
   }
 

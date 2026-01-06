@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { saveTestAttempt } from "@/lib/testStorage";
+import WebcamPreview from "@/components/WebcamPreview";
+import AlertDialog from "@/components/AlertDialog";
 
 interface Question {
   id: number;
@@ -30,7 +32,35 @@ export default function NEETFullMock() {
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [markedForReview, setMarkedForReview] = useState<Set<number>>(new Set());
   const [testStarted, setTestStarted] = useState(false);
+  const [cameraEnabled, setCameraEnabled] = useState(true);
+  const [showBackAlert, setShowBackAlert] = useState(false);
   const startTimeRef = useRef<number>(0);
+
+  // Prevent back button during exam
+  useEffect(() => {
+    if (testStarted && !testSubmitted) {
+      window.history.pushState(null, "", window.location.href);
+      
+      const handlePopState = () => {
+        window.history.pushState(null, "", window.location.href);
+        setShowBackAlert(true);
+      };
+
+      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+        e.preventDefault();
+        e.returnValue = "You have an exam in progress. Are you sure you want to leave?";
+        return e.returnValue;
+      };
+
+      window.addEventListener("popstate", handlePopState);
+      window.addEventListener("beforeunload", handleBeforeUnload);
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }
+  }, [testStarted, testSubmitted]);
 
   const allQuestions: Question[] = [
     // PHYSICS (15 questions)
@@ -560,7 +590,7 @@ export default function NEETFullMock() {
 
   if (!testStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-12">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -590,8 +620,34 @@ export default function NEETFullMock() {
               </div>
             </div>
 
-            <div className="mb-12 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+            <div className="mb-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
               <p className="text-yellow-200">⚠️ <strong>Important:</strong> 180 marks in 180 minutes. Manage time wisely across all subjects!</p>
+            </div>
+
+            {/* Camera Monitoring Toggle */}
+            <div className="mb-8 p-6 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div className="text-left">
+                  <p className="text-purple-200 font-semibold flex items-center gap-2">
+                    <span>📷</span> Camera Monitoring
+                  </p>
+                  <p className="text-purple-200/70 text-sm mt-1">
+                    Display your webcam feed during the exam
+                  </p>
+                </div>
+                <button
+                  onClick={() => setCameraEnabled(!cameraEnabled)}
+                  className={`relative w-14 h-8 rounded-full transition-colors ${
+                    cameraEnabled ? "bg-purple-500" : "bg-gray-600"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${
+                      cameraEnabled ? "translate-x-6" : "translate-x-0"
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
 
             <motion.button
@@ -616,7 +672,7 @@ export default function NEETFullMock() {
 
   if (testSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-12">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -891,6 +947,17 @@ export default function NEETFullMock() {
           </div>
         </div>
       </div>
+
+      {/* Webcam Preview - shows during exam if enabled */}
+      <WebcamPreview isActive={cameraEnabled && testStarted && !testSubmitted} />
+
+      {/* Back Button Alert Dialog */}
+      <AlertDialog
+        isOpen={showBackAlert}
+        onClose={() => setShowBackAlert(false)}
+        title="⚠️ Cannot Go Back"
+        message="You cannot go back during the exam. Please complete the exam and click the Submit button."
+      />
     </div>
   );
 }
