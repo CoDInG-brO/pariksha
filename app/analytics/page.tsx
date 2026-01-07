@@ -8,6 +8,11 @@ import {
   estimateCollegeCategory,
   estimateIIMCategory
 } from "@/lib/percentileCalculator";
+
+import CatIcon from '@/components/icons/CatIcon';
+import NeetIcon from '@/components/icons/NeetIcon';
+import ReviewIcon from '@/components/icons/ReviewIcon';
+import TrashIcon from '@/components/icons/TrashIcon';
 import {
   getTestAttempts,
   formatTimestamp,
@@ -69,11 +74,11 @@ export default function Analytics() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="max-w-7xl mx-auto px-6 mb-12"
         >
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
+          <div className="bg-surface rounded-2xl p-8 border shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-white flex items-center gap-3">
                 📋 Your Test Attempts
-                <span className="text-sm font-normal text-gray-400 bg-black/30 px-3 py-1 rounded-full">
+                <span className="text-sm font-normal text-gray-400 bg-black/10 px-3 py-1 rounded-full">
                   {attempts.length} {attempts.length === 1 ? "attempt" : "attempts"}
                 </span>
               </h2>
@@ -93,21 +98,21 @@ export default function Analytics() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
-                    className={`bg-black/30 rounded-xl p-5 border ${
+                    className={`bg-surface rounded-xl p-5 border ${
                       attempt.examType === "CAT"
-                        ? "border-blue-500/30 hover:border-blue-500/50"
-                        : "border-green-500/30 hover:border-green-500/50"
+                        ? "border-blue-500/20 hover:border-blue-500/40"
+                        : "border-green-500/20 hover:border-green-500/40"
                     } transition-all`}
                   >
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       {/* Left: Info */}
                       <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl ${
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-xl ${
                           attempt.examType === "CAT"
-                            ? "bg-blue-500/20"
-                            : "bg-green-500/20"
+                            ? "bg-blue-500/10"
+                            : "bg-green-500/10"
                         }`}>
-                          {attempt.examType === "CAT" ? "📊" : "🔬"}
+                          {attempt.examType === "CAT" ? <CatIcon className="w-6 h-6 text-blue-400" /> : <NeetIcon className="w-6 h-6 text-green-400" />}
                         </div>
                         <div>
                           <h3 className="text-lg font-bold text-white">
@@ -145,21 +150,17 @@ export default function Analytics() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
-                          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                            attempt.examType === "CAT"
-                              ? "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
-                              : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
-                          }`}
+                          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${attempt.examType === "CAT" ? 'btn-enterprise' : 'btn-enterprise green'}`}
                         >
-                          📝 Review
+                          <ReviewIcon className="w-4 h-4 mr-2" /> Review
                         </motion.button>
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleDeleteAttempt(attempt.id)}
-                          className="px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30 transition-all text-sm"
+                          className="px-3 py-2 rounded-lg btn-ghost text-red-400 border-red-500/20 hover:bg-red-500/10 transition-all text-sm"
                         >
-                          🗑️
+                          <TrashIcon className="w-4 h-4" />
                         </motion.button>
                       </div>
                     </div>
@@ -179,7 +180,7 @@ export default function Analytics() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="max-w-7xl mx-auto px-6 mb-12"
         >
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl text-center">
+          <div className="bg-surface rounded-2xl p-8 border text-center">
             <p className="text-6xl mb-4">📝</p>
             <h3 className="text-xl font-bold text-white mb-2">No Test Attempts Yet</h3>
             <p className="text-gray-400 mb-6">Take a full mock test to see your results here</p>
@@ -188,7 +189,7 @@ export default function Analytics() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/cat/full-mock")}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold"
+                className="px-6 py-3 btn-enterprise"
               >
                 📊 Take CAT Mock
               </motion.button>
@@ -196,7 +197,7 @@ export default function Analytics() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/neet/full-mock")}
-                className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-lg text-white font-semibold"
+                className="px-6 py-3 btn-enterprise green"
               >
                 🔬 Take NEET Mock
               </motion.button>
@@ -219,9 +220,7 @@ export default function Analytics() {
               onClick={() => setExamType(type)}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 examType === type
-                  ? type === "CAT"
-                    ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white"
-                    : "bg-gradient-to-r from-green-500 to-green-600 text-white"
+                  ? (type === "CAT" ? 'btn-enterprise' : 'btn-enterprise green')
                   : "bg-surface text-gray-400 hover:text-white"
               }`}
             >
@@ -238,7 +237,7 @@ export default function Analytics() {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="max-w-7xl mx-auto px-6 mb-12"
       >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
+        <div className="bg-surface rounded-2xl p-8 border">
           <h2 className="text-2xl font-bold text-white mb-6">Enter Your Score</h2>
           <div className="space-y-4">
             <div>
@@ -252,7 +251,7 @@ export default function Analytics() {
                 max={examType === "CAT" ? 198 : 720}
                 value={score}
                 onChange={e => setScore(Number(e.target.value))}
-                className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer accent-accent"
+                className="w-full h-2 bg-black/20 rounded-lg appearance-none cursor-pointer accent-accent"
               />
             </div>
           </div>
@@ -270,11 +269,7 @@ export default function Analytics() {
           {/* Percentile Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className={`bg-gradient-to-br ${
-              examType === "CAT"
-                ? "from-blue-500/20 to-blue-600/20 border-blue-500/30"
-                : "from-green-500/20 to-green-600/20 border-green-500/30"
-            } rounded-2xl p-8 border shadow-xl`}
+            className={`bg-surface rounded-2xl p-8 border ${examType === 'CAT' ? 'border-blue-500/20' : 'border-green-500/20'} shadow-sm`}
           >
             <p className="text-gray-400 text-sm mb-2">Your Percentile</p>
             <motion.p
@@ -282,11 +277,7 @@ export default function Analytics() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className={`text-6xl font-bold mb-2 bg-gradient-to-r ${
-                examType === "CAT"
-                  ? "from-blue-400 to-blue-200"
-                  : "from-green-400 to-green-200"
-              } bg-clip-text text-transparent`}
+              className={`text-6xl font-bold mb-2 ${examType === 'CAT' ? 'text-blue-400' : 'text-green-400'}`}
             >
               {result.percentile.toFixed(1)}
             </motion.p>
@@ -298,7 +289,7 @@ export default function Analytics() {
           {/* Score Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className="bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl p-8 border border-accent/30 shadow-xl"
+            className="bg-surface rounded-2xl p-8 border border-accent/30 shadow-sm"
           >
             <p className="text-gray-400 text-sm mb-2">Your Score</p>
             <motion.p
@@ -318,7 +309,7 @@ export default function Analytics() {
           {/* Rank Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-2xl p-8 border border-purple-500/30 shadow-xl"
+            className="bg-surface rounded-2xl p-8 border border-purple-300/10 shadow-sm"
           >
             <p className="text-gray-400 text-sm mb-2">Estimated Rank</p>
             <motion.p
@@ -344,7 +335,7 @@ export default function Analytics() {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="max-w-7xl mx-auto px-6 mb-12"
       >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
+        <div className="bg-surface rounded-2xl p-8 border shadow-sm">
           <h3 className="text-2xl font-bold text-white mb-4">📊 Your Performance Analysis</h3>
           <motion.p
             initial={{ opacity: 0 }}
@@ -375,7 +366,7 @@ export default function Analytics() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 + idx * 0.1 }}
-                className="bg-black/30 border border-accent/30 rounded-lg p-4 hover:border-accent/60 transition-all"
+                className="bg-surface rounded-lg p-4 border border-accent/20 hover:shadow-sm transition-all"
               >
                 <p className="text-accent font-semibold">{college}</p>
               </motion.div>
@@ -391,7 +382,7 @@ export default function Analytics() {
         transition={{ duration: 0.5, delay: 0.6 }}
         className="max-w-7xl mx-auto px-6 mb-12"
       >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
+        <div className="bg-surface rounded-2xl p-8 border shadow-sm">
           <h3 className="text-2xl font-bold text-white mb-6">📈 Score Distribution</h3>
           <div className="space-y-4">
             {[

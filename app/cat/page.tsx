@@ -1,11 +1,15 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import ClockIcon from '@/components/icons/ClockIcon';
+import QuestionIcon from '@/components/icons/QuestionIcon';
+
 
 interface CATSection {
   id: string;
   name: string;
   description: string;
+  topics: string[];
   timeLimit: number;
   totalQuestions: number;
   icon: string;
@@ -18,6 +22,7 @@ export default function CATDashboard() {
       id: "quant",
       name: "Quantitative Aptitude",
       description: "Questions on mathematics, arithmetic, algebra, geometry",
+      topics: ["Arithmetic", "Algebra", "Geometry"],
       timeLimit: 40,
       totalQuestions: 22,
       icon: "🔢",
@@ -27,6 +32,7 @@ export default function CATDashboard() {
       id: "dilr",
       name: "Data Interpretation & Logical Reasoning",
       description: "Data analysis, graphs, logic puzzles, arrangements",
+      topics: ["DI", "LR", "Data Sets"],
       timeLimit: 40,
       totalQuestions: 22,
       icon: "📊",
@@ -36,6 +42,7 @@ export default function CATDashboard() {
       id: "verbal",
       name: "Verbal Ability & Reading Comprehension",
       description: "Grammar, vocabulary, reading comprehension, sentence correction",
+      topics: ["RC", "Grammar", "Vocab"],
       timeLimit: 40,
       totalQuestions: 22,
       icon: "📖",
@@ -93,17 +100,17 @@ export default function CATDashboard() {
         className="max-w-7xl mx-auto px-6 mb-12"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Duration</p>
             <p className="text-3xl font-bold text-white mt-2">120 Minutes</p>
             <p className="text-xs text-gray-500 mt-2">40 min × 3 sections</p>
           </div>
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Questions</p>
             <p className="text-3xl font-bold text-white mt-2">66 Questions</p>
             <p className="text-xs text-gray-500 mt-2">22 per section</p>
           </div>
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Marks</p>
             <p className="text-3xl font-bold text-white mt-2">198 Marks</p>
             <p className="text-xs text-gray-500 mt-2">+3, -1, 0 scoring</p>
@@ -128,35 +135,46 @@ export default function CATDashboard() {
               className="group"
             >
               <Link href={`/cat/${section.id}`}>
-                <div className={`bg-gradient-to-br ${section.color} rounded-2xl p-8 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer h-full shadow-lg hover:shadow-2xl`}>
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="text-5xl">{section.icon}</span>
-                    <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold">
-                      {index + 1}/3
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-2">{section.name}</h3>
-                  <p className="text-white/80 text-sm mb-6">{section.description}</p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm text-white/90">
-                      <span>⏱️ Time Limit</span>
-                      <span className="font-semibold">{section.timeLimit} min</span>
-                    </div>
-                    <div className="flex justify-between text-sm text-white/90">
-                      <span>📝 Questions</span>
-                      <span className="font-semibold">{section.totalQuestions}</span>
-                    </div>
+                <div className={`relative rounded-2xl p-6 border bg-surface transition-all duration-300 cursor-pointer h-full`}> 
+                  {/* top-left icon */}
+                  <div className="absolute top-4 left-4 w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-black/10 border border-white/5">
+                    <span className="text-lg">{section.icon}</span>
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full mt-6 py-3 px-4 bg-white/20 hover:bg-white/30 rounded-lg text-white font-semibold transition-all duration-200 backdrop-blur"
-                  >
-                    Start Section Test →
-                  </motion.button>
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white">{section.name}</h3>
+                    <span className="badge-pill text-sm">{index + 1}/3</span>
+                  </div>
+
+                  <p className="text-gray-300 text-sm mb-4">{section.description}</p>
+
+                  <div className="flex gap-2 flex-wrap mb-4">
+                    {section.topics.map(t => (
+                      <span key={t} className="text-xs px-3 py-1 rounded-full bg-black/5 border border-white/5 text-gray-300">{t}</span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex gap-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                        <ClockIcon className="w-4 h-4 text-gray-300" />
+                        <span className="text-white/90">{section.timeLimit} min</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-sm text-gray-300">
+                        <QuestionIcon className="w-4 h-4 text-gray-300" />
+                        <span className="text-white/90">{section.totalQuestions} Qs</span>
+                      </div>
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="px-4 py-2 btn-enterprise text-sm"
+                    >
+                      Start Section →
+                    </motion.button>
+                  </div>
                 </div>
               </Link>
             </motion.div>
@@ -172,7 +190,7 @@ export default function CATDashboard() {
         className="max-w-7xl mx-auto px-6 mb-12"
       >
         <Link href="/cat/full-mock">
-          <div className="bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-2xl p-8 border-2 border-green-500/30 hover:border-green-500/60 transition-all duration-300 cursor-pointer">
+          <div className="bg-surface rounded-2xl p-8 border transition-all duration-300 cursor-pointer">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-2xl font-bold text-white mb-2">🎯 Full CAT Mock Test</h3>
@@ -180,9 +198,9 @@ export default function CATDashboard() {
                 <p className="text-sm text-green-300 mt-3">Includes real exam experience with section-wise locked navigation</p>
               </div>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-bold transition-all duration-200 shadow-lg hover:shadow-green-500/20"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-4 btn-enterprise green"
               >
                 Start Full Mock →
               </motion.button>

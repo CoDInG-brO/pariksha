@@ -1,5 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
+import CatIcon from '@/components/icons/CatIcon';
+import NeetIcon from '@/components/icons/NeetIcon';
 import { useState, useEffect, useRef } from "react";
 import {
   savePracticeProgress,
@@ -825,30 +827,34 @@ export default function Practice() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             {/* CAT Option */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleExamSelect("CAT")}
-              className="w-64 p-8 bg-gradient-to-br from-orange-500/20 to-red-500/10 rounded-2xl border border-orange-500/30 hover:border-orange-500/60 transition-all group"
+              aria-label="Start CAT Practice"
+              className="w-64 p-6 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
             >
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                📊
+              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-105 transition-transform">
+                {/* SVG icon */}
+                <CatIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">CAT</h3>
-              <p className="text-orange-300 text-sm">Quantitative, Verbal & Logical Reasoning</p>
+              <h3 className="text-xl font-semibold text-white mb-1">CAT</h3>
+              <p className="text-gray-300 text-sm">Quantitative, Verbal & Logical Reasoning</p>
             </motion.button>
 
             {/* NEET Option */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleExamSelect("NEET")}
-              className="w-64 p-8 bg-gradient-to-br from-green-500/20 to-teal-500/10 rounded-2xl border border-green-500/30 hover:border-green-500/60 transition-all group"
+              aria-label="Start NEET Practice"
+              className="w-64 p-6 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
             >
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                🔬
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-105 transition-transform">
+                {/* SVG icon */}
+                <NeetIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">NEET</h3>
-              <p className="text-green-300 text-sm">Physics, Chemistry & Biology</p>
+              <h3 className="text-xl font-semibold text-white mb-1">NEET</h3>
+              <p className="text-gray-300 text-sm">Physics, Chemistry & Biology</p>
             </motion.button>
           </div>
         </motion.div>
@@ -887,7 +893,7 @@ export default function Practice() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.02 }}
-              className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10"
+              className="bg-surface rounded-xl p-6 border"
             >
             {/* Question */}
             <div className="flex gap-4 mb-4">
@@ -926,11 +932,30 @@ export default function Practice() {
                   <div
                     key={optIndex}
                     onClick={() => !showAnswers[q.id] && handleOptionSelect(q.id, option, q.answer)}
-                    className={optionClass}
+                    role="button"
+                    aria-pressed={isSelected}
+                    className={`flex items-center gap-4 p-3 rounded-lg border transition-all ${isSelected ? 'option--selected' : ''} ${(showingAnswer && isCorrect) || (!showingAnswer && isSelected && isCorrect) ? 'option--correct' : ''} ${(showingAnswer && isSelected && !isCorrect) || (!showingAnswer && isSelected && !isCorrect) ? 'option--incorrect' : ''}`}
                   >
-                    <span className="mr-3 text-gray-500">{String.fromCharCode(65 + optIndex)}.</span>
-                    {option}
-                    {showingAnswer && isCorrect && <span className="ml-2">✓</span>}
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${isSelected ? 'bg-white/5' : 'bg-transparent text-gray-400'}`}>
+                      {String.fromCharCode(65 + optIndex)}
+                    </div>
+                    <div className="flex-1 text-white">{option}</div>
+
+                    {/* Inline icons - show immediately on selection */}
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      { (isSelected && !isCorrect) && (
+                        <svg className="option__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 6L18 18" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M6 18L18 6" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+
+                      { ((isCorrect && showingAnswer) || (!showingAnswer && isSelected && isCorrect)) && (
+                        <svg className="option__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 6L9 17l-5-5" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -940,15 +965,24 @@ export default function Practice() {
             <div className="ml-12">
               <button
                 onClick={() => toggleAnswer(q.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  showAnswers[q.id]
-                    ? "bg-white/10 text-gray-300"
-                    : selectedExam === "CAT"
-                    ? "bg-orange-500/20 text-orange-300 hover:bg-orange-500/30"
-                    : "bg-green-500/20 text-green-300 hover:bg-green-500/30"
-                }`}
+                aria-pressed={showAnswers[q.id]}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all btn-toggle ${showAnswers[q.id] ? 'active' : (selectedExam === 'CAT' ? 'orange' : 'green')}`}
               >
-                {showAnswers[q.id] ? "Hide Answer" : "Show Answer"}
+                <span className="inline-flex items-center gap-2">
+                  {showAnswers[q.id] ? (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.94 17.94L6.06 6.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M10.58 10.58A3 3 0 1113.42 13.42 3 3 0 0110.58 10.58z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6-9.1-6-9.1-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6S2.9 12 2.9 12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                  <span>{showAnswers[q.id] ? 'Hide Answer' : 'Show Answer'}</span>
+                </span>
               </button>
 
               {/* Explanation */}

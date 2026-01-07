@@ -176,7 +176,7 @@ export default function TakeTest() {
                     whileHover={{ x: selectedAnswer === null ? 4 : 0 }}
                     onClick={() => handleAnswerClick(index)}
                     disabled={showAnswer}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${bgColor} ${selectedAnswer === null ? "cursor-pointer" : ""}`}
+                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${selectedAnswer === index ? (isCorrect ? 'option--correct' : 'option--incorrect') : (showAnswer && index === currentQuestion.correctAnswer ? 'option--correct' : 'bg-black/20 border-white/10 hover:border-accent/50')} ${selectedAnswer === null ? "cursor-pointer" : ""}`}
                   >
                     <div className="flex items-center gap-4">
                       <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-semibold text-sm ${
@@ -186,9 +186,39 @@ export default function TakeTest() {
                             : "bg-red-500 border-red-500 text-white"
                           : "border-white/30 text-gray-400"
                       }`}>
-                        {icon || String.fromCharCode(65 + index)}
+                        {selectedAnswer === index ? (
+                          isCorrect ? (
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M20 6L9 17l-5-5" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6 6L18 18" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M6 18L18 6" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )
+                        ) : (
+                          String.fromCharCode(65 + index)
+                        )}
                       </div>
+
                       <span className="text-white font-medium">{option}</span>
+
+                      {/* right-side icons when showing answer */}
+                      <div className="ml-auto flex items-center gap-2">
+                        {showAnswer && index === currentQuestion.correctAnswer && (
+                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17l-5-5" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+
+                        {selectedAnswer === index && selectedAnswer !== currentQuestion.correctAnswer && (
+                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 6L18 18" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M6 18L18 6" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
                     </div>
                   </motion.button>
                 );
@@ -206,9 +236,16 @@ export default function TakeTest() {
                 {!showAnswer && (
                   <button
                     onClick={handleShowAnswer}
-                    className="w-full py-3 px-4 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg hover:shadow-accent/20"
+                    aria-pressed={showAnswer}
+                    className={`w-full py-3 px-4 rounded-xl text-white font-semibold transition-all duration-200 btn-toggle green`}
                   >
-                    {isCorrect ? "Show Explanation" : "Show Answer"}
+                    <span className="inline-flex items-center justify-center gap-3">
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6S2.9 12 2.9 12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>{isCorrect ? "Show Explanation" : "Show Answer"}</span>
+                    </span>
                   </button>
                 )}
 

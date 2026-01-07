@@ -101,22 +101,22 @@ export default function NEETDashboard() {
         className="max-w-7xl mx-auto px-6 mb-12"
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Questions</p>
             <p className="text-3xl font-bold text-white mt-2">180</p>
             <p className="text-xs text-gray-500 mt-2">MCQ format</p>
           </div>
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Marks</p>
             <p className="text-3xl font-bold text-white mt-2">720</p>
             <p className="text-xs text-gray-500 mt-2">+4, -1, 0 scoring</p>
           </div>
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Exam Duration</p>
             <p className="text-3xl font-bold text-white mt-2">180 Min</p>
             <p className="text-xs text-gray-500 mt-2">3 hours</p>
           </div>
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-xl p-6 border border-white/10">
+          <div className="bg-surface rounded-xl p-6 border">
             <p className="text-gray-400 text-sm">Total Chapters</p>
             <p className="text-3xl font-bold text-white mt-2">85</p>
             <p className="text-xs text-gray-500 mt-2">NCERT covered</p>
