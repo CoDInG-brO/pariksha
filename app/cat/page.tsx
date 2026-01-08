@@ -17,7 +17,8 @@ interface CATSection {
 }
 
 export default function CATDashboard() {
-  const sections: CATSection[] = [
+  // Add per-section accent hex values so we can render subtle, consistent accents
+  const sections: (CATSection & { accentFrom: string; accentTo: string; accentHex: string })[] = [
     {
       id: "quant",
       name: "Quantitative Aptitude",
@@ -26,7 +27,10 @@ export default function CATDashboard() {
       timeLimit: 40,
       totalQuestions: 22,
       icon: "🔢",
-      color: "from-blue-500 to-blue-600"
+      color: "from-blue-500 to-blue-600",
+      accentFrom: "#3B82F6",
+      accentTo: "#2563EB",
+      accentHex: "#2563EB"
     },
     {
       id: "dilr",
@@ -36,7 +40,10 @@ export default function CATDashboard() {
       timeLimit: 40,
       totalQuestions: 22,
       icon: "📊",
-      color: "from-purple-500 to-purple-600"
+      color: "from-purple-500 to-purple-600",
+      accentFrom: "#A855F7",
+      accentTo: "#7C3AED",
+      accentHex: "#7C3AED"
     },
     {
       id: "verbal",
@@ -46,9 +53,22 @@ export default function CATDashboard() {
       timeLimit: 40,
       totalQuestions: 22,
       icon: "📖",
-      color: "from-orange-500 to-orange-600"
+      color: "from-orange-500 to-orange-600",
+      accentFrom: "#FB923C",
+      accentTo: "#F97316",
+      accentHex: "#F97316"
     }
   ];
+
+  // helper to derive rgba from a hex color
+  function hexToRgba(hex: string, alpha: number) {
+    const h = hex.replace('#','');
+    const bigint = parseInt(h, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -135,9 +155,12 @@ export default function CATDashboard() {
               className="group"
             >
               <Link href={`/cat/${section.id}`}>
-                <div className={`relative rounded-2xl p-6 border bg-surface transition-all duration-300 cursor-pointer h-full`}> 
+                <div className={`relative rounded-2xl p-6 border bg-surface transition-all duration-300 cursor-pointer h-full`}>
+                  {/* subtle top stripe to indicate section accent */}
+                  <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute -top-2 left-6 right-6 h-1 rounded-md" />
+
                   {/* top-left icon */}
-                  <div className="absolute top-4 left-4 w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-black/10 border border-white/5">
+                  <div className="absolute top-6 left-6 w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-black/5 border border-white/5">
                     <span className="text-lg">{section.icon}</span>
                   </div>
 
@@ -150,7 +173,7 @@ export default function CATDashboard() {
 
                   <div className="flex gap-2 flex-wrap mb-4">
                     {section.topics.map(t => (
-                      <span key={t} className="text-xs px-3 py-1 rounded-full bg-black/5 border border-white/5 text-gray-300">{t}</span>
+                      <span key={t} className="text-xs px-3 py-1 rounded-full" style={{background: hexToRgba(section.accentFrom, 0.06), border: `1px solid ${hexToRgba(section.accentFrom, 0.12)}`, color: section.accentTo}}>{t}</span>
                     ))}
                   </div>
 

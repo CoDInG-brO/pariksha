@@ -527,13 +527,13 @@ export default function NEETSubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
-                  className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+                  className={`px-3 py-1 rounded-md text-[11px] font-semibold transition-all ${
                     markedForReview.has(currentQuestionIndex)
-                      ? "bg-yellow-500/30 border border-yellow-500 text-yellow-300"
+                      ? "bg-yellow-500/20 border border-yellow-500 text-yellow-300"
                       : "bg-white/10 border border-white/20 hover:bg-white/20 text-white"
                   }`}
                 >
-                  {markedForReview.has(currentQuestionIndex) ? "⭐ Marked" : "Mark for Review"}
+                  {markedForReview.has(currentQuestionIndex) ? "⭐ Marked" : "Mark for Review"} 
                 </motion.button>
 
                 <motion.button

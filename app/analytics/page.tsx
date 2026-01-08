@@ -68,6 +68,7 @@ export default function Analytics() {
 
       {/* Past Attempts Section */}
       {attempts.length > 0 && (
+      <div className="bg-section">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -170,6 +171,7 @@ export default function Analytics() {
             )}
           </div>
         </motion.div>
+      </div>
       )}
 
       {/* No Attempts Message */}
@@ -205,6 +207,7 @@ export default function Analytics() {
           </div>
         </motion.div>
       )}
+
 
       {/* Exam Selector */}
       <motion.div
