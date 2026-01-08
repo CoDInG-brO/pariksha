@@ -76,7 +76,8 @@ export default function SettingsPage() {
                 <p className="text-gray-400 text-sm mb-5">Your preferences have been updated successfully.</p>
                 <button
                   onClick={handleToastClose}
-                  className="w-full px-4 py-2.5 bg-accent hover:bg-accent/90 rounded-lg text-white text-sm font-medium transition-colors"
+                  className="w-full btn-gradient-gray"
+                  style={{padding: '0.625rem 1rem'}}
                 >
                   Close
                 </button>

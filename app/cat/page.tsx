@@ -91,22 +91,24 @@ export default function CATDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+    <div className="min-h-screen pt-5 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto px-6 mb-16"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-5xl">📊</span>
-          <h1 className="text-4xl font-bold text-white">CAT Section-wise Tests</h1>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-4xl shadow-sm">
+            📊
+          </div>
+          <h1 className="text-5xl font-bold text-slate-900">CAT Section-wise Tests</h1>
         </div>
-        <p className="text-gray-400 text-lg">Choose a section to practice. Each section has 40 minutes time limit - just like the real exam.</p>
+        <p className="text-slate-600 text-lg mb-6">Choose a section to practice. Each section has 40 minutes time limit - just like the real exam.</p>
         
-        <div className="mt-5 px-3 py-2.5 rounded-md bg-amber-500/10 border border-amber-500/20">
-          <p className="text-amber-700 dark:text-amber-200 text-[12px] leading-relaxed">
+        <div className="px-4 py-3 rounded-xl bg-amber-50 border border-amber-200">
+          <p className="text-amber-900 text-sm leading-relaxed font-medium">
             <strong>⚠️ Important:</strong> In actual CAT, you cannot switch sections once you start. Practice with the same mindset!
           </p>
         </div>
@@ -117,23 +119,23 @@ export default function CATDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Duration</p>
-            <p className="text-3xl font-bold text-white mt-2">120 Minutes</p>
-            <p className="text-xs text-gray-500 mt-2">40 min × 3 sections</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Duration</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">120 Minutes</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">40 min × 3 sections</p>
           </div>
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Questions</p>
-            <p className="text-3xl font-bold text-white mt-2">66 Questions</p>
-            <p className="text-xs text-gray-500 mt-2">22 per section</p>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Questions</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">66 Questions</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">22 per section</p>
           </div>
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Marks</p>
-            <p className="text-3xl font-bold text-white mt-2">198 Marks</p>
-            <p className="text-xs text-gray-500 mt-2">+3, -1, 0 scoring</p>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Marks</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">198 Marks</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">+3, -1, 0 scoring</p>
           </div>
         </div>
       </motion.div>
@@ -143,10 +145,10 @@ export default function CATDashboard() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <h2 className="text-2xl font-bold text-white mb-8">Available Sections</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8">Available Sections</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {sections.map((section, index) => (
             <motion.div
               key={section.id}
@@ -155,47 +157,47 @@ export default function CATDashboard() {
               className="group"
             >
               <Link href={`/cat/${section.id}`}>
-                <div className={`relative rounded-2xl p-6 border bg-surface transition-all duration-300 cursor-pointer h-full`}>
+                <div className={`relative rounded-3xl p-8 border border-blue-200/50 bg-white transition-all duration-300 cursor-pointer h-full hover:shadow-lg shadow-sm`}>
                   {/* subtle top stripe to indicate section accent */}
-                  <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute -top-2 left-6 right-6 h-1 rounded-md" />
+                  <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute top-0 left-8 right-8 h-1.5 rounded-b-md" />
 
                   {/* top-left icon */}
-                  <div className="absolute top-6 left-6 w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-black/5 border border-white/5">
-                    <span className="text-lg">{section.icon}</span>
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-sm mb-4">
+                    {section.icon}
                   </div>
 
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">{section.name}</h3>
-                    <span className="badge-pill text-sm">{index + 1}/3</span>
+                    <h3 className="text-xl font-bold text-slate-900">{section.name}</h3>
+                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">{index + 1}/3</span>
                   </div>
 
-                  <p className="text-gray-300 text-sm mb-4">{section.description}</p>
+                  <p className="text-slate-600 text-sm mb-6">{section.description}</p>
 
-                  <div className="flex gap-2 flex-wrap mb-4">
+                  <div className="flex gap-2 flex-wrap mb-6">
                     {section.topics.map(t => (
-                      <span key={t} className="text-xs px-3 py-1 rounded-full" style={{background: hexToRgba(section.accentFrom, 0.06), border: `1px solid ${hexToRgba(section.accentFrom, 0.12)}`, color: section.accentTo}}>{t}</span>
+                      <span key={t} className="text-xs px-3 py-1.5 rounded-lg font-semibold" style={{background: hexToRgba(section.accentFrom, 0.1), border: `1px solid ${hexToRgba(section.accentFrom, 0.2)}`, color: section.accentTo}}>{t}</span>
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex gap-4">
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
-                        <ClockIcon className="w-4 h-4 text-gray-300" />
-                        <span className="text-white/90">{section.timeLimit} min</span>
+                  <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-200">
+                    <div className="flex gap-6">
+                      <div className="flex items-center gap-2 text-sm">
+                        <ClockIcon className="w-4 h-4 text-slate-600" />
+                        <span className="font-semibold text-slate-900">{section.timeLimit} min</span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
-                        <QuestionIcon className="w-4 h-4 text-gray-300" />
-                        <span className="text-white/90">{section.totalQuestions} Qs</span>
+                      <div className="flex items-center gap-2 text-sm">
+                        <QuestionIcon className="w-4 h-4 text-slate-600" />
+                        <span className="font-semibold text-slate-900">{section.totalQuestions} Qs</span>
                       </div>
                     </div>
 
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-4 py-2 btn-enterprise text-sm"
+                      className="px-6 py-2.5 btn-gradient-blue"
                     >
-                      Start Section →
+                      Start →
                     </motion.button>
                   </div>
                 </div>
@@ -210,20 +212,20 @@ export default function CATDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
         <Link href="/cat/full-mock">
-          <div className="bg-surface rounded-2xl p-8 border transition-all duration-300 cursor-pointer">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 transition-all duration-300 cursor-pointer hover:shadow-lg shadow-sm">
+            <div className="flex items-center justify-between gap-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">🎯 Full CAT Mock Test</h3>
-                <p className="text-gray-300">Take all 3 sections back-to-back in one sitting. (120 minutes total)</p>
-                <p className="text-sm text-green-300 mt-3">Includes real exam experience with section-wise locked navigation</p>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">🎯 Full CAT Mock Test</h3>
+                <p className="text-slate-600 text-lg">Take all 3 sections back-to-back in one sitting. (120 minutes total)</p>
+                <p className="text-sm text-emerald-600 mt-4 font-semibold">✓ Real exam experience with section-wise locked navigation</p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 btn-enterprise green"
+                className="px-8 py-4 btn-gradient-blue whitespace-nowrap"
               >
                 Start Full Mock →
               </motion.button>
@@ -237,40 +239,40 @@ export default function CATDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
-          <h3 className="text-2xl font-bold text-white mb-6">💡 CAT Preparation Tips</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-2xl">⏰</span>
+        <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+          <h3 className="text-3xl font-bold text-slate-900 mb-8">💡 CAT Preparation Tips</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">⏰</span>
                 <div>
-                  <p className="text-white font-semibold">Time Management</p>
-                  <p className="text-gray-400 text-sm">40 minutes per section is tight. Practice speed without sacrificing accuracy.</p>
+                  <p className="text-slate-900 font-bold text-lg">Time Management</p>
+                  <p className="text-slate-600 text-sm mt-1">40 minutes per section is tight. Practice speed without sacrificing accuracy.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-2xl">🎯</span>
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">🎯</span>
                 <div>
-                  <p className="text-white font-semibold">Strategic Approach</p>
-                  <p className="text-gray-400 text-sm">Attempt easy questions first, skip tough ones, don't let time pressure affect decisions.</p>
+                  <p className="text-slate-900 font-bold text-lg">Strategic Approach</p>
+                  <p className="text-slate-600 text-sm mt-1">Attempt easy questions first, skip tough ones, don't let time pressure affect decisions.</p>
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-2xl">📊</span>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">📊</span>
                 <div>
-                  <p className="text-white font-semibold">Negative Marking</p>
-                  <p className="text-gray-400 text-sm">-1 for wrong answer. Better to skip than guess. Calculate risk vs. reward.</p>
+                  <p className="text-slate-900 font-bold text-lg">Negative Marking</p>
+                  <p className="text-slate-600 text-sm mt-1">-1 for wrong answer. Better to skip than guess. Calculate risk vs. reward.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-2xl">🔒</span>
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">🔒</span>
                 <div>
-                  <p className="text-white font-semibold">No Going Back</p>
-                  <p className="text-gray-400 text-sm">Once a section ends, you can't return. Treat each section independently and strategically.</p>
+                  <p className="text-slate-900 font-bold text-lg">No Going Back</p>
+                  <p className="text-slate-600 text-sm mt-1">Once a section ends, you can't return. Treat each section independently and strategically.</p>
                 </div>
               </div>
             </div>

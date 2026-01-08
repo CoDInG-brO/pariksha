@@ -815,7 +815,7 @@ export default function Practice() {
   // Exam selection screen
   if (!selectedExam) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center">
+      <div className="min-h-[80vh] flex items-center justify-center pt-[7rem]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -864,7 +864,7 @@ export default function Practice() {
 
   // Questions display
   return (
-    <div className="max-w-4xl mx-auto pb-12">
+    <div className="max-w-4xl mx-auto pb-12 pt-[7rem]">
       {/* Header */}
       <div className="flex items-center justify-between mb-8 sticky top-20 bg-background/80 backdrop-blur-lg py-4 z-10 border-b border-white/10">
         <div className="flex items-center gap-4">
@@ -961,12 +961,13 @@ export default function Practice() {
               })}
             </div>
 
-            {/* Show Answer Button */}
-            <div className="ml-12">
+            {/* Show Answer Button & Action Buttons */}
+            <div className="ml-12 flex gap-3 flex-wrap">
               <button
                 onClick={() => toggleAnswer(q.id)}
                 aria-pressed={showAnswers[q.id]}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all btn-toggle ${showAnswers[q.id] ? 'active' : (selectedExam === 'CAT' ? 'orange' : 'green')}`}
+                className={showAnswers[q.id] ? 'btn-gradient-gray' : 'btn-gradient-pink'}
+                style={{padding: '0.5rem 1rem'}}
               >
                 <span className="inline-flex items-center gap-2">
                   {showAnswers[q.id] ? (
@@ -985,23 +986,45 @@ export default function Practice() {
                 </span>
               </button>
 
-              {/* Explanation */}
-              {showAnswers[q.id] && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  className="mt-4 p-4 rounded-lg bg-black/30 border border-accent/20"
-                >
-                  <p className="text-sm text-gray-300">
-                    <span className="text-accent font-medium">Explanation: </span>
-                    {q.explanation}
-                  </p>
-                </motion.div>
-              )}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-gradient-yellow"
+                style={{padding: '0.5rem 1rem'}}
+              >
+                <span className="inline-flex items-center gap-2">
+                  <span>{showAnswers[q.id] ? 'Hide Answer' : 'Show Answer'}</span>
+                </span>
+              </motion.button>
             </div>
+
+            {/* Explanation */}
+            {showAnswers[q.id] && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mt-4 p-4 rounded-lg bg-black/30 border border-accent/20"
+              >
+                <p className="text-sm text-gray-300">
+                  <span className="text-accent font-medium">Explanation: </span>
+                  {q.explanation}
+                </p>
+              </motion.div>
+            )}
           </motion.div>
           </>
         ))}
+      </div>
+
+      {/* Submit Practice Button */}
+      <div className="mt-12 flex justify-end">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="btn-gradient-orange-lg"
+        >
+          Submit Practice
+        </motion.button>
       </div>
 
       {/* Fixed Back to Top Button - shows after scrolling past 3rd question */}

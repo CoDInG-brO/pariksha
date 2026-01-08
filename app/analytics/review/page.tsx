@@ -164,16 +164,16 @@ function ReviewContent() {
         />
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
           {/* Question Navigator */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-1"
           >
-            <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10 sticky top-32">
-              <h3 className="text-lg font-bold text-white mb-4">Questions</h3>
-              <div className="grid grid-cols-5 gap-2 max-h-80 overflow-y-auto">
+            <div className="bg-gradient-to-br from-surface to-elevated rounded-lg p-3 border border-white/10 sticky top-32">
+              <h3 className="text-xs font-bold text-white mb-2">Questions</h3>
+              <div className="grid grid-cols-6 gap-0.5 max-h-80 overflow-y-auto">
                 {filteredQuestions.map(({ question, originalIndex: origIdx }, idx) => {
                   const uAnswer = attempt.selectedAnswers[origIdx];
                   const isCor = uAnswer === question.correctAnswer;
@@ -188,7 +188,7 @@ function ReviewContent() {
                     <button
                       key={idx}
                       onClick={() => setCurrentQuestionIndex(idx)}
-                      className={`w-10 h-10 rounded-lg border transition-all flex items-center justify-center text-sm font-bold ${bgColor} ${
+                      className={`w-7 h-7 rounded text-xs font-bold border transition-all flex items-center justify-center ${bgColor} ${
                         currentQuestionIndex === idx ? "ring-2 ring-accent" : ""
                       }`}
                     >
@@ -197,18 +197,18 @@ function ReviewContent() {
                   );
                 })}
               </div>
-              <div className="mt-4 pt-4 border-t border-white/10 space-y-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded bg-green-500/30 border border-green-500"></div>
-                  <span className="text-gray-400">Correct</span>
+              <div className="mt-2 pt-2 border-t border-white/10 space-y-1 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-sm bg-green-500/30 border border-green-500"></div>
+                  <span className="text-gray-400 text-xs">Correct</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded bg-red-500/30 border border-red-500"></div>
-                  <span className="text-gray-400">Incorrect</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-sm bg-red-500/30 border border-red-500"></div>
+                  <span className="text-gray-400 text-xs">Incorrect</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded bg-gray-500/30 border border-gray-500"></div>
-                  <span className="text-gray-400">Unanswered</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-sm bg-gray-500/30 border border-gray-500"></div>
+                  <span className="text-gray-400 text-xs">Unanswered</span>
                 </div>
               </div>
             </div>
@@ -220,23 +220,23 @@ function ReviewContent() {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-3"
           >
-            <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
+            <div className="bg-gradient-to-br from-surface to-elevated rounded-lg p-3 border border-white/10">
               {/* Question Header */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${
                     attempt.examType === "CAT" ? "bg-blue-500/20 text-blue-300" : "bg-green-500/20 text-green-300"
                   }`}>
                     Q{originalIndex + 1}
                   </span>
                   {currentQuestion.section && (
-                    <span className="text-gray-400 text-sm">{currentQuestion.section}</span>
+                    <span className="text-gray-500 text-xs">{currentQuestion.section}</span>
                   )}
                   {currentQuestion.subject && (
-                    <span className="text-gray-400 text-sm">{currentQuestion.subject}</span>
+                    <span className="text-gray-500 text-xs">{currentQuestion.subject}</span>
                   )}
                 </div>
-                <div className={`px-4 py-2 rounded-lg text-sm font-bold ${
+                <div className={`px-2 py-0.5 rounded text-xs font-bold ${
                   isCorrect 
                     ? "bg-green-500/20 text-green-400 border border-green-500/30"
                     : isUnanswered
@@ -253,12 +253,12 @@ function ReviewContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-xl font-bold text-white mb-6 leading-relaxed">
+                <h2 className="text-sm font-bold text-white mb-2 leading-snug">
                   {currentQuestion.question}
                 </h2>
 
                 {/* Options */}
-                <div className="space-y-3 mb-8">
+                <div className="space-y-1 mb-3">
                   {currentQuestion.options.map((option, index) => {
                     const isThisCorrect = index === currentQuestion.correctAnswer;
                     const isUserChoice = index === userAnswer;
@@ -266,19 +266,19 @@ function ReviewContent() {
                     let optionStyle = "bg-white/5 border-white/20 text-gray-400";
                     
                     if (isThisCorrect) {
-                      optionStyle = "bg-green-500/20 border-green-500 text-green-300";
+                      optionStyle = "bg-green-500/15 border-green-500/40 text-green-200";
                     } else if (isUserChoice && !isThisCorrect) {
-                      optionStyle = "bg-red-500/20 border-red-500 text-red-300";
+                      optionStyle = "bg-red-500/15 border-red-500/40 text-red-200";
                     }
 
                     return (
                       <div
                         key={index}
-                        className={`p-4 rounded-lg border-2 transition-all ${optionStyle}`}
+                        className={`p-2 rounded border transition-all text-sm ${optionStyle}`}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1.5">
                           <div
-                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold ${
+                            className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                               isThisCorrect
                                 ? "bg-green-500 border-green-500 text-white"
                                 : isUserChoice
@@ -288,15 +288,12 @@ function ReviewContent() {
                           >
                             {isThisCorrect ? "✓" : isUserChoice ? "✗" : String.fromCharCode(65 + index)}
                           </div>
-                          <span className="flex-1">{option}</span>
-                          {isThisCorrect && (
-                            <span className="text-green-400 font-semibold text-sm">Correct Answer</span>
+                          <span className="flex-1 text-xs">{option}</span>
+                          {(isThisCorrect || (isUserChoice && isThisCorrect)) && (
+                            <span className="text-green-400 font-semibold text-xs flex-shrink-0">Correct</span>
                           )}
                           {isUserChoice && !isThisCorrect && (
-                            <span className="text-red-400 font-semibold text-sm">Your Answer</span>
-                          )}
-                          {isUserChoice && isThisCorrect && (
-                            <span className="text-green-400 font-semibold text-sm">Your Answer ✓</span>
+                            <span className="text-red-400 font-semibold text-xs flex-shrink-0">Your Answer</span>
                           )}
                         </div>
                       </div>
@@ -308,38 +305,38 @@ function ReviewContent() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-6 rounded-xl border ${
+                  className={`p-2.5 rounded border ${
                     attempt.examType === "CAT"
                       ? "bg-blue-500/10 border-blue-500/30"
                       : "bg-green-500/10 border-green-500/30"
                   }`}
                 >
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-2xl">💡</span>
-                    <h4 className={`font-bold ${
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-sm">💡</span>
+                    <h4 className={`font-bold text-xs ${
                       attempt.examType === "CAT" ? "text-blue-300" : "text-green-300"
                     }`}>
                       Explanation
                     </h4>
                   </div>
-                  <p className="text-gray-200 leading-relaxed">{currentQuestion.explanation}</p>
+                  <p className="text-gray-200 text-xs leading-snug">{currentQuestion.explanation}</p>
                 </motion.div>
               </motion.div>
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between pt-6 mt-6 border-t border-white/10">
+              <div className="flex justify-between pt-2 mt-2 border-t border-white/10">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white text-xs font-semibold transition-all"
                 >
-                  ← Previous
+                  ← Prev
                 </motion.button>
 
-                <span className="text-gray-400 self-center">
-                  {currentQuestionIndex + 1} of {filteredQuestions.length}
+                <span className="text-gray-400 text-xs self-center">
+                  {currentQuestionIndex + 1} / {filteredQuestions.length}
                 </span>
 
                 <motion.button
@@ -349,7 +346,7 @@ function ReviewContent() {
                     setCurrentQuestionIndex(Math.min(filteredQuestions.length - 1, currentQuestionIndex + 1))
                   }
                   disabled={currentQuestionIndex === filteredQuestions.length - 1}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white text-xs font-semibold transition-all"
                 >
                   Next →
                 </motion.button>
@@ -368,47 +365,47 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto px-6 mb-8"
+      className="max-w-6xl mx-auto px-6 mb-3"
     >
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
         <div>
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center gap-2 mb-1">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => router.push("/analytics")}
-              className="text-gray-400 hover:text-white transition-all"
+              className="text-gray-400 hover:text-white transition-all text-xs"
             >
               ← Back
             </motion.button>
-            <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+            <span className={`px-2 py-0.5 rounded text-xs font-bold ${
               attempt.examType === "CAT" ? "bg-blue-500/20 text-blue-300" : "bg-green-500/20 text-green-300"
             }`}>
               {attempt.examType}
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-white">Review Your Answers</h1>
-          <p className="text-gray-400">
+          <h1 className="text-lg font-bold text-white">Review</h1>
+          <p className="text-gray-500 text-xs">
             {formatTimestamp(attempt.timestamp)} • {formatTimeSpent(attempt.timeSpent)}
           </p>
         </div>
 
-        <div className="flex items-center gap-6 bg-gradient-to-r from-surface to-elevated p-4 rounded-xl border border-white/10">
+        <div className="flex items-center gap-2 bg-gradient-to-r from-surface to-elevated p-2 rounded border border-white/10">
           <div className="text-center">
-            <p className="text-2xl font-bold text-accent">{attempt.percentage}%</p>
+            <p className="text-base font-bold text-accent">{attempt.percentage}%</p>
             <p className="text-xs text-gray-400">Score</p>
           </div>
-          <div className="w-px h-12 bg-white/10"></div>
+          <div className="w-px h-8 bg-white/10"></div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-green-400">{attempt.correct}</p>
+            <p className="text-base font-bold text-green-400">{attempt.correct}</p>
             <p className="text-xs text-gray-400">Correct</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-red-400">{attempt.incorrect}</p>
+            <p className="text-base font-bold text-red-400">{attempt.incorrect}</p>
             <p className="text-xs text-gray-400">Wrong</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-400">{attempt.unanswered}</p>
+            <p className="text-base font-bold text-gray-400">{attempt.unanswered}</p>
             <p className="text-xs text-gray-400">Skipped</p>
           </div>
         </div>
@@ -440,9 +437,9 @@ function FilterButtons({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto mb-6"
+      className="max-w-6xl mx-auto mb-2"
     >
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-1.5">
         {filters.map((filter) => (
           <button
             key={filter.key}
@@ -450,7 +447,7 @@ function FilterButtons({
               setFilterType(filter.key);
               setCurrentQuestionIndex(0);
             }}
-            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex items-center gap-2 ${
+            className={`px-2 py-1 rounded font-semibold text-xs transition-all flex items-center gap-1 ${
               filterType === filter.key
                 ? filter.color === "accent"
                   ? "bg-accent text-white"
@@ -463,7 +460,7 @@ function FilterButtons({
             }`}
           >
             {filter.label}
-            <span className={`px-2 py-0.5 rounded-full text-xs ${
+            <span className={`px-1 py-0.5 rounded text-xs ${
               filterType === filter.key ? "bg-white/20" : "bg-white/10"
             }`}>
               {filter.count}

@@ -36,30 +36,52 @@ export default function NEETFullMock() {
   const [showBackAlert, setShowBackAlert] = useState(false);
   const startTimeRef = useRef<number>(0);
 
-  // Prevent back button during exam
+  // Prevent back button, refresh and keyboard shortcuts during exam
   useEffect(() => {
-    if (testStarted && !testSubmitted) {
-      window.history.pushState(null, "", window.location.href);
-      
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-        setShowBackAlert(true);
-      };
-
-      const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-        e.preventDefault();
-        e.returnValue = "You have an exam in progress. Are you sure you want to leave?";
-        return e.returnValue;
-      };
-
-      window.addEventListener("popstate", handlePopState);
-      window.addEventListener("beforeunload", handleBeforeUnload);
-
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-        window.removeEventListener("beforeunload", handleBeforeUnload);
-      };
+    if (!testStarted || testSubmitted) {
+      return;
     }
+
+    window.history.pushState(null, "", window.location.href);
+    
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+      setShowBackAlert(true);
+    };
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "You have an exam in progress";
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Prevent F5 refresh
+      if (e.key === "F5") {
+        e.preventDefault();
+      }
+      // Prevent Ctrl+R (Windows/Linux)
+      if ((e.ctrlKey || e.metaKey) && e.key === "r") {
+        e.preventDefault();
+      }
+      // Prevent Ctrl+W (close tab) on Windows/Linux
+      if (e.ctrlKey && e.key === "w") {
+        e.preventDefault();
+      }
+      // Prevent Cmd+W (close tab) on Mac
+      if (e.metaKey && e.key === "w") {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [testStarted, testSubmitted]);
 
   const allQuestions: Question[] = [
@@ -657,7 +679,7 @@ export default function NEETFullMock() {
                 startTimeRef.current = Date.now();
                 setTestStarted(true);
               }}
-              className="px-12 py-4 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-xl text-white font-bold text-lg transition-all shadow-lg hover:shadow-orange-500/20"
+              className="btn-gradient-green-lg"
             >
               Start Full Mock →
             </motion.button>
@@ -722,7 +744,7 @@ export default function NEETFullMock() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/neet")}
-                className="px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 rounded-lg text-white font-semibold transition-all"
+                className="btn-gradient-gray-lg"
               >
                 ← Back to Dashboard
               </motion.button>
@@ -818,7 +840,8 @@ export default function NEETFullMock() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
+                {/* Mark for Review Button */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -831,13 +854,13 @@ export default function NEETFullMock() {
                     }
                     setMarkedForReview(newMarked);
                   }}
-                  className={`px-3 py-1 rounded-md text-[11px] font-semibold transition-all ${
-                    markedForReview.has(currentQuestionIndex)
-                      ? "bg-yellow-500/20 border border-yellow-500 text-yellow-300"
-                      : "bg-white/10 border border-white/20 hover:bg-white/20 text-white"
-                  }`}
+                  className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
+                  style={{padding: '0.25rem 0.75rem', fontSize: '0.75rem'}}
                 >
-                  {markedForReview.has(currentQuestionIndex) ? "⭐ Marked" : "Mark for Review"}</motion.button>
+                  <span className="inline-flex items-center gap-1">
+                    <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked' : '☆ Mark'}</span>
+                  </span>
+                </motion.button>
               </div>
 
               {/* Navigation */}
@@ -866,9 +889,9 @@ export default function NEETFullMock() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-lg text-white font-bold transition-all"
+                  className="ml-auto btn-gradient-cyan-lg"
                 >
-                  Submit Full Mock
+                  Submit
                 </motion.button>
               </div>
             </motion.div>

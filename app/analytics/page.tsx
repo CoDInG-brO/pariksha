@@ -50,18 +50,18 @@ export default function Analytics() {
       : estimateCollegeCategory(result.percentile);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+    <div className="min-h-screen pt-5 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-4">Percentile & Performance Analytics</h1>
-            <p className="text-gray-400">See how your performance compares against other candidates</p>
+            <h1 className="text-5xl font-bold text-slate-900 mb-4">Performance Analytics</h1>
+            <p className="text-slate-600 text-lg">Track your percentile & compare performance against other candidates</p>
           </div>
         </div>
       </motion.div>
@@ -151,9 +151,10 @@ export default function Analytics() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
-                          className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${attempt.examType === "CAT" ? 'btn-enterprise' : 'btn-enterprise green'}`}
+                          className={`px-2 py-1 rounded-lg font-semibold text-xs transition-all flex items-center gap-1 ${attempt.examType === "CAT" ? 'btn-gradient-blue' : 'btn-gradient-green'}`}
+                          style={{padding: '0.25rem 0.75rem'}}
                         >
-                          <ReviewIcon className="w-4 h-4 mr-2" /> Review
+                          <ReviewIcon className="w-3 h-3" /> Review
                         </motion.button>
                         <motion.button
                           whileHover={{ scale: 1.05 }}
@@ -191,7 +192,7 @@ export default function Analytics() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/cat/full-mock")}
-                className="px-6 py-3 btn-enterprise"
+                className="btn-gradient-blue"
               >
                 📊 Take CAT Mock
               </motion.button>
@@ -199,7 +200,7 @@ export default function Analytics() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/neet/full-mock")}
-                className="px-6 py-3 btn-enterprise green"
+                className="btn-gradient-green"
               >
                 🔬 Take NEET Mock
               </motion.button>
@@ -223,8 +224,8 @@ export default function Analytics() {
               onClick={() => setExamType(type)}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 examType === type
-                  ? (type === "CAT" ? 'btn-enterprise' : 'btn-enterprise green')
-                  : "bg-surface text-gray-400 hover:text-white"
+                  ? (type === "CAT" ? 'btn-gradient-blue' : 'btn-gradient-green')
+                  : "bg-white border border-slate-200/50 text-slate-700 hover:text-slate-900"
               }`}
             >
               {type === "CAT" ? "📊 CAT" : "🔬 NEET"}
@@ -241,12 +242,12 @@ export default function Analytics() {
         className="max-w-7xl mx-auto px-6 mb-12"
       >
         <div className="bg-surface rounded-2xl p-8 border">
-          <h2 className="text-2xl font-bold text-white mb-6">Enter Your Score</h2>
+          <h2 className="text-lg font-bold text-white mb-6">Enter Your Score</h2>
           <div className="space-y-4">
             <div>
               <label className="text-gray-300 font-semibold block mb-2">
-                Your Score: <span className="text-accent text-2xl">{score}</span>
-                {examType === "CAT" ? <span className="text-gray-500 text-lg">/198</span> : <span className="text-gray-500 text-lg">/720</span>}
+                Your Score: <span className="text-accent text-lg">{score}</span>
+                {examType === "CAT" ? <span className="text-gray-500 text-sm">/198</span> : <span className="text-gray-500 text-sm">/720</span>}
               </label>
               <input
                 type="range"
@@ -254,7 +255,7 @@ export default function Analytics() {
                 max={examType === "CAT" ? 198 : 720}
                 value={score}
                 onChange={e => setScore(Number(e.target.value))}
-                className="w-full h-2 bg-black/20 rounded-lg appearance-none cursor-pointer accent-accent"
+                className="w-full h-2 bg-black/20 rounded-lg appearance-none cursor-pointer accent-accent [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-0 [&::-webkit-slider-thumb]:h-0 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:width-0 [&::-moz-range-thumb]:background-transparent"
               />
             </div>
           </div>
@@ -280,7 +281,7 @@ export default function Analytics() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className={`text-6xl font-bold mb-2 ${examType === 'CAT' ? 'text-blue-400' : 'text-green-400'}`}
+              className={`text-[1.5rem] font-bold mb-2 ${examType === 'CAT' ? 'text-blue-400' : 'text-green-400'}`}
             >
               {result.percentile.toFixed(1)}
             </motion.p>
@@ -300,7 +301,7 @@ export default function Analytics() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="text-6xl font-bold text-accent mb-2"
+              className="text-[1.5rem] font-bold text-accent mb-2"
             >
               {result.score}
             </motion.p>
@@ -320,7 +321,7 @@ export default function Analytics() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="text-6xl font-bold text-purple-300 mb-2"
+              className="text-[1.5rem] font-bold text-purple-300 mb-2"
             >
               #{result.rank.toLocaleString("en-US")}
             </motion.p>

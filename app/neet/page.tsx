@@ -78,19 +78,27 @@ export default function NEETDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+    <div className="min-h-screen pt-5 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto px-6 mb-16"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-5xl">🔬</span>
-          <h1 className="text-4xl font-bold text-white">NEET Subject-wise Practice</h1>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center text-4xl shadow-sm">
+            🔬
+          </div>
+          <h1 className="text-5xl font-bold text-slate-900">NEET Subject-wise Tests</h1>
         </div>
-        <p className="text-gray-400 text-lg">Prepare for NEET with subject-specific questions and chapter-wise mastery tracking.</p>
+        <p className="text-slate-600 text-lg mb-6">Choose a subject to practice. Each subject has dedicated questions - just like the real exam.</p>
+        
+        <div className="px-4 py-3 rounded-xl bg-amber-50 border border-amber-200">
+          <p className="text-amber-900 text-sm leading-relaxed font-medium">
+            <strong>⚠️ Important:</strong> Biology (90 questions, 360 marks) is 50% of the exam. Master this to excel!
+          </p>
+        </div>
       </motion.div>
 
       {/* Key Stats */}
@@ -98,74 +106,28 @@ export default function NEETDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Questions</p>
-            <p className="text-3xl font-bold text-white mt-2">180</p>
-            <p className="text-xs text-gray-500 mt-2">MCQ format</p>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Questions</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">180</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">MCQ format</p>
           </div>
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Marks</p>
-            <p className="text-3xl font-bold text-white mt-2">720</p>
-            <p className="text-xs text-gray-500 mt-2">+4, -1, 0 scoring</p>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Marks</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">720</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">+4, -1, 0 scoring</p>
           </div>
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Exam Duration</p>
-            <p className="text-3xl font-bold text-white mt-2">180 Min</p>
-            <p className="text-xs text-gray-500 mt-2">3 hours</p>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Exam Duration</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">180 Min</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">3 hours</p>
           </div>
-          <div className="bg-surface rounded-xl p-6 border">
-            <p className="text-gray-400 text-sm">Total Chapters</p>
-            <p className="text-3xl font-bold text-white mt-2">85</p>
-            <p className="text-xs text-gray-500 mt-2">NCERT covered</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Performance Overview */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
-      >
-        <h2 className="text-2xl font-bold text-white mb-6">Your Performance</h2>
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
-          <div className="space-y-4">
-            {performanceData.map((item, index) => (
-              <div key={index} className="flex items-center gap-6">
-                <div className="flex-1">
-                  <div className="flex justify-between mb-2">
-                    <p className="text-white font-semibold">{item.subject}</p>
-                    <span className="text-lg">{item.status}</span>
-                  </div>
-                  <div className="w-full h-3 bg-black/30 rounded-full overflow-hidden border border-white/10">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.percentage}%` }}
-                      transition={{ duration: 1.5, delay: 0.3 + index * 0.2 }}
-                      className={`h-full rounded-full ${
-                        item.subject === "Physics"
-                          ? "bg-gradient-to-r from-blue-500 to-blue-600"
-                          : item.subject === "Chemistry"
-                          ? "bg-gradient-to-r from-green-500 to-green-600"
-                          : "bg-gradient-to-r from-orange-500 to-orange-600"
-                      }`}
-                    />
-                  </div>
-                </div>
-                <span className="text-2xl font-bold text-accent">{item.percentage}%</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Important Note */}
-          <div className="mt-8 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-            <p className="text-orange-200 text-sm">
-              <strong>📌 Focus on Biology:</strong> Biology (90 questions, 360 marks) is 50% of the exam. Strong performance here is crucial!
-            </p>
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Total Chapters</p>
+            <p className="text-4xl font-bold text-slate-900 mt-3">85</p>
+            <p className="text-xs text-slate-600 mt-2 font-medium">NCERT covered</p>
           </div>
         </div>
       </motion.div>
@@ -175,10 +137,10 @@ export default function NEETDashboard() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <h2 className="text-2xl font-bold text-white mb-8">Choose Subject to Practice</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8">Choose Subject to Practice</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {subjects.map((subject, index) => (
             <motion.div
               key={subject.id}
@@ -187,39 +149,41 @@ export default function NEETDashboard() {
               className="group"
             >
               <Link href={`/neet/${subject.id}`}>
-                <div className={`bg-gradient-to-br ${subject.color} rounded-2xl p-8 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer h-full shadow-lg hover:shadow-2xl`}>
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="text-5xl">{subject.icon}</span>
-                    <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold">
-                      {subject.totalMarks} Marks
-                    </span>
+                <div className={`relative rounded-3xl p-8 border border-slate-200/50 bg-white transition-all duration-300 cursor-pointer h-full hover:shadow-lg shadow-sm`}>
+                  {/* subtle top stripe to indicate subject accent */}
+                  <div className={`absolute top-0 left-8 right-8 h-1.5 rounded-b-md ${subject.color}`} />
+
+                  {/* top-left icon */}
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-gradient-to-br from-green-50 to-green-100 shadow-sm mb-4">
+                    {subject.icon}
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white mb-2">{subject.name}</h3>
-                  <p className="text-white/80 text-sm mb-6">{subject.description}</p>
-
-                  <div className="space-y-3 mb-6 pb-6 border-b border-white/20">
-                    <div className="flex justify-between text-sm text-white/90">
-                      <span>📝 Questions</span>
-                      <span className="font-semibold">{subject.totalQuestions}</span>
-                    </div>
-                    <div className="flex justify-between text-sm text-white/90">
-                      <span>📚 Chapters</span>
-                      <span className="font-semibold">{subject.chapters}</span>
-                    </div>
-                    <div className="flex justify-between text-sm text-white/90">
-                      <span>📊 Accuracy</span>
-                      <span className="font-semibold">{subject.averageAccuracy}%</span>
-                    </div>
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-bold text-slate-900">{subject.name}</h3>
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wider">{subject.totalMarks} Marks</span>
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full py-3 px-4 bg-white/20 hover:bg-white/30 rounded-lg text-white font-semibold transition-all duration-200 backdrop-blur"
-                  >
-                    Practice Subject →
-                  </motion.button>
+                  <p className="text-slate-600 text-sm mb-6">{subject.description}</p>
+
+                  <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-200">
+                    <div className="flex gap-6">
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="font-semibold text-slate-900">📝 {subject.totalQuestions} Qs</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="font-semibold text-slate-900">📚 {subject.chapters} Ch</span>
+                      </div>
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="px-6 py-2.5 btn-gradient-green"
+                    >
+                      Start →
+                    </motion.button>
+                  </div>
                 </div>
               </Link>
             </motion.div>
@@ -232,20 +196,20 @@ export default function NEETDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
         <Link href="/neet/full-mock">
-          <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-2xl p-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition-all duration-300 cursor-pointer">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/50 hover:shadow-lg transition-all shadow-sm cursor-pointer">
+            <div className="flex items-center justify-between gap-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">🎯 Full NEET Mock Test</h3>
-                <p className="text-gray-300">Take all 3 subjects with flexible navigation. (180 minutes total)</p>
-                <p className="text-sm text-purple-300 mt-3">Test your readiness with complete exam simulation including all NCERT topics</p>
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">🎯 Full NEET Mock Test</h3>
+                <p className="text-slate-600 text-lg">Take all 3 subjects with flexible navigation. (180 minutes total)</p>
+                <p className="text-sm text-emerald-600 mt-4 font-semibold">✓ Test your readiness with complete exam simulation including all NCERT topics</p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 rounded-xl text-white font-bold transition-all duration-200 shadow-lg hover:shadow-purple-500/20"
+                className="px-8 py-4 btn-gradient-green whitespace-nowrap"
               >
                 Start Full Mock →
               </motion.button>
@@ -254,83 +218,45 @@ export default function NEETDashboard() {
         </Link>
       </motion.div>
 
-      {/* Chapter Mastery */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
-      >
-        <h2 className="text-2xl font-bold text-white mb-6">Recommended Chapters to Focus On</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { name: "Mechanics (Physics)", level: "Medium", status: "🔴 Weak", progress: 45 },
-            { name: "Organic Chemistry", level: "Hard", status: "🔴 Weak", progress: 52 },
-            { name: "Photosynthesis (Biology)", level: "Easy", status: "🟢 Strong", progress: 88 }
-          ].map((chapter, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -4 }}
-              className="bg-black/30 border border-white/10 rounded-xl p-6 hover:border-accent/50 transition-all duration-300"
-            >
-              <div className="flex justify-between items-start mb-3">
-                <h4 className="text-lg font-bold text-white">{chapter.name}</h4>
-                <span className="text-xl">{chapter.status}</span>
-              </div>
-              <p className="text-gray-400 text-sm mb-4">Difficulty: {chapter.level}</p>
-              <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${chapter.progress}%` }}
-                  transition={{ duration: 1.2, delay: 0.3 + idx * 0.1 }}
-                  className="h-full bg-gradient-to-r from-accent to-accent/60"
-                />
-              </div>
-              <p className="text-xs text-gray-500 mt-2">{chapter.progress}% mastered</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
       {/* Tips Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto mb-12"
       >
-        <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
-          <h3 className="text-2xl font-bold text-white mb-6">💡 NEET Preparation Tips</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-2xl">📚</span>
+        <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
+          <h3 className="text-3xl font-bold text-slate-900 mb-8">💡 NEET Preparation Tips</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">📚</span>
                 <div>
-                  <p className="text-white font-semibold">NCERT Focus</p>
-                  <p className="text-gray-400 text-sm">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
+                  <p className="text-slate-900 font-bold text-lg">NCERT Focus</p>
+                  <p className="text-slate-600 text-sm mt-1">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-2xl">🧬</span>
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">🧬</span>
                 <div>
-                  <p className="text-white font-semibold">Biology Priority</p>
-                  <p className="text-gray-400 text-sm">50% of the exam is Biology. It's your scoring subject. Master it!</p>
+                  <p className="text-slate-900 font-bold text-lg">Biology Priority</p>
+                  <p className="text-slate-600 text-sm mt-1">50% of the exam is Biology. It's your scoring subject. Master it!</p>
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-2xl">📊</span>
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">📊</span>
                 <div>
-                  <p className="text-white font-semibold">Balanced Approach</p>
-                  <p className="text-gray-400 text-sm">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
+                  <p className="text-slate-900 font-bold text-lg">Balanced Approach</p>
+                  <p className="text-slate-600 text-sm mt-1">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-2xl">⏰</span>
+              <div className="flex gap-4">
+                <span className="text-3xl flex-shrink-0">⏰</span>
                 <div>
-                  <p className="text-white font-semibold">Time Management</p>
-                  <p className="text-gray-400 text-sm">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
+                  <p className="text-slate-900 font-bold text-lg">Time Management</p>
+                  <p className="text-slate-600 text-sm mt-1">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
                 </div>
               </div>
             </div>

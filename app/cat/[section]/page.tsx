@@ -600,22 +600,36 @@ export default function CATSectionTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleShowAnswer}
-                  className="px-6 py-2 bg-blue-500/20 border border-blue-500/50 hover:bg-blue-500/30 rounded-lg text-blue-300 font-semibold transition-all"
+                  className={showAnswer ? 'btn-gradient-gray' : 'btn-gradient-pink'}
+                  style={{padding: '0.5rem 1rem'}}
                 >
-                  {showAnswer ? "Hide" : "Show"} Answer
+                  <span className="inline-flex items-center gap-2">
+                    {showAnswer ? (
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.94 17.94L6.06 6.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M10.58 10.58A3 3 0 1113.42 13.42 3 3 0 0110.58 10.58z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6-9.1-6-9.1-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6S2.9 12 2.9 12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                    <span>{showAnswer ? 'Hide Answer' : 'Show Answer'}</span>
+                  </span>
                 </motion.button>
 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
-                  className={`px-3 py-1 rounded-md text-[11px] font-semibold transition-all ${
-                    markedForReview.has(currentQuestionIndex)
-                      ? "bg-yellow-500/20 border border-yellow-500 text-yellow-300"
-                      : "bg-white/10 border border-white/20 hover:bg-white/20 text-white"
-                  }`}
+                  className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
+                  style={{padding: '0.5rem 1rem'}}
                 >
-                  {markedForReview.has(currentQuestionIndex) ? "⭐ Marked" : "Mark for Review"} 
+                  <span className="inline-flex items-center gap-2">
+                    <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked ✓' : '☆ Mark for Review'}</span>
+                  </span>
                 </motion.button>
               </div>
 
@@ -645,9 +659,9 @@ export default function CATSectionTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-lg text-white font-bold transition-all"
+                  className="ml-auto btn-gradient-cyan-lg"
                 >
-                  Submit Test
+                  Submit Practice
                 </motion.button>
               </div>
             </motion.div>
