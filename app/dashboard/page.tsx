@@ -15,14 +15,14 @@ import {
 export default function Dashboard() {
   const router = useRouter();
   const [attempts, setAttempts] = useState<TestAttempt[]>([]);
-  const [catAttempts, setCatAttempts] = useState<TestAttempt[]>([]);
+  const [jeeAttempts, setJeeAttempts] = useState<TestAttempt[]>([]);
   const [neetAttempts, setNeetAttempts] = useState<TestAttempt[]>([]);
   const [practiceProgress, setPracticeProgress] = useState<PracticeProgress | null>(null);
 
   useEffect(() => {
     const allAttempts = getTestAttempts();
     setAttempts(allAttempts);
-    setCatAttempts(getAttemptsByExamType("CAT"));
+    setJeeAttempts(getAttemptsByExamType("JEE"));
     setNeetAttempts(getAttemptsByExamType("NEET"));
     setPracticeProgress(getPracticeProgress());
   }, []);
@@ -50,7 +50,7 @@ export default function Dashboard() {
     };
   };
 
-  const catStats = calculateStats(catAttempts);
+  const jeeStats = calculateStats(jeeAttempts);
   const neetStats = calculateStats(neetAttempts);
 
   const containerVariants = {
@@ -85,7 +85,7 @@ export default function Dashboard() {
         >
           <div>
             <h1 className="text-2xl font-bold text-slate-900 mb-1">Monitor your Progress</h1>
-            <p className="text-slate-500 text-sm">Track your preparation in real-time across CAT & NEET</p>
+            <p className="text-slate-500 text-sm">Track your preparation in real-time across JEE & NEET</p>
           </div>
           {attempts.length > 0 && (
             <div className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-[11px] font-semibold">
@@ -101,7 +101,7 @@ export default function Dashboard() {
           animate="visible"
           className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6"
         >
-          {/* CAT Performance Card */}
+          {/* JEE Performance Card */}
           <motion.div variants={itemVariants}>
             <div className="bg-white rounded-xl p-5 border border-blue-200/50 h-full hover:shadow-lg transition-all duration-300 shadow-sm">
               <div className="flex items-center justify-between mb-4">
@@ -110,38 +110,38 @@ export default function Dashboard() {
                     📊
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900 leading-tight">CAT Performance</h2>
-                    <p className="text-slate-500 text-[11px]">Common Admission Test</p>
+                    <h2 className="text-lg font-bold text-slate-900 leading-tight">JEE Performance</h2>
+                    <p className="text-slate-500 text-[11px]">Joint Entrance Examination</p>
                   </div>
                 </div>
-                {catStats && (
+                {jeeStats && (
                   <span className="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                    {catStats.totalAttempts} attempt{catStats.totalAttempts > 1 ? "s" : ""}
+                    {jeeStats.totalAttempts} attempt{jeeStats.totalAttempts > 1 ? "s" : ""}
                   </span>
                 )}
               </div>
 
-              {catStats ? (
+              {jeeStats ? (
                 <>
                   <div className="grid grid-cols-2 gap-2.5 mb-5">
                     <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
                       <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Best Score</p>
-                      <p className="text-2xl font-bold text-blue-600 mb-0.5">{catStats.bestScore}%</p>
-                      <p className="text-blue-600/70 text-[10px] font-medium">{catStats.bestPercentile}%ile</p>
+                      <p className="text-2xl font-bold text-blue-600 mb-0.5">{jeeStats.bestScore}%</p>
+                      <p className="text-blue-600/70 text-[10px] font-medium">{jeeStats.bestPercentile}%ile</p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
                       <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Latest Score</p>
-                      <p className="text-2xl font-bold text-slate-900 mb-0.5">{catStats.latestScore}%</p>
-                      <p className="text-slate-600 text-[10px] font-medium">{catStats.latestPercentile}%ile</p>
+                      <p className="text-2xl font-bold text-slate-900 mb-0.5">{jeeStats.latestScore}%</p>
+                      <p className="text-slate-600 text-[10px] font-medium">{jeeStats.latestPercentile}%ile</p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
                       <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Average</p>
-                      <p className="text-xl font-bold text-slate-800">{catStats.avgPercentage}%</p>
+                      <p className="text-xl font-bold text-slate-800">{jeeStats.avgPercentage}%</p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
                       <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Accuracy</p>
                       <p className="text-xl font-bold text-blue-600">
-                        {((catStats.totalCorrect / catStats.totalQuestions) * 100).toFixed(1)}%
+                        {((jeeStats.totalCorrect / jeeStats.totalQuestions) * 100).toFixed(1)}%
                       </p>
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export default function Dashboard() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => router.push("/cat/full-mock")}
+                      onClick={() => router.push("/jee/full-mock")}
                       className="flex-1 btn-gradient-blue"
                     >
                       Take New Test
@@ -158,7 +158,7 @@ export default function Dashboard() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => router.push(`/analytics/review?id=${catAttempts[0]?.id}`)}
+                      onClick={() => router.push(`/analytics/review?id=${jeeAttempts[0]?.id}`)}
                       className="px-3.5 py-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-blue-700 text-[11px] font-bold transition-all"
                     >
                       Review Last
@@ -167,14 +167,14 @@ export default function Dashboard() {
                 </>
               ) : (
                 <div className="text-center py-5">
-                  <p className="text-gray-400 mb-2 text-sm">No CAT tests attempted yet</p>
+                  <p className="text-gray-400 mb-2 text-sm">No JEE tests attempted yet</p>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => router.push("/cat/full-mock")}
+                    onClick={() => router.push("/jee/full-mock")}
                     className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all text-sm"
                   >
-                    Take Your First CAT Mock →
+                    Take Your First JEE Mock →
                   </motion.button>
                 </div>
               )}
@@ -281,7 +281,7 @@ export default function Dashboard() {
                   <p className="text-slate-500 text-[11px]">
                     {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions
                       ? `${practiceProgress.examType} Session`
-                      : "CAT & NEET Questions"}
+                      : "JEE & NEET Questions"}
                   </p>
                 </div>
               </div>
@@ -340,7 +340,7 @@ export default function Dashboard() {
               </>
             ) : (
               <div className="flex flex-col items-center justify-center py-8">
-                <p className="text-slate-500 text-center mb-3 text-sm">Practice with random CAT & NEET questions</p>
+                <p className="text-slate-500 text-center mb-3 text-sm">Practice with random JEE & NEET questions</p>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -381,15 +381,15 @@ export default function Dashboard() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
                     className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${
-                      attempt.examType === "CAT" 
+                      attempt.examType === "JEE" 
                         ? "bg-blue-50/50 border-blue-100/50 hover:border-blue-200 hover:bg-blue-50" 
                         : "bg-green-50/50 border-green-100/50 hover:border-green-200 hover:bg-green-50"
                     }`}
                     onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
                   >
                     <div className="flex items-center gap-3">
-                      <span className={`text-lg w-8 h-8 rounded-lg flex items-center justify-center font-bold ${attempt.examType === "CAT" ? "bg-blue-100 text-blue-600" : "bg-green-100 text-green-600"}`}>
-                        {attempt.examType === "CAT" ? "📊" : "🔬"}
+                      <span className={`text-lg w-8 h-8 rounded-lg flex items-center justify-center font-bold ${attempt.examType === "JEE" ? "bg-blue-100 text-blue-600" : "bg-green-100 text-green-600"}`}>
+                        {attempt.examType === "JEE" ? "🧮" : "🔬"}
                       </span>
                       <div>
                         <p className="text-slate-900 font-semibold text-xs">{attempt.examType} Mock</p>
@@ -416,10 +416,10 @@ export default function Dashboard() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => router.push("/cat/full-mock")}
+                    onClick={() => router.push("/jee/full-mock")}
                     className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 border border-blue-200 rounded-lg text-blue-50 text-[11px] font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg"
                   >
-                    📊 CAT Mock
+                    🧮 JEE Mock
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
@@ -454,10 +454,10 @@ export default function Dashboard() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => router.push("/cat/full-mock")}
+                  onClick={() => router.push("/jee/full-mock")}
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold shadow-md hover:shadow-lg transition-all text-sm"
                 >
-                  📊 Start CAT Mock
+                  🧮 Start JEE Mock
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}

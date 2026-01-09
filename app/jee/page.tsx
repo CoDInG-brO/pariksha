@@ -3,62 +3,74 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import ClockIcon from '@/components/icons/ClockIcon';
 import QuestionIcon from '@/components/icons/QuestionIcon';
+import { jeeQuestionBank, type JEESubject } from '@/lib/jeeQuestionBank';
 
 
-interface CATSection {
-  id: string;
-  name: string;
-  description: string;
-  topics: string[];
-  timeLimit: number;
-  totalQuestions: number;
-  icon: string;
-  color: string;
-}
-
-export default function CATDashboard() {
-  // Add per-section accent hex values so we can render subtle, consistent accents
-  const sections: (CATSection & { accentFrom: string; accentTo: string; accentHex: string })[] = [
-    {
-      id: "quant",
-      name: "Quantitative Aptitude",
-      description: "Questions on mathematics, arithmetic, algebra, geometry",
-      topics: ["Arithmetic", "Algebra", "Geometry"],
-      timeLimit: 40,
-      totalQuestions: 22,
-      icon: "🔢",
-      color: "from-blue-500 to-blue-600",
-      accentFrom: "#3B82F6",
+export default function JEEDashboard() {
+  // Per-subject metadata wired to the real question bank counts
+  const subjectConfig: Record<JEESubject, {
+    name: string;
+    description: string;
+    topics: string[];
+    icon: string;
+    color: string;
+    accentFrom: string;
+    accentTo: string;
+    accentHex: string;
+  }> = {
+    physics: {
+      name: "Physics",
+      description: "Mechanics, electricity, magnetism and modern physics numericals",
+      topics: ["Mechanics", "Electrostatics", "Modern"],
+      icon: "🔭",
+      color: "from-cyan-500 to-blue-500",
+      accentFrom: "#06B6D4",
       accentTo: "#2563EB",
-      accentHex: "#2563EB"
+      accentHex: "#0EA5E9"
     },
-    {
-      id: "dilr",
-      name: "Data Interpretation & Logical Reasoning",
-      description: "Data analysis, graphs, logic puzzles, arrangements",
-      topics: ["DI", "LR", "Data Sets"],
-      timeLimit: 40,
-      totalQuestions: 22,
-      icon: "📊",
-      color: "from-purple-500 to-purple-600",
-      accentFrom: "#A855F7",
-      accentTo: "#7C3AED",
-      accentHex: "#7C3AED"
-    },
-    {
-      id: "verbal",
-      name: "Verbal Ability & Reading Comprehension",
-      description: "Grammar, vocabulary, reading comprehension, sentence correction",
-      topics: ["RC", "Grammar", "Vocab"],
-      timeLimit: 40,
-      totalQuestions: 22,
-      icon: "📖",
-      color: "from-orange-500 to-orange-600",
-      accentFrom: "#FB923C",
-      accentTo: "#F97316",
+    chemistry: {
+      name: "Chemistry",
+      description: "Balanced mix of Physical, Organic and Inorganic chemistry",
+      topics: ["Physical", "Organic", "Inorganic"],
+      icon: "⚗️",
+      color: "from-amber-500 to-orange-500",
+      accentFrom: "#F97316",
+      accentTo: "#EA580C",
       accentHex: "#F97316"
+    },
+    mathematics: {
+      name: "Mathematics",
+      description: "Algebra, calculus and coordinate geometry intensive sets",
+      topics: ["Algebra", "Calculus", "Coordinate"],
+      icon: "📐",
+      color: "from-purple-500 to-indigo-600",
+      accentFrom: "#8B5CF6",
+      accentTo: "#4C1D95",
+      accentHex: "#7C3AED"
     }
-  ];
+  };
+
+  const baseCounts: Record<JEESubject, number> = {
+    physics: 0,
+    chemistry: 0,
+    mathematics: 0
+  };
+
+  const questionCounts = jeeQuestionBank.reduce<Record<JEESubject, number>>((acc, question) => {
+    acc[question.section] = (acc[question.section] || 0) + 1;
+    return acc;
+  }, baseCounts);
+
+  const sections = (Object.keys(subjectConfig) as JEESubject[]).map((subject) => ({
+    id: subject,
+    timeLimit: 60,
+    totalQuestions: questionCounts[subject],
+    ...subjectConfig[subject]
+  }));
+
+  const totalQuestions = sections.reduce((sum, section) => sum + section.totalQuestions, 0);
+  const totalDuration = sections.length * 60;
+  const totalMarks = totalQuestions * 4;
 
   // helper to derive rgba from a hex color
   function hexToRgba(hex: string, alpha: number) {
@@ -103,13 +115,13 @@ export default function CATDashboard() {
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-3xl shadow-sm">
             📊
           </div>
-          <h1 className="text-3xl font-bold text-slate-900">CAT Section-wise Tests</h1>
+          <h1 className="text-3xl font-bold text-slate-900">JEE Subject-wise Drills</h1>
         </div>
-        <p className="text-slate-600 text-base mb-4">Choose a section to practice. Each section has 40 minutes time limit - just like the real exam.</p>
+        <p className="text-slate-600 text-base mb-4">Choose a subject to practice. Each block mimics the JEE Main pattern with 60 minutes focus time.</p>
         
         <div className="px-4 py-2.5 rounded-lg bg-amber-50 border border-amber-200">
           <p className="text-amber-900 text-sm leading-snug font-medium">
-            <strong>⚠️ Important:</strong> In actual CAT, you cannot switch sections once you start. Practice with the same mindset!
+            <strong>⚠️ Important:</strong> JEE Main rewards accuracy. Stick to one subject at a time and avoid random switching.
           </p>
         </div>
       </motion.div>
@@ -124,18 +136,18 @@ export default function CATDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Duration</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">120 Minutes</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">40 min × 3 sections</p>
+            <p className="text-3xl font-bold text-slate-900 mt-2">{totalDuration} Minutes</p>
+            <p className="text-[11px] text-slate-600 mt-1 font-medium">60 min × {sections.length} subjects</p>
           </div>
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Questions</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">66 Questions</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">22 per section</p>
+            <p className="text-3xl font-bold text-slate-900 mt-2">{totalQuestions} Questions</p>
+            <p className="text-[11px] text-slate-600 mt-1 font-medium">Sourced from live PCM bank</p>
           </div>
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Marks</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">198 Marks</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">+3, -1, 0 scoring</p>
+            <p className="text-3xl font-bold text-slate-900 mt-2">{totalMarks} Marks</p>
+            <p className="text-[11px] text-slate-600 mt-1 font-medium">+4 correct, -1 incorrect</p>
           </div>
         </div>
       </motion.div>
@@ -156,7 +168,7 @@ export default function CATDashboard() {
               whileHover={{ y: -8 }}
               className="group"
             >
-              <Link href={`/cat/${section.id}`}>
+              <Link href={`/jee/${section.id}`}>
                 <div className={`relative rounded-2xl p-6 border border-blue-200/50 bg-white transition-all duration-300 cursor-pointer h-full hover:shadow-lg shadow-sm`}>
                   {/* subtle top stripe to indicate section accent */}
                   <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute top-0 left-8 right-8 h-1.5 rounded-b-md" />
@@ -214,13 +226,13 @@ export default function CATDashboard() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="max-w-7xl mx-auto mb-8"
       >
-        <Link href="/cat/full-mock">
+        <Link href="/jee/full-mock">
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 transition-all duration-300 cursor-pointer hover:shadow-lg shadow-sm">
             <div className="flex items-center justify-between gap-6">
               <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-1">🎯 Full CAT Mock Test</h3>
-                <p className="text-slate-600 text-sm">Take all 3 sections back-to-back in one sitting. (120 minutes total)</p>
-                <p className="text-xs text-emerald-600 mt-3 font-semibold">✓ Real exam experience with section-wise locked navigation</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-1">🎯 Full JEE Mock Test</h3>
+                <p className="text-slate-600 text-sm">Attempt the complete 3-subject paper in one sitting (180 minutes total).</p>
+                <p className="text-xs text-emerald-600 mt-3 font-semibold">✓ Real exam experience with accurate marking scheme</p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -242,21 +254,21 @@ export default function CATDashboard() {
         className="max-w-7xl mx-auto"
       >
         <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
-          <h3 className="text-2xl font-bold text-slate-900 mb-5">💡 CAT Preparation Tips</h3>
+          <h3 className="text-2xl font-bold text-slate-900 mb-5">💡 JEE Preparation Tips</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="space-y-4">
               <div className="flex gap-3">
                 <span className="text-2xl flex-shrink-0">⏰</span>
                 <div>
                   <p className="text-slate-900 font-semibold text-base">Time Management</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">40 minutes per section is tight. Practice speed without sacrificing accuracy.</p>
+                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">Split 180 minutes into 55-60 min blocks per subject and carry buffer for Section B numericals.</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <span className="text-2xl flex-shrink-0">🎯</span>
                 <div>
                   <p className="text-slate-900 font-semibold text-base">Strategic Approach</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">Attempt easy questions first, skip tough ones, don't let time pressure affect decisions.</p>
+                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">Attempt all single-correct MCQs first, then move to numerical section for assured marks.</p>
                 </div>
               </div>
             </div>
@@ -265,14 +277,14 @@ export default function CATDashboard() {
                 <span className="text-2xl flex-shrink-0">📊</span>
                 <div>
                   <p className="text-slate-900 font-semibold text-base">Negative Marking</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">-1 for wrong answer. Better to skip than guess. Calculate risk vs. reward.</p>
+                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">-1 hurts quickly. Fix threshold rules: skip if solving time crosses 2 minutes without progress.</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <span className="text-2xl flex-shrink-0">🔒</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-base">No Going Back</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">Once a section ends, you can't return. Treat each section independently and strategically.</p>
+                  <p className="text-slate-900 font-semibold text-base">Formula Discipline</p>
+                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">Keep condensed formula sheets for last-mile revision—especially for Electrostatics and Organic Chemistry.</p>
                 </div>
               </div>
             </div>

@@ -225,7 +225,7 @@ function ReviewContent() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${
-                    attempt.examType === "CAT" ? "bg-blue-500/20 text-blue-300" : "bg-green-500/20 text-green-300"
+                    attempt.examType === "JEE" ? "bg-cyan-500/20 text-cyan-300" : "bg-green-500/20 text-green-300"
                   }`}>
                     Q{originalIndex + 1}
                   </span>
@@ -306,15 +306,15 @@ function ReviewContent() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`p-2.5 rounded border ${
-                    attempt.examType === "CAT"
-                      ? "bg-blue-500/10 border-blue-500/30"
+                    attempt.examType === "JEE"
+                      ? "bg-cyan-500/10 border-cyan-500/30"
                       : "bg-green-500/10 border-green-500/30"
                   }`}
                 >
                   <div className="flex items-center gap-1.5 mb-1">
                     <span className="text-sm">💡</span>
                     <h4 className={`font-bold text-xs ${
-                      attempt.examType === "CAT" ? "text-blue-300" : "text-green-300"
+                      attempt.examType === "JEE" ? "text-cyan-300" : "text-green-300"
                     }`}>
                       Explanation
                     </h4>
@@ -379,7 +379,7 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
               ← Back
             </motion.button>
             <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-              attempt.examType === "CAT" ? "bg-blue-500/20 text-blue-300" : "bg-green-500/20 text-green-300"
+              attempt.examType === "JEE" ? "bg-cyan-500/20 text-cyan-300" : "bg-green-500/20 text-green-300"
             }`}>
               {attempt.examType}
             </span>

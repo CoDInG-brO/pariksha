@@ -1,273 +1,188 @@
-# Quick Reference: New Features Location
+# Quick Reference: JEE & NEET Feature Map
 
-## 🗂️ File Locations
+## File Locations
 
-### Navigation
-📍 **File**: `components/layout/Navbar.tsx`
-- CAT and NEET as main tabs
-- Color-coded buttons
-- 6 navigation items
+### Navigation Shell
+File: `components/layout/Navbar.tsx`
+- Primary toggles: JEE | NEET | Dashboard | Take Test | Practice | Analytics
+- Active-state gradients and icons per exam
+- Mobile drawer mirrors the same structure
 
-### CAT Features
-📍 **File**: `app/cat/page.tsx`
-- Section overview (Quant, DI-LR, Verbal)
-- Section selection cards
-- Full mock option
-- CAT tips section
+### JEE Surfaces
+File: `app/jee/page.tsx`
+- Physics, Chemistry, Mathematics cards with time and difficulty cues
+- Section quick-links wired to `/jee/[section]`
+- CTA to the full mock and analytics recap panels
 
-### NEET Features
-📍 **File**: `app/neet/page.tsx`
-- Subject overview (Physics, Chemistry, Biology)
-- Subject selection cards
-- Chapter tracking
-- Performance metrics
-- NEET tips section
+File: `app/jee/[section]/page.tsx`
+- 60-minute drill per subject with +4/-1 scoring
+- Dynamic section metadata and contextual strategy blurbs
 
-### Analytics & Percentile
-📍 **File**: `app/analytics/page.tsx`
-- Score input slider
-- Percentile display
-- Rank calculation
-- College recommendations
-- Score distribution graph
+File: `app/jee/full-mock/page.tsx`
+- 180-minute PCM simulation (20 questions per subject today)
+- Autosave to `lib/testStorage.ts` with percentile snapshot
+- Camera toggle and integrity guardrails (keyboard/back navigation locks)
 
-### Calculation Engine
-📍 **File**: `lib/percentileCalculator.ts`
-- CAT percentile function
-- NEET percentile function
-- Section-wise CAT percentile
-- Subject-wise NEET percentile
-- College recommendations
+### NEET Surfaces
+File: `app/neet/page.tsx`
+- Physics/Chemistry/Biology emphasis with biology weightage callouts
+- Links into `/neet/[subject]` practice (placeholder) and `/neet/full-mock`
 
----
+File: `app/neet/full-mock/page.tsx`
+- 180-minute, 180-question workflow with +4/-1 scoring and subject ladders
 
-## 🎯 How to Access Each Feature
+### Shared Study Modes
+File: `app/practice/page.tsx`
+- Randomized drills sourcing from `lib/jeeQuestionBank.ts` (JEE) and inline NEET sets
+- Mode toggle and progress chips reused across dashboards
 
-### 1. CAT Dashboard
-```
-URL: http://localhost:3000/cat
-Description: View CAT section options and full mock test
-```
+File: `app/take-test/page.tsx`
+- Generic coding test harness retained for future interview prep lane
 
-### 2. NEET Dashboard
-```
-URL: http://localhost:3000/neet
-Description: View NEET subject options and full mock test
-```
+### Analytics & Data
+File: `app/analytics/page.tsx`
+- Split tabs for JEE vs NEET percentile/rank calculators
+- Hooks into `lib/percentileCalculator.ts` and `lib/testStorage.ts`
 
-### 3. Analytics
-```
-URL: http://localhost:3000/analytics
-Description: Enter score and see percentile/rank/recommendations
-```
+File: `lib/percentileCalculator.ts`
+- `calculateJEEPercentile`, `calculateNEETPercentile`, `estimateIITCategory`, `estimateCollegeCategory`
+- Subject helpers: `calculateJEESectionPercentile`, `calculateNEETSubjectPercentile`
 
-### 4. Main Navigation
-```
-Location: Top of every page
-Components: CAT | NEET | Dashboard | Take Test | Practice | Analytics
-```
+File: `lib/jeeQuestionBank.ts`
+- Canonical PCM dataset consumed by practice and full-mock flows
 
 ---
 
-## 📊 Exam Specifications
+## Access Paths
+```
+/jee                     JEE dashboard overview
+/jee/[section]           Physics/Chemistry/Mathematics drills
+/jee/full-mock           180-minute PCM simulation
+/neet                    NEET dashboard overview
+/neet/[subject]          Subject drills (scaffolding in progress)
+/neet/full-mock          180-question NEET mock
+/practice                Mixed-mode practice switcher (JEE or NEET)
+/analytics               Percentile and rank analytics
+```
 
-### CAT
-- **Total Questions**: 66
-- **Total Marks**: 198
-- **Duration**: 120 minutes
-- **Scoring**: +3, -1, 0
-- **Sections**: 3 (40 min each)
-  1. Quantitative Aptitude (22 Q, 66 marks)
-  2. Data Interpretation & Logical Reasoning (22 Q, 66 marks)
-  3. Verbal Ability (22 Q, 66 marks)
+---
+
+## Exam Specifications
+
+### JEE (Main style)
+- Total questions: 90 (75 attempted) | Max score: 300
+- Duration: 180 minutes (60 per subject in UI)
+- Scoring: +4 correct, -1 incorrect, 0 skipped
+- Subjects: Physics, Chemistry, Mathematics (equal weight)
+- Current implementation: 20 curated MCQs per subject with shared explanations, stopwatch, and review grid
 
 ### NEET
-- **Total Questions**: 180
-- **Total Marks**: 720
-- **Duration**: 180 minutes
-- **Scoring**: +4, -1, 0
-- **Subjects**: 3
-  1. Physics (45 Q, 180 marks)
-  2. Chemistry (45 Q, 180 marks)
-  3. Biology (90 Q, 360 marks)
+- Total questions: 180 | Max score: 720
+- Duration: 180 minutes
+- Scoring: +4 correct, -1 incorrect, 0 skipped
+- Subjects: Physics (45), Chemistry (45), Biology (90)
+- Current implementation: Full mock plus dashboard guidance, subject practice scaffolding underway
 
 ---
 
-## 💡 Key Features Implemented
+## Key Features Implemented
 
-### Navigation Features
-- ✅ Exam-specific tabs (CAT/NEET)
-- ✅ Color-coded buttons
-- ✅ Responsive design
-- ✅ Active state indicators
+### JEE Track
+- Section cards with realistic timers and topic cues
+- Full mock with integrity locks, camera toggle, and analytics wiring
+- Shared PCM bank powering both practice mode and the full mock
+- Score calculation uses JEE weights (+4/-1) with percentile and IIT bucket estimates
 
-### CAT Features
-- ✅ Section-wise breakdown
-- ✅ Time management info
-- ✅ Negative marking explanation
-- ✅ Full mock option
-- ✅ Strategic tips
+### NEET Track
+- Subject emphasis blocks with biology dominance messaging
+- Full mock reflecting NEET timings and scoring
+- Analytics copy tailored to NEET counselling tiers (AIIMS, government, private)
 
-### NEET Features
-- ✅ Subject-wise breakdown
-- ✅ Chapter tracking
-- ✅ Biology importance (50%)
-- ✅ Performance distribution
-- ✅ Study tips
-
-### Analytics Features
-- ✅ Score input (slider)
-- ✅ Percentile calculation
-- ✅ Rank estimation
-- ✅ College/IIM recommendations
-- ✅ Performance interpretation
-- ✅ Score distribution visualization
-- ✅ Next steps recommendations
-
-### Percentile System
-- ✅ CAT: 0-198 score range
-- ✅ NEET: 0-720 score range
-- ✅ Realistic distributions
-- ✅ Section-wise percentiles (CAT)
-- ✅ Subject-wise percentiles (NEET)
-- ✅ IIM recommendations (CAT)
-- ✅ College recommendations (NEET)
+### Analytics and Storage
+- Unified slider/input feeding exam-specific percentile math
+- Local test ledger via `lib/testStorage.ts` for recent attempts
+- IIT/medical college recommendation chips derived from percentile outputs
 
 ---
 
-## 🔧 Integration Points
+## Integration Points
 
-### For Backend Integration:
-1. **Store test results**
-   ```typescript
-   Interface for test result:
-   {
-     examType: "CAT" | "NEET",
-     score: number,
-     percentage: number,
-     date: Date,
-     sectionScores?: { [section: string]: number },  // For CAT
-     subjectScores?: { [subject: string]: number }   // For NEET
-   }
-   ```
-
-2. **User progress tracking**
-   ```typescript
-   {
-     userId: string,
-     totalMocks: number,
-     averageScore: number,
-     highestScore: number,
-     testHistory: TestResult[]
-   }
-   ```
-
-3. **Performance analytics**
-   ```typescript
-   {
-     strongAreas: string[],
-     weakAreas: string[],
-     improvementRate: number,
-     trendingTopics: string[]
-   }
-   ```
-
----
-
-## 📈 Sample Percentile Outputs
-
-### CAT Score: 150/198
-```
-Percentage: 76%
-Percentile: 75
-Rank: ~50,000
-Colleges: IIM L, IIM I, IIM K, Other Top B-schools
+```ts
+interface TestResult {
+  examType: "JEE" | "NEET";
+  score: number;
+  maxScore: number;
+  percentage: number;
+  percentile: number;
+  timeSpent: number;       // seconds
+  sectionScores?: Record<string, number>;   // Physics/Chemistry/Mathematics
+  subjectScores?: Record<string, number>;   // Physics/Chemistry/Biology
+  selectedAnswers: (number | null)[];
+  questions: Array<{
+    id: number;
+    section: string;
+    question: string;
+    options: string[];
+    correctAnswer: number;
+  }>;
+}
 ```
 
-### NEET Score: 600/720
+Use `saveTestAttempt()` from `lib/testStorage.ts` to persist this envelope and feed `/analytics` or `/profile/performance` once wired.
+
+---
+
+## Sample Percentile Outputs
+
+### JEE score: 210/300
+```
+Percentage: 70%
+Percentile: ~15
+Rank estimate: ~135,000 of 900,000
+Recommendations: NIT Trichy/Warangal core branches, IIT BHU dual degrees
+Interpretation: "Strong PCM balance--push accuracy to break into the top 10%."
+```
+
+### NEET score: 600/720
 ```
 Percentage: 83%
-Percentile: 90
-Rank: ~160,000
-Colleges: Government Medical, Premium Private
+Percentile: ~90
+Rank estimate: ~160,000 of 1.6M
+Recommendations: Government medical colleges, premium private seats
+Interpretation: "Top 10%--maintain Biology precision for AIIMS contention."
 ```
 
 ---
 
-## 🎨 Design Details
-
-### Color Scheme
-- **CAT**: Blue gradient (`from-blue-500 to-blue-600`)
-- **NEET**: Green gradient (`from-green-500 to-green-600`)
-- **Accent**: Indigo (`#6366F1`)
-- **Background**: Dark theme (#0B0F19)
-
-### Typography
-- **Headers**: Bold, 24-48px
-- **Body**: Regular, 14-16px
-- **Accent**: Semi-bold, colored
-
-### Components
-- Gradient cards
-- Progress bars with animations
-- Emoji icons for quick scanning
-- Hover effects on interactive elements
+## Design Details
+- JEE palette: cyan to blue (Physics), amber to orange (Chemistry), purple to indigo (Mathematics)
+- NEET palette: emerald to teal gradients per subject, biology cards double height
+- Accent: indigo #6366F1 for shared CTAs and sliders
+- Motion: Framer Motion fade/scale on cards, timer badges pulse below 60 seconds
+- Typography: 40-48px display for hero stats, 16px body, monospace timers
 
 ---
 
-## 🚀 Deployment Checklist
-
-- ✅ All files created
-- ✅ Navigation updated
-- ✅ Percentile system implemented
-- ✅ Analytics page complete
-- ⏳ Database schema (ready for implementation)
-- ⏳ User authentication (next phase)
-- ⏳ Section-wise tests (next phase)
+## Deployment Checklist
+- [x] Navigation and route scaffolding live
+- [x] Percentile and analytics stack aligned to JEE/NEET
+- [x] Practice and full mock leverage shared PCM data
+- [ ] Expand NEET subject drill pages
+- [ ] Persist analytics history per user session
+- [ ] Connect to real auth/storage backend
 
 ---
 
-## 📝 Documentation Files
-
-1. **EXAMINER_RECOMMENDATIONS.md** - Architecture & strategy
-2. **NEW_STRUCTURE.md** - Project structure overview
-3. **CHANGES_SUMMARY.md** - Detailed changes log
-4. **QUICK_REFERENCE.md** - This file
-
----
-
-## ✨ What Makes This Professional
-
-1. **Exam-specific design** - Not a generic platform
-2. **Realistic percentiles** - Based on actual exam patterns
-3. **Practical tips** - From examiner's perspective
-4. **College recommendations** - Actual college tiers
-5. **Performance insights** - Detailed analytics
-6. **Beautiful UI** - Gradient cards, animations, icons
-7. **Mobile responsive** - Works on all devices
-8. **Scalable architecture** - Ready for databases & APIs
+## Documentation Map
+1. `VISUAL_ARCHITECTURE.md` -- topology and flows
+2. `NEW_STRUCTURE.md` -- file/folder layout
+3. `CHANGES_SUMMARY.md` -- release notes for the JEE rebrand
+4. `EXAMINER_RECOMMENDATIONS.md` -- exam-specific product guidance
+5. `IMPLEMENTATION_CHECKLIST.md` -- phased delivery tracker
 
 ---
 
-## 🎯 Next Priorities
-
-1. **High Priority**
-   - Section-wise CAT test with locking
-   - NEET subject-wise practice
-   - Database integration
-
-2. **Medium Priority**
-   - User authentication
-   - Progress tracking
-   - Historical analytics
-
-3. **Low Priority**
-   - AI recommendations
-   - Social features
-   - Mobile app
-
----
-
-**Created**: January 2, 2026
-**Status**: Production Ready (Phase 1)
-**Last Updated**: January 2, 2026
+## Next Priorities
+1. Expand `lib/jeeQuestionBank.ts` to full 75-question coverage and sync timers/UI to the official pattern.
+2. Stand up `/neet/[subject]/page.tsx` with NCERT chapter filters and bookmarking to match the JEE experience parity.
+3. Wire `/profile/performance` to `lib/testStorage.ts` so recent JEE/NEET mocks surface inside the profile area.

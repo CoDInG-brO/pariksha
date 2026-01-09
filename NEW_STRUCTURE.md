@@ -1,99 +1,69 @@
-# Updated Project Structure
+# Updated Project Structure (JEE + NEET)
 
 ```
 mockexam-ai-ui/
-├── app/
-│   ├── globals.css
-│   ├── layout.tsx
-│   ├── page.tsx (Home)
-│   ├── providers.tsx
-│   ├── dashboard/
-│   │   └── page.tsx (General Dashboard)
-│   ├── cat/
-│   │   ├── page.tsx (CAT Section Selection) ✨ NEW
-│   │   ├── [section]/
-│   │   │   └── page.tsx (Section-wise test with locked navigation) - TODO
-│   │   └── full-mock/
-│   │       └── page.tsx (Full 120 min CAT mock) - TODO
-│   ├── neet/
-│   │   ├── page.tsx (NEET Subject Selection) ✨ NEW
-│   │   ├── [subject]/
-│   │   │   └── page.tsx (Subject-wise practice) - TODO
-│   │   └── full-mock/
-│   │       └── page.tsx (Full 180 min NEET mock) - TODO
-│   ├── take-test/
-│   │   └── page.tsx (Generic test page)
-│   ├── practice/
-│   │   └── page.tsx (Practice mode)
-│   ├── analytics/
-│   │   └── page.tsx (Percentile calculation & analysis) ✨ NEW
-│
-├── components/
-│   └── layout/
-│       └── Navbar.tsx (Updated with CAT/NEET tabs)
-│
-├── lib/
-│   └── percentileCalculator.ts (Percentile calculation system) ✨ NEW
-│
-├── EXAMINER_RECOMMENDATIONS.md (Architecture guide)
-└── ...config files
+ app/
+    globals.css
+    layout.tsx
+    page.tsx
+    providers.tsx
+    dashboard/
+       page.tsx                    # General overview tiles
+    jee/
+       page.tsx                    # JEE dashboard (PCM cards + CTA)
+       [section]/page.tsx          # Physics/Chemistry/Mathematics drills
+       full-mock/page.tsx          # 180-minute PCM simulation (+4/-1)
+    neet/
+       page.tsx                    # NEET dashboard (subject emphasis)
+       [subject]/page.tsx          # Subject drills (scaffolding)
+       full-mock/page.tsx          # 180-question NEET mock
+    analytics/page.tsx              # Percentile, rank, college intel
+    practice/page.tsx               # Mixed-mode practice (JEE/NEET)
+    take-test/page.tsx              # Generic coding test harness
+    profile/
+       edit/page.tsx               # Profile editor (targets, details)
+       performance/page.tsx        # Test history + charts (to retheme)
+       settings/page.tsx
+    login|signup|auth routes        # NextAuth entry
+    api/auth/[...nextauth]/route.ts
+
+ components/
+    layout/Navbar.tsx               # Exam toggles + nav
+    AlertDialog.tsx                 # Confirmations (back-out, etc.)
+    WebcamPreview.tsx               # Proctoring surface for mocks
+    icons/                          # Shared SVG iconography
+
+ lib/
+    percentileCalculator.ts         # `calculateJEEPercentile`, `estimateIITCategory`, etc.
+    jeeQuestionBank.ts              # Central PCM dataset (20 Q/subject)
+    testStorage.ts                  # Local attempt ledger
+    auth.ts                         # NextAuth helpers
+    sounds.ts / percentile helpers  # UX utilities
+
+ middleware.ts                       # Auth protection for dashboard routes
+ CHANGES_SUMMARY.md                  # Release log (needs JEE wording)
+ IMPLEMENTATION_CHECKLIST.md         # Phase tracker
+ QUICK_REFERENCE.md                  # File map (updated)
+ VISUAL_ARCHITECTURE.md              # UI + flow diagram
+ ...config files (Tailwind, PostCSS, tsconfig, etc.)
 ```
 
-## What's New:
+## Highlights
+- `/app/jee` now carries the dedicated PCM-focused dashboards, section drills, and full mock experiences.
+- `/app/practice` pulls from `lib/jeeQuestionBank.ts` when the JEE toggle is active, keeping paper sets centralized.
+- `/app/analytics` now references JEE vs NEET percentile engines plus IIT/medical recommendations.
+- Navbar exposes JEE and NEET as the primary exam tabs with matching gradients and iconography.
 
-### 1. **CAT Dashboard** (`/cat`)
-- Section-wise test options
-- Full mock test option
-- Real exam info (timing, marks, scoring)
-- CAT preparation tips
-- Statistics overview
+## Features Delivered
+- JEE dashboard + full mock using +4/-1 scoring and 180-minute timers
+- Shared PCM bank powering JEE practice + mock
+- NEET dashboard + full mock with accurate subject weights
+- Analytics workflow with IIT/medical guidance
+- Local attempt persistence for downstream analytics/profile use
 
-### 2. **NEET Dashboard** (`/neet`)
-- Subject-wise practice (Physics, Chemistry, Biology)
-- Full mock test option
-- Exam info specific to NEET
-- Chapter mastery tracking
-- NEET preparation tips
-- Subject importance breakdown (Biology = 50%)
-
-### 3. **Analytics Page** (`/analytics`)
-- Score input slider
-- Percentile calculation
-- Estimated rank display
-- College/IIM recommendations
-- Score distribution visualization
-- Performance interpretation
-- Next steps recommendations
-
-### 4. **Percentile Calculation System** (`/lib/percentileCalculator.ts`)
-- CAT percentile calculation (0-198 score)
-- NEET percentile calculation (0-720 score)
-- Section-wise percentiles for CAT
-- Subject-wise percentiles for NEET
-- College/IIM recommendations
-- Score interpretations
-
-### 5. **Updated Navigation**
-- Main tabs now: CAT | NEET | Dashboard | Take Test | Practice Mode | Analytics
-- Distinct styling for each exam type
-- Emoji icons for quick identification
-
-## Features Implemented:
-
-✅ **Exam-specific tabs** in main navigation
-✅ **CAT section-wise dashboard** with locked navigation info
-✅ **NEET subject-wise dashboard** with chapter tracking
-✅ **Percentile calculation system** with realistic distributions
-✅ **Analytics page** with score analysis
-✅ **College recommendations** based on percentile
-✅ **Performance interpretations** specific to each exam
-
-## Still TODO:
-
-- [ ] CAT section-wise test implementation with timer & locking
-- [ ] NEET subject-wise test with bookmarking feature
-- [ ] Database integration for storing results
-- [ ] User authentication
-- [ ] Previous test history tracking
-- [ ] Detailed performance graphs
-- [ ] AI-powered study recommendations
+## Outstanding
+- Flesh out `/app/neet/[subject]` for chapter-wise drills
+- Expand `lib/jeeQuestionBank.ts` toward the full 75-question blueprint
+- Keep `VISUAL_ARCHITECTURE.md`, `CHANGES_SUMMARY.md`, and `IMPLEMENTATION_CHECKLIST.md` aligned with the JEE/NEET narrative
+- Connect profile performance cards to saved attempts
+- Replace placeholder `/take-test` content with exam-ready material or retire it

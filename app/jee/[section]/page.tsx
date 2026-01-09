@@ -1,314 +1,73 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
+import { jeeQuestionBank, type JEESubject, type JEEQuestion } from "@/lib/jeeQuestionBank";
+import { saveTestAttempt } from "@/lib/testStorage";
 
-interface Question {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-  section: string;
-}
+const SUBJECT_SEQUENCE: readonly JEESubject[] = ["physics", "chemistry", "mathematics"] as const;
 
-interface SectionConfig {
-  id: string;
-  name: string;
-  icon: string;
-  color: string;
-  questions: Question[];
-}
+const sectionMeta: Record<JEESubject, { name: string; icon: string; color: string }> = {
+  physics: {
+    name: "Physics",
+    icon: "🔭",
+    color: "from-cyan-500 to-blue-600"
+  },
+  chemistry: {
+    name: "Chemistry",
+    icon: "⚗️",
+    color: "from-amber-500 to-orange-600"
+  },
+  mathematics: {
+    name: "Mathematics",
+    icon: "📐",
+    color: "from-purple-500 to-indigo-600"
+  }
+};
 
-export default function CATSectionTest() {
+export default function JEESubjectTest() {
   const params = useParams();
   const router = useRouter();
   const sectionId = params.section as string;
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([]);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(40 * 60); // 40 minutes in seconds
-  const [testSubmitted, setTestSubmitted] = useState(false);
-  const [markedForReview, setMarkedForReview] = useState<Set<number>>(new Set());
+  const normalizedSection: JEESubject = SUBJECT_SEQUENCE.includes(sectionId as JEESubject)
+    ? (sectionId as JEESubject)
+    : "physics";
 
-  // Sample questions for each section
-  const sectionsData: Record<string, SectionConfig> = {
-    quant: {
-      id: "quant",
-      name: "Quantitative Aptitude",
-      icon: "🔢",
-      color: "from-blue-500 to-blue-600",
-      questions: [
-        {
-          id: 1,
-          question: "If 2x + 3 = 11, what is the value of x?",
-          options: ["2", "3", "4", "5"],
-          correctAnswer: 2,
-          explanation: "2x + 3 = 11 → 2x = 8 → x = 4",
-          section: "quant"
-        },
-        {
-          id: 2,
-          question: "What is the area of a circle with radius 5?",
-          options: ["25π", "50π", "10π", "75π"],
-          correctAnswer: 0,
-          explanation: "Area = πr² = π(5)² = 25π",
-          section: "quant"
-        },
-        {
-          id: 3,
-          question: "If the ratio of boys to girls is 3:2 and there are 30 boys, how many girls are there?",
-          options: ["15", "20", "25", "30"],
-          correctAnswer: 1,
-          explanation: "3:2 ratio means for every 3 boys, there are 2 girls. 30/3 × 2 = 20 girls",
-          section: "quant"
-        },
-        {
-          id: 4,
-          question: "What is 15% of 200?",
-          options: ["20", "25", "30", "35"],
-          correctAnswer: 2,
-          explanation: "15% of 200 = 0.15 × 200 = 30",
-          section: "quant"
-        },
-        {
-          id: 5,
-          question: "If a number is multiplied by 3 and then 5 is added, the result is 26. What is the number?",
-          options: ["5", "6", "7", "8"],
-          correctAnswer: 2,
-          explanation: "3x + 5 = 26 → 3x = 21 → x = 7",
-          section: "quant"
-        },
-        {
-          id: 6,
-          question: "A train travels 360 km in 4 hours. What is its speed in km/hr?",
-          options: ["80", "90", "100", "85"],
-          correctAnswer: 1,
-          explanation: "Speed = Distance/Time = 360/4 = 90 km/hr",
-          section: "quant"
-        },
-        {
-          id: 7,
-          question: "If the compound interest on ₹1000 for 2 years at 10% p.a. is:",
-          options: ["₹200", "₹210", "₹220", "₹230"],
-          correctAnswer: 1,
-          explanation: "CI = P(1+r/100)^n - P = 1000(1.1)² - 1000 = 1210 - 1000 = ₹210",
-          section: "quant"
-        },
-        {
-          id: 8,
-          question: "The average of 5 consecutive odd numbers is 25. Find the largest number.",
-          options: ["27", "29", "31", "33"],
-          correctAnswer: 1,
-          explanation: "If average is 25, middle number is 25. Consecutive odd: 21, 23, 25, 27, 29. Largest = 29",
-          section: "quant"
-        },
-        {
-          id: 9,
-          question: "A shopkeeper sells an item at 20% profit. If the cost price is ₹500, what is the selling price?",
-          options: ["₹550", "₹600", "₹650", "₹700"],
-          correctAnswer: 1,
-          explanation: "SP = CP × (1 + Profit%) = 500 × 1.2 = ₹600",
-          section: "quant"
-        },
-        {
-          id: 10,
-          question: "What is the HCF of 24 and 36?",
-          options: ["6", "8", "12", "18"],
-          correctAnswer: 2,
-          explanation: "24 = 2³ × 3, 36 = 2² × 3². HCF = 2² × 3 = 12",
-          section: "quant"
-        }
-      ]
-    },
-    dilr: {
-      id: "dilr",
-      name: "Data Interpretation & Logical Reasoning",
-      icon: "📊",
-      color: "from-purple-500 to-purple-600",
-      questions: [
-        {
-          id: 1,
-          question: "In a logical sequence 2, 4, 8, 16, ?, what comes next?",
-          options: ["24", "32", "40", "48"],
-          correctAnswer: 1,
-          explanation: "Each number is doubled: 2→4→8→16→32",
-          section: "dilr"
-        },
-        {
-          id: 2,
-          question: "If A > B, B > C, and C > D, which of the following is true?",
-          options: ["D > A", "A > D", "B < D", "C > A"],
-          correctAnswer: 1,
-          explanation: "From the given conditions: A > B > C > D, therefore A > D",
-          section: "dilr"
-        },
-        {
-          id: 3,
-          question: "In a group of 100 students, 60 play cricket, 50 play football. How many play both if 20 play neither?",
-          options: ["10", "20", "30", "40"],
-          correctAnswer: 2,
-          explanation: "Students playing at least one sport = 100 - 20 = 80. Using inclusion-exclusion: 60 + 50 - x = 80 → x = 30",
-          section: "dilr"
-        },
-        {
-          id: 4,
-          question: "What is the next number in the series: 1, 1, 2, 3, 5, 8, ?, 21?",
-          options: ["11", "12", "13", "14"],
-          correctAnswer: 2,
-          explanation: "Fibonacci series: each number is the sum of the previous two. 5 + 8 = 13",
-          section: "dilr"
-        },
-        {
-          id: 5,
-          question: "If 5 workers can complete a job in 12 days, how many days will 3 workers take?",
-          options: ["15", "18", "20", "24"],
-          correctAnswer: 2,
-          explanation: "Total work = 5 × 12 = 60 worker-days. For 3 workers: 60 ÷ 3 = 20 days",
-          section: "dilr"
-        },
-        {
-          id: 6,
-          question: "If all roses are flowers and some flowers fade quickly, which statement must be true?",
-          options: ["All roses fade quickly", "Some roses fade quickly", "No roses fade quickly", "Cannot be determined"],
-          correctAnswer: 3,
-          explanation: "We only know roses are flowers and SOME flowers fade. We cannot determine if roses are among those that fade.",
-          section: "dilr"
-        },
-        {
-          id: 7,
-          question: "In a row of children, Ravi is 7th from the left and 12th from the right. How many children are in the row?",
-          options: ["17", "18", "19", "20"],
-          correctAnswer: 1,
-          explanation: "Total = Position from left + Position from right - 1 = 7 + 12 - 1 = 18",
-          section: "dilr"
-        },
-        {
-          id: 8,
-          question: "Complete the pattern: B, D, G, K, ?",
-          options: ["N", "O", "P", "Q"],
-          correctAnswer: 2,
-          explanation: "Differences between letters: +2, +3, +4, +5. K + 5 = P",
-          section: "dilr"
-        },
-        {
-          id: 9,
-          question: "A cube is painted red on all sides and cut into 27 smaller cubes. How many small cubes have exactly 2 painted faces?",
-          options: ["6", "8", "12", "16"],
-          correctAnswer: 2,
-          explanation: "Cubes with 2 painted faces are on the edges (not corners). Each edge has 1 such cube, and a cube has 12 edges = 12 cubes",
-          section: "dilr"
-        },
-        {
-          id: 10,
-          question: "If COMPUTER is coded as RFUVQNPC, how is PRINTER coded?",
-          options: ["QSJOUFQ", "SFUOJSQ", "QSJOUFS", "SFUOQSJ"],
-          correctAnswer: 2,
-          explanation: "Each letter is shifted: +1, -1, +1, -1... Pattern applied to PRINTER gives QSJOUFS",
-          section: "dilr"
-        }
-      ]
-    },
-    verbal: {
-      id: "verbal",
-      name: "Verbal Ability & Reading Comprehension",
-      icon: "📖",
-      color: "from-orange-500 to-orange-600",
-      questions: [
-        {
-          id: 1,
-          question: "Choose the word that is most similar in meaning to 'Benevolent'",
-          options: ["Malicious", "Kind-hearted", "Indifferent", "Aggressive"],
-          correctAnswer: 1,
-          explanation: "Benevolent means kind and generous. Kind-hearted is the best synonym.",
-          section: "verbal"
-        },
-        {
-          id: 2,
-          question: "Identify the error in the sentence: 'Neither of the boys are coming to the party.'",
-          options: ["No error", "'Neither' should be 'Either'", "'are' should be 'is'", "'coming' should be 'came'"],
-          correctAnswer: 2,
-          explanation: "'Neither' is singular, so it should be followed by 'is' not 'are'.",
-          section: "verbal"
-        },
-        {
-          id: 3,
-          question: "What does the idiom 'Break the ice' mean?",
-          options: ["To freeze water", "To initiate conversation", "To damage something", "To refuse to talk"],
-          correctAnswer: 1,
-          explanation: "'Break the ice' means to initiate a conversation or ease tension in a social situation.",
-          section: "verbal"
-        },
-        {
-          id: 4,
-          question: "Fill in the blank: 'She is _____ to mathematics than her brother.'",
-          options: ["more talented", "talented", "most talented", "talenteder"],
-          correctAnswer: 0,
-          explanation: "When comparing two people, use 'more + adjective'. 'More talented' is correct.",
-          section: "verbal"
-        },
-        {
-          id: 5,
-          question: "Choose the best option to complete: 'Although he was tired, _____ he continued working.'",
-          options: ["but", "and", "yet", "nor"],
-          correctAnswer: 2,
-          explanation: "'Yet' works best to show contrast. 'Although' already sets up the contrast, so 'but' would be redundant.",
-          section: "verbal"
-        },
-        {
-          id: 6,
-          question: "Choose the word opposite in meaning to 'Ephemeral'",
-          options: ["Transient", "Permanent", "Fleeting", "Brief"],
-          correctAnswer: 1,
-          explanation: "Ephemeral means short-lived. Permanent is the opposite.",
-          section: "verbal"
-        },
-        {
-          id: 7,
-          question: "Which sentence is grammatically correct?",
-          options: ["He don't know nothing", "He doesn't know anything", "He don't know anything", "He doesn't know nothing"],
-          correctAnswer: 1,
-          explanation: "'He doesn't know anything' is correct. 'Doesn't' for third person singular, 'anything' avoids double negative.",
-          section: "verbal"
-        },
-        {
-          id: 8,
-          question: "What does 'Burning the midnight oil' mean?",
-          options: ["Wasting resources", "Working late into the night", "Starting a fire", "Being very angry"],
-          correctAnswer: 1,
-          explanation: "'Burning the midnight oil' means working or studying late into the night.",
-          section: "verbal"
-        },
-        {
-          id: 9,
-          question: "Fill in the blank: 'The committee _____ divided in their opinion.'",
-          options: ["is", "are", "was", "were"],
-          correctAnswer: 3,
-          explanation: "When committee members are acting individually (divided opinion), use plural verb 'were'.",
-          section: "verbal"
-        },
-        {
-          id: 10,
-          question: "Choose the correctly spelled word:",
-          options: ["Accomodate", "Accommodate", "Acommodate", "Acomodate"],
-          correctAnswer: 1,
-          explanation: "'Accommodate' is correct with double 'c' and double 'm'.",
-          section: "verbal"
-        }
-      ]
-    }
+  const questionsForSection = jeeQuestionBank.filter((question) => question.section === normalizedSection);
+  const effectiveSection: JEESubject = questionsForSection.length > 0 ? normalizedSection : "physics";
+  const sectionQuestions: JEEQuestion[] = questionsForSection.length > 0
+    ? questionsForSection
+    : jeeQuestionBank.filter((question) => question.section === "physics");
+
+  const sectionData = {
+    id: effectiveSection,
+    ...sectionMeta[effectiveSection],
+    questions: sectionQuestions
   };
 
-  const sectionData = sectionsData[sectionId] || sectionsData.quant;
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(() => new Array(sectionData.questions.length).fill(null));
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(60 * 60); // 60 minutes per subject
+  const [testSubmitted, setTestSubmitted] = useState(false);
+  const [markedForReview, setMarkedForReview] = useState<Set<number>>(new Set<number>());
+  const [savedAttemptId, setSavedAttemptId] = useState<string | null>(null);
+  const startTimeRef = useRef<number>(Date.now());
+
   const questions = sectionData.questions;
 
-  // Initialize selected answers
+  // Reset whenever the learner switches sections or question count shifts
   useEffect(() => {
-    if (selectedAnswers.length === 0) {
-      setSelectedAnswers(new Array(questions.length).fill(null));
-    }
-  }, []);
+    setSelectedAnswers(new Array(questions.length).fill(null));
+    setCurrentQuestionIndex(0);
+    setMarkedForReview(new Set<number>());
+    setShowAnswer(false);
+    setTestSubmitted(false);
+    setTimeRemaining(60 * 60);
+    setSavedAttemptId(null);
+    startTimeRef.current = Date.now();
+  }, [sectionData.id, questions.length]);
 
   // Timer countdown
   useEffect(() => {
@@ -325,7 +84,7 @@ export default function CATSectionTest() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [testSubmitted]);
+  }, [testSubmitted, sectionData.id]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -375,6 +134,38 @@ export default function CATSectionTest() {
   };
 
   const handleSubmitTest = () => {
+    if (testSubmitted) return;
+
+    const timeSpent = startTimeRef.current
+      ? Math.max(0, Math.min(60 * 60, Math.floor((Date.now() - startTimeRef.current) / 1000)))
+      : 60 * 60 - timeRemaining;
+
+    const latestScore = calculateScore();
+
+    const savedAttempt = saveTestAttempt({
+      examType: "JEE",
+      timeSpent,
+      totalQuestions: questions.length,
+      correct: latestScore.correct,
+      incorrect: latestScore.incorrect,
+      unanswered: latestScore.unanswered,
+      rawScore: latestScore.rawScore,
+      maxScore: latestScore.maxScore,
+      percentage: latestScore.percentage,
+      estimatedPercentile: latestScore.estimatedPercentile,
+      questions: questions.map((question) => ({
+        id: question.id,
+        question: question.question,
+        options: question.options,
+        correctAnswer: question.correctAnswer,
+        explanation: question.explanation,
+        section: question.section
+      })),
+      selectedAnswers: [...selectedAnswers]
+    });
+
+    setSavedAttemptId(savedAttempt.id);
+    setShowAnswer(false);
     setTestSubmitted(true);
   };
 
@@ -386,22 +177,57 @@ export default function CATSectionTest() {
     selectedAnswers.forEach((answer, index) => {
       if (answer === null) {
         unanswered++;
-      } else if (answer === questions[index].correctAnswer) {
+      } else if (answer === questions[index]?.correctAnswer) {
         correct++;
       } else {
         incorrect++;
       }
     });
 
-    const rawScore = correct * 3 - incorrect * 1;
+    const maxScore = Math.max(questions.length * 4, 1);
+    const rawScore = correct * 4 - incorrect;
+    const normalizedScore = Math.max(0, Math.min(1, rawScore / maxScore));
+    const percentage = (normalizedScore * 100).toFixed(1);
+    const estimatedPercentile = Math.max(0, Math.min(100, Math.round(45 + normalizedScore * 55)));
+
     return {
       correct,
       incorrect,
       unanswered,
       rawScore,
-      percentage: ((rawScore / (questions.length * 3)) * 100).toFixed(1)
+      percentage,
+      maxScore,
+      estimatedPercentile
     };
   };
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-10 border border-white/10"
+          >
+            <p className="text-5xl mb-4">🛠️</p>
+            <h2 className="text-2xl font-bold text-white mb-2">Question bank loading</h2>
+            <p className="text-gray-400 text-sm mb-6">
+              We&apos;re refreshing the {sectionData.name} deck. Please check back in a moment or pick another subject.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => router.push("/jee")}
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white font-semibold"
+            >
+              Back to Dashboard
+            </motion.button>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
   const score = calculateScore();
@@ -417,7 +243,7 @@ export default function CATSectionTest() {
             className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
           >
             <div className="text-6xl mb-4">
-              {score.rawScore >= (questions.length * 3) * 0.7 ? "🎉" : "📊"}
+              {score.rawScore >= score.maxScore * 0.7 ? "🎉" : "📊"}
             </div>
 
             <h2 className="text-4xl font-bold text-white mb-2">Test Completed!</h2>
@@ -468,6 +294,7 @@ export default function CATSectionTest() {
             <div className="mb-8 p-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg border border-blue-500/30">
               <p className="text-gray-400 text-sm mb-2">Score Percentage</p>
               <p className="text-5xl font-bold text-white">{score.percentage}%</p>
+              <p className="text-gray-300 text-xs mt-1">Out of {score.maxScore} marks</p>
               <p className="text-gray-400 text-sm mt-4">
                 {parseFloat(score.percentage) >= 70
                   ? "🎯 Excellent performance! Keep practicing."
@@ -475,16 +302,31 @@ export default function CATSectionTest() {
                   ? "👍 Good attempt! Focus on weak areas."
                   : "📚 Need more practice. Review concepts."}
               </p>
+              <p className="text-cyan-200 text-sm font-semibold mt-3">
+                Estimated Percentile: {score.estimatedPercentile}%ile
+              </p>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/cat")}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all"
-            >
-              Back to Dashboard →
-            </motion.button>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/jee")}
+                className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all"
+              >
+                Back to Dashboard →
+              </motion.button>
+              {savedAttemptId && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => router.push(`/analytics/review?id=${savedAttemptId}`)}
+                  className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg text-white font-semibold transition-all"
+                >
+                  Review Saved Attempt →
+                </motion.button>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>
@@ -661,7 +503,7 @@ export default function CATSectionTest() {
                   onClick={handleSubmitTest}
                   className="ml-auto btn-gradient-cyan-sm"
                 >
-                  Submit
+                  Submit & Save
                 </motion.button>
               </div>
             </motion.div>

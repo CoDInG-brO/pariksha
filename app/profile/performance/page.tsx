@@ -11,14 +11,13 @@ const performanceData = {
     studyHours: 156,
     currentStreak: 12
   },
-  cat: {
+  jee: {
     testsCompleted: 14,
     avgScore: 82,
     sections: [
-      { name: "Quantitative Aptitude", score: 85, questions: 180, correct: 153 },
-      { name: "Verbal Ability", score: 78, questions: 180, correct: 140 },
-      { name: "Data Interpretation", score: 80, questions: 120, correct: 96 },
-      { name: "Logical Reasoning", score: 84, questions: 120, correct: 101 }
+      { name: "Physics", score: 84, questions: 180, correct: 148 },
+      { name: "Chemistry", score: 81, questions: 180, correct: 146 },
+      { name: "Mathematics", score: 83, questions: 180, correct: 149 }
     ]
   },
   neet: {
@@ -31,11 +30,11 @@ const performanceData = {
     ]
   },
   recentTests: [
-    { name: "CAT Full Mock 5", date: "Dec 28, 2025", score: 85, percentile: 94 },
+    { name: "JEE Full Mock 5", date: "Dec 28, 2025", score: 85, percentile: 94 },
     { name: "NEET Physics", date: "Dec 26, 2025", score: 78, percentile: 88 },
-    { name: "CAT VARC Section", date: "Dec 24, 2025", score: 82, percentile: 91 },
+    { name: "JEE PCM Drill", date: "Dec 24, 2025", score: 82, percentile: 91 },
     { name: "NEET Full Mock 3", date: "Dec 22, 2025", score: 76, percentile: 85 },
-    { name: "CAT DILR Section", date: "Dec 20, 2025", score: 88, percentile: 96 }
+    { name: "JEE Mathematics Sprint", date: "Dec 20, 2025", score: 88, percentile: 96 }
   ]
 };
 
@@ -75,7 +74,7 @@ export default function PerformancePage() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* CAT Performance */}
+          {/* JEE Performance */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -84,36 +83,36 @@ export default function PerformancePage() {
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                📊 CAT Performance
+                📐 JEE Performance
               </h3>
-              <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">
-                {performanceData.cat.testsCompleted} tests
+              <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-full text-sm">
+                {performanceData.jee.testsCompleted} tests
               </span>
             </div>
             <div className="mb-4">
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-gray-400">Average Score</span>
-                <span className="text-blue-300 font-bold">{performanceData.cat.avgScore}%</span>
+                <span className="text-cyan-300 font-bold">{performanceData.jee.avgScore}%</span>
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
-                  style={{ width: `${performanceData.cat.avgScore}%` }}
+                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 rounded-full"
+                  style={{ width: `${performanceData.jee.avgScore}%` }}
                 />
               </div>
             </div>
             <div className="space-y-3">
-              {performanceData.cat.sections.map((section, idx) => (
+              {performanceData.jee.sections.map((section, idx) => (
                 <div key={idx} className="flex items-center justify-between">
                   <span className="text-gray-300 text-sm">{section.name}</span>
                   <div className="flex items-center gap-2">
                     <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-blue-400 rounded-full"
+                        className="h-full bg-cyan-400 rounded-full"
                         style={{ width: `${section.score}%` }}
                       />
                     </div>
-                    <span className="text-blue-300 text-sm font-medium w-10">{section.score}%</span>
+                    <span className="text-cyan-300 text-sm font-medium w-10">{section.score}%</span>
                   </div>
                 </div>
               ))}

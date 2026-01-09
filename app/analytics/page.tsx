@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
-  calculateCATPercentile,
+  calculateJEEPercentile,
   calculateNEETPercentile,
   estimateCollegeCategory,
-  estimateIIMCategory
+  estimateIITCategory
 } from "@/lib/percentileCalculator";
 
-import CatIcon from '@/components/icons/CatIcon';
+import JeeIcon from '@/components/icons/JeeIcon';
 import NeetIcon from '@/components/icons/NeetIcon';
 import ReviewIcon from '@/components/icons/ReviewIcon';
 import TrashIcon from '@/components/icons/TrashIcon';
@@ -23,7 +23,7 @@ import {
 
 export default function Analytics() {
   const router = useRouter();
-  const [examType, setExamType] = useState<"CAT" | "NEET">("CAT");
+  const [examType, setExamType] = useState<"JEE" | "NEET">("JEE");
   const [score, setScore] = useState<number>(150);
   const [attempts, setAttempts] = useState<TestAttempt[]>([]);
   const [showAttempts, setShowAttempts] = useState(true);
@@ -40,13 +40,13 @@ export default function Analytics() {
     }
   };
 
-  const CATResult = calculateCATPercentile(score);
-  const NEETResult = calculateNEETPercentile(score * 4); // Convert CAT-like input to NEET
-  const result = examType === "CAT" ? CATResult : NEETResult;
+  const jeeResult = calculateJEEPercentile(score);
+  const neetResult = calculateNEETPercentile(score);
+  const result = examType === "JEE" ? jeeResult : neetResult;
 
   const estimatedColleges =
-    examType === "CAT"
-      ? estimateIIMCategory(result.percentile)
+    examType === "JEE"
+      ? estimateIITCategory(result.percentile)
       : estimateCollegeCategory(result.percentile);
 
   return (
@@ -100,7 +100,7 @@ export default function Analytics() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
                     className={`bg-surface rounded-xl p-4 border ${
-                      attempt.examType === "CAT"
+                      attempt.examType === "JEE"
                         ? "border-blue-500/20 hover:border-blue-500/40"
                         : "border-green-500/20 hover:border-green-500/40"
                     } transition-all`}
@@ -109,11 +109,11 @@ export default function Analytics() {
                       {/* Left: Info */}
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg ${
-                          attempt.examType === "CAT"
+                          attempt.examType === "JEE"
                             ? "bg-blue-500/10"
                             : "bg-green-500/10"
                         }`}>
-                          {attempt.examType === "CAT" ? <CatIcon className="w-6 h-6 text-blue-400" /> : <NeetIcon className="w-6 h-6 text-green-400" />}
+                          {attempt.examType === "JEE" ? <JeeIcon className="w-6 h-6 text-blue-400" /> : <NeetIcon className="w-6 h-6 text-green-400" />}
                         </div>
                         <div>
                           <h3 className="text-base font-semibold text-white">
@@ -151,7 +151,7 @@ export default function Analytics() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
-                          className={`px-2 py-1 rounded-lg font-semibold text-xs transition-all flex items-center gap-1 ${attempt.examType === "CAT" ? 'btn-gradient-blue' : 'btn-gradient-green'}`}
+                          className={`px-2 py-1 rounded-lg font-semibold text-xs transition-all flex items-center gap-1 ${attempt.examType === "JEE" ? 'btn-gradient-blue' : 'btn-gradient-green'}`}
                           style={{padding: '0.25rem 0.75rem'}}
                         >
                           <ReviewIcon className="w-3 h-3" /> Review
@@ -191,10 +191,10 @@ export default function Analytics() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/cat/full-mock")}
+                onClick={() => router.push("/jee/full-mock")}
                 className="btn-gradient-blue"
               >
-                📊 Take CAT Mock
+                🧮 Take JEE Mock
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -218,17 +218,17 @@ export default function Analytics() {
         className="max-w-7xl mx-auto px-5 mb-6"
       >
         <div className="flex gap-3">
-          {(["CAT", "NEET"] as const).map(type => (
+          {(["JEE", "NEET"] as const).map(type => (
             <button
               key={type}
               onClick={() => setExamType(type)}
               className={`px-4 py-2.5 rounded-md font-semibold transition-all text-sm ${
                 examType === type
-                  ? (type === "CAT" ? 'btn-gradient-blue' : 'btn-gradient-green')
+                  ? (type === "JEE" ? 'btn-gradient-blue' : 'btn-gradient-green')
                   : "bg-white border border-slate-200/50 text-slate-700 hover:text-slate-900"
               }`}
             >
-              {type === "CAT" ? "📊 CAT" : "🔬 NEET"}
+              {type === "JEE" ? "🧮 JEE" : "🔬 NEET"}
             </button>
           ))}
         </div>
@@ -247,12 +247,12 @@ export default function Analytics() {
             <div>
               <label className="text-gray-300 font-semibold block mb-2 text-sm">
                 Your Score: <span className="text-accent text-base">{score}</span>
-                {examType === "CAT" ? <span className="text-gray-500 text-xs">/198</span> : <span className="text-gray-500 text-xs">/720</span>}
+                {examType === "JEE" ? <span className="text-gray-500 text-xs">/300</span> : <span className="text-gray-500 text-xs">/720</span>}
               </label>
               <input
                 type="range"
                 min={0}
-                max={examType === "CAT" ? 198 : 720}
+                max={examType === "JEE" ? 300 : 720}
                 value={score}
                 onChange={e => setScore(Number(e.target.value))}
                 className="w-full h-2 bg-black/20 rounded-lg appearance-none cursor-pointer accent-accent [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-0 [&::-webkit-slider-thumb]:h-0 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:width-0 [&::-moz-range-thumb]:background-transparent"
@@ -273,7 +273,7 @@ export default function Analytics() {
           {/* Percentile Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className={`bg-surface rounded-2xl p-6 border ${examType === 'CAT' ? 'border-blue-500/20' : 'border-green-500/20'} shadow-sm`}
+            className={`bg-surface rounded-2xl p-6 border ${examType === 'JEE' ? 'border-blue-500/20' : 'border-green-500/20'} shadow-sm`}
           >
             <p className="text-gray-400 text-sm mb-2">Your Percentile</p>
             <motion.p
@@ -281,7 +281,7 @@ export default function Analytics() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className={`text-[1.5rem] font-bold mb-2 ${examType === 'CAT' ? 'text-blue-400' : 'text-green-400'}`}
+              className={`text-[1.5rem] font-bold mb-2 ${examType === 'JEE' ? 'text-blue-400' : 'text-green-400'}`}
             >
               {result.percentile.toFixed(1)}
             </motion.p>
@@ -361,7 +361,7 @@ export default function Analytics() {
       >
         <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-xl">
           <h3 className="text-2xl font-bold text-white mb-6">
-            {examType === "CAT" ? "🎓 IIM Categories You Can Target" : "🏥 College Categories You Can Target"}
+            {examType === "JEE" ? "🎓 IIT/NIT Categories You Can Target" : "🏥 College Categories You Can Target"}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {estimatedColleges.map((college, idx) => (
@@ -451,24 +451,24 @@ export default function Analytics() {
               <li className="flex gap-3">
                 <span>📌</span>
                 <span className="text-gray-300">
-                  {examType === "CAT"
-                    ? "Focus on Verbal Ability section for better percentile"
+                  {examType === "JEE"
+                    ? "Prioritize Physics problem-solving for a quick percentile boost"
                     : "Strengthen Biology - it's 50% of the exam"}
                 </span>
               </li>
               <li className="flex gap-3">
                 <span>📌</span>
                 <span className="text-gray-300">
-                  {examType === "CAT"
-                    ? "Improve accuracy in Data Interpretation questions"
+                  {examType === "JEE"
+                    ? "Sharpen Maths accuracy on calculus and coordinate geometry"
                     : "Improve Physics numericals - they're scoring"}
                 </span>
               </li>
               <li className="flex gap-3">
                 <span>📌</span>
                 <span className="text-gray-300">
-                  {examType === "CAT"
-                    ? "Practice negative marking strategies"
+                  {examType === "JEE"
+                    ? "Balance speed with precision to avoid negative marking"
                     : "Practice Chemistry conceptual questions"}
                 </span>
               </li>

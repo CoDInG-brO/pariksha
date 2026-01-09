@@ -235,7 +235,7 @@ export default function LoginPage() {
         >
           <div className="p-2 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
             <span className="text-xl">📊</span>
-            <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">CAT Prep</p>
+            <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">JEE Prep</p>
           </div>
           <div className="p-2 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/5">
             <span className="text-xl">🔬</span>

@@ -12,7 +12,7 @@ const defaultProfile = {
   phone: "+91 9876543210",
   address: "Mumbai, Maharashtra",
   dateOfBirth: "2000-01-01",
-  targetExam: "CAT"
+  targetExam: "JEE"
 };
 
 export default function EditProfilePage() {
@@ -283,9 +283,9 @@ export default function EditProfilePage() {
                     onChange={(e) => setFormData({ ...formData, targetExam: e.target.value })}
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
                   >
-                    <option value="CAT">CAT</option>
+                    <option value="JEE">JEE</option>
                     <option value="NEET">NEET</option>
-                    <option value="BOTH">Both CAT & NEET</option>
+                    <option value="BOTH">Both JEE & NEET</option>
                   </select>
                 </div>
               </div>

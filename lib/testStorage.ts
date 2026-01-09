@@ -1,7 +1,7 @@
 // Types for test storage
 export interface TestAttempt {
   id: string;
-  examType: "CAT" | "NEET";
+  examType: "JEE" | "NEET";
   timestamp: string;
   timeSpent: number; // in seconds
   totalQuestions: number;
@@ -72,7 +72,7 @@ export function getTestAttemptById(id: string): TestAttempt | null {
 }
 
 // Get attempts filtered by exam type
-export function getAttemptsByExamType(examType: "CAT" | "NEET"): TestAttempt[] {
+export function getAttemptsByExamType(examType: "JEE" | "NEET"): TestAttempt[] {
   const attempts = getTestAttempts();
   return attempts.filter(a => a.examType === examType);
 }
@@ -130,7 +130,7 @@ export function formatTimeSpent(seconds: number): string {
 const PRACTICE_KEY = "iyotaprep_practice_progress";
 
 export interface PracticeProgress {
-  examType: "CAT" | "NEET";
+  examType: "JEE" | "NEET";
   currentQuestionIndex: number;
   totalQuestions: number;
   answeredQuestions: number[];

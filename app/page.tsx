@@ -14,7 +14,7 @@ export default function Home() {
     {
       icon: "📊",
       title: "Real Exam Simulation",
-      description: "Experience the exact exam pattern, timing, and pressure of actual CAT and NEET exams."
+      description: "Experience the exact exam pattern, timing, and pressure of actual JEE and NEET exams."
     },
     {
       icon: "📈",
@@ -39,13 +39,13 @@ export default function Home() {
   ];
 
   const examFeatures = {
-    cat: [
-      "Quantitative Aptitude with 2000+ problems",
-      "Verbal Ability & Reading Comprehension",
-      "Data Interpretation & Logical Reasoning",
-      "Sectional and full-length mock tests",
-      "IIM-specific question patterns",
-      "Time management strategies"
+    jee: [
+      "Physics numericals with NCERT + advanced problem sets",
+      "Chemistry coverage for Organic, Inorganic & Physical",
+      "Mathematics drills on Algebra, Calculus & Coordinate Geometry",
+      "Chapter-wise practice layered with previous year questions",
+      "Mock tests for both JEE Main and Advanced patterns",
+      "Time management and attempt optimization strategies"
     ],
     neet: [
       "Physics with NCERT-aligned content",
@@ -140,7 +140,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
           >
-            Crack <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">CAT & NEET</span>
+            Crack <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-blue-500">JEE & NEET</span>
             <br />with AI-Powered Preparation
           </motion.h1>
           
@@ -249,7 +249,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* CAT Card */}
+            {/* JEE Card */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -261,12 +261,12 @@ export default function Home() {
                   📊
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">CAT Preparation</h3>
-                  <p className="text-orange-300">For IIM & Top B-School Aspirants</p>
+                  <h3 className="text-2xl font-bold text-white">JEE Preparation</h3>
+                  <p className="text-orange-300">For IIT & Top Engineering Aspirants</p>
                 </div>
               </div>
               <ul className="space-y-3">
-                {examFeatures.cat.map((feature, i) => (
+                {examFeatures.jee.map((feature, i) => (
                   <li key={i} className="flex items-center gap-3 text-gray-300">
                     <span className="text-orange-400">✓</span>
                     {feature}
@@ -277,7 +277,7 @@ export default function Home() {
                 onClick={() => router.push("/signup")}
                 className="mt-8 w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-xl text-white font-semibold transition-all"
               >
-                Start CAT Prep →
+                Start JEE Prep →
               </button>
             </motion.div>
 
@@ -335,9 +335,9 @@ export default function Home() {
             {[
               {
                 name: "Priya Sharma",
-                exam: "CAT 2025 - 99.5%ile",
-                college: "IIM Ahmedabad",
-                quote: "IYOTAPREP's AI-powered analytics helped me identify my weak areas. The personalized study plan was a game-changer!"
+                exam: "JEE Main 2025 - AIR 52",
+                college: "IIT Bombay",
+                quote: "IYOTAPREP's AI analytics spotted the exact Physics topics pulling me down. The custom drills boosted my score massively."
               },
               {
                 name: "Rahul Verma",
@@ -347,9 +347,9 @@ export default function Home() {
               },
               {
                 name: "Ananya Patel",
-                exam: "CAT 2025 - 99.2%ile",
-                college: "IIM Bangalore",
-                quote: "Mock tests with real exam interface gave me the confidence I needed. Highly recommend for serious aspirants!"
+                exam: "JEE Advanced 2025 - AIR 312",
+                college: "IIT Kharagpur",
+                quote: "The mock tests mirror the JEE interface and pacing perfectly. Going into the exam felt familiar and calm."
               }
             ].map((testimonial, i) => (
               <motion.div
