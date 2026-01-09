@@ -120,13 +120,13 @@ export default function TakeTest() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background">
       {/* Progress Bar */}
-      <div className="sticky top-20 z-40 bg-surface/80 backdrop-blur border-b border-white/10 px-6 py-4">
+      <div className="sticky top-20 z-40 bg-surface/80 backdrop-blur border-b border-white/10 px-5 py-3">
         <div className="max-w-3xl mx-auto">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-medium text-gray-300">Progress</span>
-            <span className="text-sm font-medium text-accent">{currentQuestionIndex + 1} / {questions.length}</span>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-xs font-medium text-gray-300 uppercase tracking-wide">Progress</span>
+            <span className="text-xs font-semibold text-accent">{currentQuestionIndex + 1} / {questions.length}</span>
           </div>
-          <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden border border-white/10">
+          <div className="w-full h-1.5 bg-black/30 rounded-full overflow-hidden border border-white/10">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -138,7 +138,7 @@ export default function TakeTest() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-3xl mx-auto px-5 py-6">
         <motion.div
           key={currentQuestionIndex}
           initial={{ opacity: 0, y: 20 }}
@@ -146,16 +146,16 @@ export default function TakeTest() {
           transition={{ duration: 0.3 }}
         >
           {/* Question Card */}
-          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10 shadow-2xl">
-            <div className="mb-6">
-              <span className="inline-block px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-semibold mb-4">
+          <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10 shadow-2xl">
+            <div className="mb-4">
+              <span className="inline-block px-2.5 py-1 rounded-full bg-accent/20 text-accent text-[11px] font-semibold mb-3">
                 {currentQuestion.category}
               </span>
-              <h2 className="text-2xl font-bold text-white leading-relaxed">{currentQuestion.question}</h2>
+              <h2 className="text-xl font-semibold text-white leading-snug">{currentQuestion.question}</h2>
             </div>
 
             {/* Options */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-2.5 mb-6">
               {currentQuestion.options.map((option, index) => {
                 let bgColor = "bg-black/20 border-white/10 hover:border-accent/50";
                 let icon = "";
@@ -176,10 +176,10 @@ export default function TakeTest() {
                     whileHover={{ x: selectedAnswer === null ? 4 : 0 }}
                     onClick={() => handleAnswerClick(index)}
                     disabled={showAnswer}
-                    className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${selectedAnswer === index ? (isCorrect ? 'option--correct' : 'option--incorrect') : (showAnswer && index === currentQuestion.correctAnswer ? 'option--correct' : 'bg-black/20 border-white/10 hover:border-accent/50')} ${selectedAnswer === null ? "cursor-pointer" : ""}`}
+                    className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 ${selectedAnswer === index ? (isCorrect ? 'option--correct' : 'option--incorrect') : (showAnswer && index === currentQuestion.correctAnswer ? 'option--correct' : 'bg-black/20 border-white/10 hover:border-accent/50')} ${selectedAnswer === null ? "cursor-pointer" : ""}`}
                   >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-semibold text-sm ${
+                    <div className="flex items-center gap-3">
+                      <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center font-semibold text-xs ${
                         selectedAnswer === index
                           ? isCorrect
                             ? "bg-green-500 border-green-500 text-white"
@@ -202,7 +202,7 @@ export default function TakeTest() {
                         )}
                       </div>
 
-                      <span className="text-white font-medium">{option}</span>
+                      <span className="text-white text-sm leading-snug">{option}</span>
 
                       {/* right-side icons when showing answer */}
                       <div className="ml-auto flex items-center gap-2">
@@ -237,7 +237,7 @@ export default function TakeTest() {
                   <button
                     onClick={handleShowAnswer}
                     aria-pressed={showAnswer}
-                    className={`w-full py-3 px-4 rounded-xl text-white font-semibold transition-all duration-200 btn-toggle green`}
+                    className={`w-full py-2.5 px-4 rounded-xl text-white font-semibold transition-all duration-200 btn-toggle green`}
                   >
                     <span className="inline-flex items-center justify-center gap-3">
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -254,21 +254,21 @@ export default function TakeTest() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className={`p-6 rounded-xl border-2 ${
+                    className={`p-5 rounded-xl border-2 ${
                       isCorrect
                         ? "bg-green-500/10 border-green-500/30"
                         : "bg-red-500/10 border-red-500/30"
                     }`}
                   >
-                    <p className="text-sm text-gray-300 mb-3">
+                    <p className="text-sm text-gray-300 mb-2.5">
                       <strong className="text-white">Your Answer:</strong> {currentQuestion.options[selectedAnswer]}
                     </p>
                     {!isCorrect && (
-                      <p className="text-sm text-gray-300 mb-3">
+                      <p className="text-sm text-gray-300 mb-2.5">
                         <strong className="text-white">Correct Answer:</strong> {currentQuestion.options[currentQuestion.correctAnswer]}
                       </p>
                     )}
-                    <p className="text-sm text-gray-300 mb-4">
+                    <p className="text-sm text-gray-300 mb-3">
                       <strong className="text-white">Explanation:</strong> {currentQuestion.explanation}
                     </p>
                     <p className={`text-sm font-semibold ${isCorrect ? "text-green-400" : "text-red-400"}`}>
@@ -282,11 +282,11 @@ export default function TakeTest() {
         </motion.div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between gap-4 mt-8">
+        <div className="flex justify-between gap-3 mt-6">
           <button
             onClick={handlePrevious}
             disabled={currentQuestionIndex === 0}
-            className="px-6 py-3 bg-surface border-2 border-white/10 hover:border-white/20 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            className="px-5 py-2.5 bg-surface border-2 border-white/10 hover:border-white/20 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             ← Previous
           </button>
@@ -294,7 +294,7 @@ export default function TakeTest() {
             <button
               onClick={handleSubmitExam}
               disabled={selectedAnswer === null}
-              className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-green-500/20"
+              className="px-6 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-green-500/20"
             >
               Submit Exam →
             </button>
@@ -302,7 +302,7 @@ export default function TakeTest() {
             <button
               onClick={handleNext}
               disabled={selectedAnswer === null}
-              className="px-8 py-3 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-accent/20"
+              className="px-6 py-2.5 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-accent/20"
             >
               Next →
             </button>

@@ -815,29 +815,29 @@ export default function Practice() {
   // Exam selection screen
   if (!selectedExam) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center pt-25">
+      <div className="min-h-[70vh] flex items-center justify-center pt-25">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">Practice Mode</h1>
-          <p className="text-gray-400 mb-12 text-lg">Choose your exam to start practicing with random questions</p>
+          <h1 className="text-3xl font-bold text-white mb-3">Practice Mode</h1>
+          <p className="text-gray-400 mb-8 text-base">Choose your exam to start practicing with random questions</p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {/* CAT Option */}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => handleExamSelect("CAT")}
               aria-label="Start CAT Practice"
-              className="w-64 p-6 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
+              className="w-56 p-5 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
             >
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
                 {/* SVG icon */}
-                <CatIcon className="w-10 h-10 text-white" />
+                <CatIcon className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-1">CAT</h3>
+              <h3 className="text-lg font-semibold text-white mb-0.5">CAT</h3>
               <p className="text-gray-300 text-sm">Quantitative, Verbal & Logical Reasoning</p>
             </motion.button>
 
@@ -847,13 +847,13 @@ export default function Practice() {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleExamSelect("NEET")}
               aria-label="Start NEET Practice"
-              className="w-64 p-6 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
+              className="w-56 p-5 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
             >
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-105 transition-transform">
+              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
                 {/* SVG icon */}
-                <NeetIcon className="w-10 h-10 text-white" />
+                <NeetIcon className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-1">NEET</h3>
+              <h3 className="text-lg font-semibold text-white mb-0.5">NEET</h3>
               <p className="text-gray-300 text-sm">Physics, Chemistry & Biology</p>
             </motion.button>
           </div>
@@ -864,10 +864,10 @@ export default function Practice() {
 
   // Questions display
   return (
-    <div className="max-w-4xl mx-auto pb-12 pt-[7rem]">
+    <div className="max-w-4xl mx-auto pb-8 pt-[6.5rem] px-5">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8 sticky top-20 bg-background/80 backdrop-blur-lg py-4 z-10 border-b border-white/10">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between mb-5 sticky top-20 bg-background/80 backdrop-blur-lg py-3 z-10 border-b border-white/10">
+        <div className="flex items-center gap-3">
           <button
             onClick={resetPractice}
             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
@@ -875,16 +875,16 @@ export default function Practice() {
             ← Back
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white">{selectedExam} Practice</h1>
+            <h1 className="text-xl font-bold text-white">{selectedExam} Practice</h1>
           </div>
         </div>
-        <div className={`px-4 py-2 rounded-lg ${selectedExam === "CAT" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"}`}>
+        <div className={`px-3 py-1.5 rounded-lg text-sm ${selectedExam === "CAT" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"}`}>
           {selectedExam}
         </div>
       </div>
 
       {/* Questions List */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {questions.map((q, index) => (
           <>
             <motion.div
@@ -893,20 +893,20 @@ export default function Practice() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.02 }}
-              className="bg-surface rounded-xl p-6 border"
+              className="bg-surface rounded-xl p-4 border border-white/10"
             >
             {/* Question */}
-            <div className="flex gap-4 mb-4">
-              <span className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${
+            <div className="flex gap-3 mb-3">
+              <span className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
                 selectedExam === "CAT" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"
               }`}>
                 {index + 1}
               </span>
-              <p className="text-white text-lg">{q.question}</p>
+              <p className="text-white text-base leading-snug">{q.question}</p>
             </div>
 
             {/* Options */}
-            <div className="space-y-2 ml-12 mb-4">
+            <div className="space-y-1.5 ml-10 mb-3">
               {q.options.map((option, optIndex) => {
                 const isSelected = selectedOptions[q.id] === option;
                 const showingAnswer = showAnswers[q.id];
@@ -934,12 +934,12 @@ export default function Practice() {
                     onClick={() => !showAnswers[q.id] && handleOptionSelect(q.id, option, q.answer)}
                     role="button"
                     aria-pressed={isSelected}
-                    className={`flex items-center gap-4 p-3 rounded-lg border transition-all ${isSelected ? 'option--selected' : ''} ${(showingAnswer && isCorrect) || (!showingAnswer && isSelected && isCorrect) ? 'option--correct' : ''} ${(showingAnswer && isSelected && !isCorrect) || (!showingAnswer && isSelected && !isCorrect) ? 'option--incorrect' : ''}`}
+                    className={`flex items-center gap-3 p-2.5 rounded-lg border transition-all ${isSelected ? 'option--selected' : ''} ${(showingAnswer && isCorrect) || (!showingAnswer && isSelected && isCorrect) ? 'option--correct' : ''} ${(showingAnswer && isSelected && !isCorrect) || (!showingAnswer && isSelected && !isCorrect) ? 'option--incorrect' : ''}`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${isSelected ? 'bg-white/5' : 'bg-transparent text-gray-400'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs ${isSelected ? 'bg-white/5' : 'bg-transparent text-gray-400'}`}>
                       {String.fromCharCode(65 + optIndex)}
                     </div>
-                    <div className="flex-1 text-white">{option}</div>
+                    <div className="flex-1 text-white text-sm leading-snug">{option}</div>
 
                     {/* Inline icons - show immediately on selection */}
                     <div className="w-6 h-6 flex items-center justify-center">
@@ -962,12 +962,12 @@ export default function Practice() {
             </div>
 
             {/* Show Answer Button & Action Buttons */}
-            <div className="ml-12 flex gap-3 flex-wrap">
+            <div className="ml-10 flex gap-2.5 flex-wrap">
               <button
                 onClick={() => toggleAnswer(q.id)}
                 aria-pressed={showAnswers[q.id]}
                 className={showAnswers[q.id] ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                style={{padding: '0.5rem 1rem'}}
+                style={{padding: '0.4rem 0.9rem'}}
               >
                 <span className="inline-flex items-center gap-2">
                   {showAnswers[q.id] ? (
@@ -990,7 +990,7 @@ export default function Practice() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-gradient-yellow"
-                style={{padding: '0.5rem 1rem'}}
+                style={{padding: '0.4rem 0.9rem'}}
               >
                 <span className="inline-flex items-center gap-2">
                   <span>{showAnswers[q.id] ? 'Hide Answer' : 'Show Answer'}</span>
@@ -1003,7 +1003,7 @@ export default function Practice() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-4 p-4 rounded-lg bg-black/30 border border-accent/20"
+                className="mt-3 p-3 rounded-lg bg-black/30 border border-accent/20"
               >
                 <p className="text-sm text-gray-300">
                   <span className="text-accent font-medium">Explanation: </span>
@@ -1017,7 +1017,7 @@ export default function Practice() {
       </div>
 
       {/* Submit Practice Button */}
-      <div className="mt-12 flex justify-end">
+      <div className="mt-8 flex justify-end">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}

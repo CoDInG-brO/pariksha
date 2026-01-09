@@ -50,18 +50,18 @@ export default function Analytics() {
       : estimateCollegeCategory(result.percentile);
 
   return (
-    <div className="min-h-screen pt-25 pb-12 px-6">
+    <div className="min-h-screen pt-25 pb-10 px-5">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto mb-12"
+        className="max-w-7xl mx-auto mb-8"
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-5xl font-bold text-slate-900 mb-4">Performance Analytics</h1>
-            <p className="text-slate-600 text-lg">Track your percentile & compare performance against other candidates</p>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">Performance Analytics</h1>
+            <p className="text-slate-600 text-base">Track your percentile & compare performance against other candidates</p>
           </div>
         </div>
       </motion.div>
@@ -73,42 +73,42 @@ export default function Analytics() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="max-w-7xl mx-auto px-6 mb-12"
+          className="max-w-7xl mx-auto px-5 mb-8"
         >
-          <div className="bg-surface rounded-2xl p-8 border shadow-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+          <div className="bg-surface rounded-2xl p-6 border shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 📋 Your Test Attempts
-                <span className="text-sm font-normal text-gray-400 bg-black/10 px-3 py-1 rounded-full">
+                <span className="text-xs font-normal text-gray-400 bg-black/10 px-2.5 py-0.5 rounded-full">
                   {attempts.length} {attempts.length === 1 ? "attempt" : "attempts"}
                 </span>
               </h2>
               <button
                 onClick={() => setShowAttempts(!showAttempts)}
-                className="text-accent hover:text-accent/80 text-sm font-semibold"
+                className="text-accent hover:text-accent/80 text-xs font-semibold"
               >
                 {showAttempts ? "Hide" : "Show"}
               </button>
             </div>
 
             {showAttempts && (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {attempts.map((attempt, idx) => (
                   <motion.div
                     key={attempt.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.05 }}
-                    className={`bg-surface rounded-xl p-5 border ${
+                    className={`bg-surface rounded-xl p-4 border ${
                       attempt.examType === "CAT"
                         ? "border-blue-500/20 hover:border-blue-500/40"
                         : "border-green-500/20 hover:border-green-500/40"
                     } transition-all`}
                   >
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5">
                       {/* Left: Info */}
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-xl ${
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg ${
                           attempt.examType === "CAT"
                             ? "bg-blue-500/10"
                             : "bg-green-500/10"
@@ -116,37 +116,37 @@ export default function Analytics() {
                           {attempt.examType === "CAT" ? <CatIcon className="w-6 h-6 text-blue-400" /> : <NeetIcon className="w-6 h-6 text-green-400" />}
                         </div>
                         <div>
-                          <h3 className="text-lg font-bold text-white">
+                          <h3 className="text-base font-semibold text-white">
                             {attempt.examType} Full Mock Test
                           </h3>
-                          <p className="text-sm text-gray-400">
+                          <p className="text-xs text-gray-400">
                             {formatTimestamp(attempt.timestamp)} • {formatTimeSpent(attempt.timeSpent)}
                           </p>
                         </div>
                       </div>
 
                       {/* Middle: Stats */}
-                      <div className="flex items-center gap-6 text-center">
+                      <div className="flex items-center gap-5 text-center">
                         <div>
-                          <p className="text-2xl font-bold text-accent">{attempt.percentage}%</p>
-                          <p className="text-xs text-gray-400">Score</p>
+                          <p className="text-xl font-bold text-accent">{attempt.percentage}%</p>
+                          <p className="text-[11px] text-gray-400">Score</p>
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-green-400">{attempt.correct}</p>
-                          <p className="text-xs text-gray-400">Correct</p>
+                          <p className="text-xl font-bold text-green-400">{attempt.correct}</p>
+                          <p className="text-[11px] text-gray-400">Correct</p>
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-red-400">{attempt.incorrect}</p>
-                          <p className="text-xs text-gray-400">Wrong</p>
+                          <p className="text-xl font-bold text-red-400">{attempt.incorrect}</p>
+                          <p className="text-[11px] text-gray-400">Wrong</p>
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-gray-400">{attempt.unanswered}</p>
-                          <p className="text-xs text-gray-400">Skipped</p>
+                          <p className="text-xl font-bold text-gray-400">{attempt.unanswered}</p>
+                          <p className="text-[11px] text-gray-400">Skipped</p>
                         </div>
                       </div>
 
                       {/* Right: Actions */}
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
@@ -181,13 +181,13 @@ export default function Analytics() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="max-w-7xl mx-auto px-6 mb-12"
+          className="max-w-7xl mx-auto px-5 mb-8"
         >
-          <div className="bg-surface rounded-2xl p-8 border text-center">
-            <p className="text-6xl mb-4">📝</p>
-            <h3 className="text-xl font-bold text-white mb-2">No Test Attempts Yet</h3>
-            <p className="text-gray-400 mb-6">Take a full mock test to see your results here</p>
-            <div className="flex justify-center gap-4">
+          <div className="bg-surface rounded-2xl p-6 border text-center">
+            <p className="text-5xl mb-3">📝</p>
+            <h3 className="text-lg font-bold text-white mb-2">No Test Attempts Yet</h3>
+            <p className="text-gray-400 mb-4 text-sm">Take a full mock test to see your results here</p>
+            <div className="flex justify-center gap-3">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -215,14 +215,14 @@ export default function Analytics() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-7xl mx-auto px-6 mb-8"
+        className="max-w-7xl mx-auto px-5 mb-6"
       >
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           {(["CAT", "NEET"] as const).map(type => (
             <button
               key={type}
               onClick={() => setExamType(type)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              className={`px-4 py-2.5 rounded-md font-semibold transition-all text-sm ${
                 examType === type
                   ? (type === "CAT" ? 'btn-gradient-blue' : 'btn-gradient-green')
                   : "bg-white border border-slate-200/50 text-slate-700 hover:text-slate-900"
@@ -239,15 +239,15 @@ export default function Analytics() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto px-5 mb-8"
       >
-        <div className="bg-surface rounded-2xl p-8 border">
-          <h2 className="text-lg font-bold text-white mb-6">Enter Your Score</h2>
+        <div className="bg-surface rounded-2xl p-6 border">
+          <h2 className="text-base font-bold text-white mb-4">Enter Your Score</h2>
           <div className="space-y-4">
             <div>
-              <label className="text-gray-300 font-semibold block mb-2">
-                Your Score: <span className="text-accent text-lg">{score}</span>
-                {examType === "CAT" ? <span className="text-gray-500 text-sm">/198</span> : <span className="text-gray-500 text-sm">/720</span>}
+              <label className="text-gray-300 font-semibold block mb-2 text-sm">
+                Your Score: <span className="text-accent text-base">{score}</span>
+                {examType === "CAT" ? <span className="text-gray-500 text-xs">/198</span> : <span className="text-gray-500 text-xs">/720</span>}
               </label>
               <input
                 type="range"
@@ -267,13 +267,13 @@ export default function Analytics() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="max-w-7xl mx-auto px-6 mb-12"
+        className="max-w-7xl mx-auto px-5 mb-8"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Percentile Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className={`bg-surface rounded-2xl p-8 border ${examType === 'CAT' ? 'border-blue-500/20' : 'border-green-500/20'} shadow-sm`}
+            className={`bg-surface rounded-2xl p-6 border ${examType === 'CAT' ? 'border-blue-500/20' : 'border-green-500/20'} shadow-sm`}
           >
             <p className="text-gray-400 text-sm mb-2">Your Percentile</p>
             <motion.p
@@ -293,7 +293,7 @@ export default function Analytics() {
           {/* Score Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className="bg-surface rounded-2xl p-8 border border-accent/30 shadow-sm"
+            className="bg-surface rounded-2xl p-6 border border-accent/30 shadow-sm"
           >
             <p className="text-gray-400 text-sm mb-2">Your Score</p>
             <motion.p
@@ -313,7 +313,7 @@ export default function Analytics() {
           {/* Rank Card */}
           <motion.div
             whileHover={{ y: -8 }}
-            className="bg-surface rounded-2xl p-8 border border-purple-300/10 shadow-sm"
+            className="bg-surface rounded-2xl p-6 border border-purple-300/10 shadow-sm"
           >
             <p className="text-gray-400 text-sm mb-2">Estimated Rank</p>
             <motion.p
