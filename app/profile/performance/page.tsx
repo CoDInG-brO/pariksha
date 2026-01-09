@@ -43,7 +43,7 @@ export default function PerformancePage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12">
+    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-25 pb-12">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -956,7 +956,7 @@ export default function CATFullMock() {
         </div>
       </div>
 
-      <div className="pt-8 pb-4">
+      <div className="pt-6 pb-4">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2 items-start">
           {/* Main Question Area */}
           <div className="lg:col-span-3">

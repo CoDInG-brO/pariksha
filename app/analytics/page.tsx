@@ -50,7 +50,7 @@ export default function Analytics() {
       : estimateCollegeCategory(result.percentile);
 
   return (
-    <div className="min-h-screen pt-20 pb-12 px-6">
+    <div className="min-h-screen pt-25 pb-12 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

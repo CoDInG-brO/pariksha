@@ -516,25 +516,25 @@ export default function CATSectionTest() {
         </div>
       </div>
 
-      <div className="pt-28 pb-6">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+      <div className="pt-6 pb-4">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2 items-start">
           {/* Main Question Area */}
           <div className="lg:col-span-3">
             <motion.div
               key={currentQuestionIndex}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-5 border border-white/10"
+              transition={{ duration: 0.2 }}
+              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-4 border border-white/10"
             >
               {/* Question */}
-              <div className="mb-5">
-                <p className="text-gray-400 text-xs mb-4">Question {currentQuestionIndex + 1}</p>
-                <h2 className="text-xl font-bold text-white">{currentQuestion.question}</h2>
+              <div className="mb-1.5">
+                <p className="text-gray-400 text-[10px] mb-0.5">Question {currentQuestionIndex + 1}</p>
+                <h2 className="text-base font-semibold text-white leading-tight">{currentQuestion.question}</h2>
               </div>
 
               {/* Options */}
-              <div className="space-y-2 mb-5">
+              <div className="space-y-0.5 mb-1.5">
                 {currentQuestion.options.map((option, index) => {
                   const isSelected = selectedAnswers[currentQuestionIndex] === index;
                   const isCorrect = index === currentQuestion.correctAnswer;
@@ -601,7 +601,7 @@ export default function CATSectionTest() {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleShowAnswer}
                   className={showAnswer ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                  style={{padding: '0.5rem 1rem'}}
+                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswer ? (
@@ -625,7 +625,7 @@ export default function CATSectionTest() {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
                   className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
-                  style={{padding: '0.5rem 1rem'}}
+                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
                 >
                   <span className="inline-flex items-center gap-2">
                     <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked ✓' : '☆ Mark for Review'}</span>
@@ -634,23 +634,23 @@ export default function CATSectionTest() {
               </div>
 
               {/* Navigation */}
-              <div className="flex gap-3 mt-5 pt-5 border-t border-white/10">
+              <div className="flex gap-2 mt-3 pt-3 border-t border-white/10">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
                 >
                   ← Previous
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleNext}
                   disabled={currentQuestionIndex === questions.length - 1}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
                 >
                   Next →
                 </motion.button>
@@ -659,7 +659,7 @@ export default function CATSectionTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-md"
+                  className="ml-auto btn-gradient-cyan-sm"
                 >
                   Submit
                 </motion.button>
@@ -669,9 +669,9 @@ export default function CATSectionTest() {
 
           {/* Question Navigator */}
           <div className="lg:col-span-1">
-            <div className="sticky top-28 bg-gradient-to-br from-surface to-elevated rounded-2xl p-6.5 border border-white/10">
-              <h3 className="text-white font-bold mb-4">Questions</h3>
-              <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
+            <div className="sticky top-8 bg-gradient-to-br from-surface to-elevated rounded-2xl p-2 border border-white/10 space-y-2">
+              <h3 className="text-white font-bold mb-4 text-xs">Questions</h3>
+              <div className="flex flex-wrap gap-0.5">
                 {questions.map((_, index) => {
                   const answered = selectedAnswers[index] !== null;
                   const isCurrent = index === currentQuestionIndex;
@@ -680,17 +680,17 @@ export default function CATSectionTest() {
                   return (
                     <motion.button
                       key={index}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleJumpToQuestion(index)}
-                      className={`aspect-square rounded-lg font-bold text-sm transition-all border-2 ${
+                      className={`w-5 h-5 rounded inline-flex items-center justify-center text-[9px] font-bold transition-all border ${
                         isCurrent
                           ? "bg-blue-500 border-blue-500 text-white"
                           : answered
                           ? "bg-green-500/30 border-green-500 text-green-300"
                           : isMarked
                           ? "bg-yellow-500/30 border-yellow-500 text-yellow-300"
-                          : "bg-white/10 border-white/20 text-gray-400 hover:bg-white/20"
+                          : "bg-white/5 border-white/20 text-gray-500 hover:bg-white/10"
                       }`}
                     >
                       {index + 1}

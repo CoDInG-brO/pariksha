@@ -413,6 +413,31 @@
   .light .btn-gradient-cyan-md {
     color: white !important;
   }
+
+  .btn-gradient-cyan-sm {
+    padding: 0.5rem 1.25rem;
+    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+    background-size: 200% auto;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem;
+    border-radius: 0.75rem;
+    transition: all 0.5s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-gradient-cyan-sm:hover {
+    background-position: right center !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-gradient-cyan-sm,
+  .light .btn-gradient-cyan-sm {
+    color: white !important;
+  }
 }
 
 /* Dark theme (default) */
@@ -840,4 +865,11 @@ p, span, a, button, label, .text-base, .text-sm, .text-xs {
 
 .light .text-gray-500 {
   color: #64748B;
+}
+
+/* Custom Padding Classes */
+@layer utilities {
+  .pt-25 {
+    padding-top: 1.25rem;
+  }
 }

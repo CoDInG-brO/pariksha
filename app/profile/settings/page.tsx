@@ -48,7 +48,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12">
+    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-25 pb-12">
       {/* Success Dialog */}
       <AnimatePresence>
         {showSuccessToast && (
@@ -282,7 +282,7 @@ export default function SettingsPage() {
             </button>
             <button
               onClick={handleSave}
-              className="px-5 py-2.5 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white text-sm font-medium transition-all"
+              className="btn-gradient-cyan-md"
             >
               Save Changes
             </button>

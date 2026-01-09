@@ -48,10 +48,38 @@ export default function EditProfilePage() {
         alert("Image size should be less than 2MB");
         return;
       }
+      
+      // Compress image using canvas
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64 = reader.result as string;
-        setProfilePhoto(base64);
+        const img = new Image();
+        img.onload = () => {
+          // Create canvas and compress
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Resize if image is too large
+          const maxDimension = 400;
+          if (width > height && width > maxDimension) {
+            height = (height * maxDimension) / width;
+            width = maxDimension;
+          } else if (height > maxDimension) {
+            width = (width * maxDimension) / height;
+            height = maxDimension;
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            // Compress to JPEG with quality 0.7 to reduce size
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+            setProfilePhoto(compressedBase64);
+          }
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -74,6 +102,8 @@ export default function EditProfilePage() {
     } else {
       localStorage.removeItem(PROFILE_PHOTO_KEY);
     }
+    // Dispatch storage event to update navbar and other components in real-time
+    window.dispatchEvent(new Event('storage'));
     setShowSuccessDialog(true);
   };
 
@@ -83,7 +113,7 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-28 pb-12">
+    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-25 pb-12">
       {/* Success Dialog */}
       <AnimatePresence>
         {showSuccessDialog && (
@@ -263,7 +293,7 @@ export default function EditProfilePage() {
               <div className="flex gap-4 mt-8 pt-6 border-t border-white/10">
                 <button
                   type="submit"
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white font-semibold transition-all"
+                  className="flex-1 btn-gradient-cyan-md"
                 >
                   💾 Save Changes
                 </button>

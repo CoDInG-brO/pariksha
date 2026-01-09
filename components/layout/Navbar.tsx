@@ -48,6 +48,28 @@ export function Navbar() {
         console.error("Failed to parse profile:", e);
       }
     }
+
+    // Listen for storage updates from profile edit page
+    const handleStorageUpdate = () => {
+      const updatedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
+      if (updatedPhoto) {
+        setProfilePhoto(updatedPhoto);
+      }
+      const updatedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (updatedProfile) {
+        try {
+          const parsed = JSON.parse(updatedProfile);
+          if (parsed.name) {
+            setProfileName(parsed.name);
+          }
+        } catch (e) {
+          console.error("Failed to parse profile:", e);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageUpdate);
+    return () => window.removeEventListener("storage", handleStorageUpdate);
   }, []);
 
   // Close menu when clicking outside
@@ -90,171 +112,210 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between mb-4">
-          <Link href="/dashboard" className="flex items-center gap-2 group">
+    <header className="fixed top-0 w-full z-50 bg-gradient-to-b from-surface via-surface to-background/50 backdrop-blur-xl border-b border-white/5 shadow-2xl">
+      <div className="max-w-7xl mx-auto px-6 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo & Brand */}
+          <Link href="/dashboard" className="flex items-center gap-3 group">
             {/* Logo - Book Stack SVG */}
-            <svg 
-              width="28" 
-              height="28" 
-              viewBox="0 0 32 32" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform group-hover:scale-105"
-            >
-              {/* Book 1 - Tilted (Orange/Red) */}
-              <rect x="4" y="6" width="6" height="20" rx="1" transform="rotate(-12 4 6)" 
-                className="fill-orange-500" />
-              <rect x="5.5" y="8" width="3" height="14" rx="0.5" transform="rotate(-12 5.5 8)" 
-                className="fill-orange-300" />
-              
-              {/* Book 2 - Tall (Green) */}
-              <rect x="11" y="4" width="6" height="22" rx="1" 
-                className="fill-green-500" />
-              <rect x="12.5" y="6" width="3" height="16" rx="0.5" 
-                className="fill-green-300" />
-              
-              {/* Book 3 - Medium (Yellow) */}
-              <rect x="18" y="8" width="5" height="18" rx="1" 
-                className="fill-yellow-500" />
-              <rect x="19.2" y="10" width="2.5" height="12" rx="0.5" 
-                className="fill-yellow-300" />
-              
-              {/* Book 4 - Short (Blue/Cyan) */}
-              <rect x="24" y="10" width="5" height="16" rx="1" 
-                className="fill-cyan-500" />
-              <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" 
-                className="fill-cyan-300" />
-              
-              {/* Shelf */}
-              <rect x="2" y="26" width="28" height="2" rx="1" 
-                className="fill-gray-400 dark:fill-gray-500" />
-            </svg>
-            
-            <span className="font-bold text-xl text-white tracking-tight">
-              IYOTAPREP
-            </span>
-          </Link>
-          
-          {/* Profile Menu */}
-          {session ? (
-            <div className="relative" ref={menuRef}>
-              <button
-                onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold hover:scale-105 transition-transform border-2 border-white/20 overflow-hidden"
+            <div className="relative">
+              <svg 
+                width="32" 
+                height="32" 
+                viewBox="0 0 32 32" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-lg"
               >
-                {getProfileImage() ? (
-                  <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-sm">{getInitials(session.user?.name)}</span>
-                )}
-              </button>
+                {/* Book 1 - Tilted (Orange/Red) */}
+                <rect x="4" y="6" width="6" height="20" rx="1" transform="rotate(-12 4 6)" 
+                  className="fill-orange-500 drop-shadow-lg" />
+                <rect x="5.5" y="8" width="3" height="14" rx="0.5" transform="rotate(-12 5.5 8)" 
+                  className="fill-orange-300" />
+                
+                {/* Book 2 - Tall (Green) */}
+                <rect x="11" y="4" width="6" height="22" rx="1" 
+                  className="fill-green-500 drop-shadow-lg" />
+                <rect x="12.5" y="6" width="3" height="16" rx="0.5" 
+                  className="fill-green-300" />
+                
+                {/* Book 3 - Medium (Yellow) */}
+                <rect x="18" y="8" width="5" height="18" rx="1" 
+                  className="fill-yellow-500 drop-shadow-lg" />
+                <rect x="19.2" y="10" width="2.5" height="12" rx="0.5" 
+                  className="fill-yellow-300" />
+                
+                {/* Book 4 - Short (Blue/Cyan) */}
+                <rect x="24" y="10" width="5" height="16" rx="1" 
+                  className="fill-cyan-500 drop-shadow-lg" />
+                <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" 
+                  className="fill-cyan-300" />
+                
+                {/* Shelf */}
+                <rect x="2" y="26" width="28" height="2" rx="1" 
+                  className="fill-gray-400 dark:fill-gray-500" />
+              </svg>
+              <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-yellow-500 to-cyan-500 rounded-lg opacity-0 group-hover:opacity-20 blur transition-opacity duration-300 -z-10" />
+            </div>
+            
+            <div className="flex flex-col">
+              <span className="font-bold text-lg bg-gradient-to-r from-orange-400 via-yellow-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+                IYOTAPREP
+              </span>
+              <span className="text-[10px] text-gray-500 font-medium tracking-widest">EXAM PREP</span>
+            </div>
+          </Link>
 
-              {/* Dropdown Menu */}
-              {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-52 bg-elevated rounded-xl border border-white/10 shadow-2xl overflow-hidden">
-                  {/* User Info Header */}
-                  <div className="bg-gradient-to-br from-accent/20 to-blue-600/20 p-3 border-b border-white/10">
-                    <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold text-base overflow-hidden">
-                        {getProfileImage() ? (
-                          <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
-                        ) : (
-                          <span>{getInitials(session.user?.name)}</span>
-                        )}
+          {/* Navigation Tabs - Center */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {tabs.map(tab => {
+              const isActive = 
+                (tab.name === "CAT" && pathname.startsWith("/cat")) ||
+                (tab.name === "NEET" && pathname.startsWith("/neet")) ||
+                (tab.name === "Dashboard" && pathname === "/dashboard") ||
+                (tab.name === "Practice Mode" && pathname.startsWith("/practice")) ||
+                (tab.name === "Analytics" && pathname.startsWith("/analytics"));
+
+              return (
+                <Link
+                  key={tab.href}
+                  href={tab.href}
+                  className={`relative px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 flex items-center gap-1.5 group ${
+                    isActive 
+                      ? "text-white" 
+                      : "text-gray-400 hover:text-gray-200"
+                  }`}
+                >
+                  <span className="text-base">{tab.icon}</span>
+                  <span>{tab.name}</span>
+                  
+                  {isActive && (
+                    <div className="absolute inset-0 -z-10 rounded-lg">
+                      <div className={`absolute inset-0 rounded-lg opacity-20 ${
+                        tab.name === "CAT" ? "bg-gradient-to-r from-blue-500 to-blue-600" :
+                        tab.name === "NEET" ? "bg-gradient-to-r from-green-500 to-green-600" :
+                        tab.name === "Analytics" ? "bg-gradient-to-r from-purple-500 to-purple-600" :
+                        tab.name === "Practice Mode" ? "bg-gradient-to-r from-pink-500 to-pink-600" :
+                        "bg-gradient-to-r from-cyan-500 to-blue-600"
+                      }`} />
+                    </div>
+                  )}
+                  
+                  {!isActive && (
+                    <div className="absolute bottom-1 left-4 right-4 h-0.5 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Right Side - Profile & Auth */}
+          <div className="flex items-center gap-3">
+            {/* Mobile Menu Indicator */}
+            <div className="lg:hidden flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="text-xs font-medium text-gray-400">Menu</span>
+            </div>
+
+            {session ? (
+              <div className="relative" ref={menuRef}>
+                <button
+                  onClick={() => setShowProfileMenu(!showProfileMenu)}
+                  className="group relative"
+                >
+                  <div className="absolute -inset-1 bg-gradient-to-r from-accent via-blue-500 to-cyan-500 rounded-full opacity-0 group-hover:opacity-40 blur transition-all duration-300 group-hover:duration-200" />
+                  <div className="relative w-11 h-11 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300 border border-white/20 overflow-hidden">
+                    {getProfileImage() ? (
+                      <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-sm">{getInitials(session.user?.name)}</span>
+                    )}
+                  </div>
+                </button>
+
+                {/* Dropdown Menu */}
+                {showProfileMenu && (
+                  <div className="absolute right-0 mt-3 w-56 bg-gradient-to-b from-surface to-elevated rounded-2xl border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl">
+                    {/* User Info Header */}
+                    <div className="bg-gradient-to-br from-accent/10 via-blue-600/10 to-transparent p-4 border-b border-white/5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold overflow-hidden border border-white/20 shadow-lg shadow-accent/20">
+                          {getProfileImage() ? (
+                            <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
+                          ) : (
+                            <span>{getInitials(session.user?.name)}</span>
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-sm">{getDisplayName().split(' ')[0]}</p>
+                          <p className="text-gray-400 text-xs">Exam Candidate</p>
+                        </div>
                       </div>
-                      <p className="text-white font-medium text-sm">{getDisplayName().split(' ')[0]}</p>
+                    </div>
+
+                    {/* Menu Items */}
+                    <div className="p-2">
+                      <Link
+                        href="/profile/edit"
+                        onClick={() => setShowProfileMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
+                      >
+                        <span className="text-lg group-hover:scale-110 transition-transform">✏️</span>
+                        <div>
+                          <p className="text-sm font-medium">Edit Profile</p>
+                          <p className="text-[11px] text-gray-400">Update information</p>
+                        </div>
+                      </Link>
+
+                      <Link
+                        href="/profile/settings"
+                        onClick={() => setShowProfileMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
+                      >
+                        <span className="text-lg group-hover:scale-110 transition-transform">⚙️</span>
+                        <div>
+                          <p className="text-sm font-medium">Settings</p>
+                          <p className="text-[11px] text-gray-400">Preferences</p>
+                        </div>
+                      </Link>
+
+                      <Link
+                        href="/profile/performance"
+                        onClick={() => setShowProfileMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
+                      >
+                        <span className="text-lg group-hover:scale-110 transition-transform">📊</span>
+                        <div>
+                          <p className="text-sm font-medium">My Performance</p>
+                          <p className="text-[11px] text-gray-400">View progress</p>
+                        </div>
+                      </Link>
+
+                      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-red-500/20 transition-all duration-200 text-red-400 hover:text-red-300 group"
+                      >
+                        <span className="text-lg group-hover:scale-110 transition-transform">🚪</span>
+                        <p className="text-sm font-medium">Logout</p>
+                      </button>
                     </div>
                   </div>
-
-                  {/* Menu Items */}
-                  <div className="p-1.5">
-                    <Link
-                      href="/profile/edit"
-                      onClick={() => setShowProfileMenu(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-                    >
-                      <span className="text-base">✏️</span>
-                      <div>
-                        <p className="text-sm font-medium">Edit Profile</p>
-                        <p className="text-[10px] text-gray-400">Update your information</p>
-                      </div>
-                    </Link>
-
-                    <Link
-                      href="/profile/settings"
-                      onClick={() => setShowProfileMenu(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-                    >
-                      <span className="text-base">⚙️</span>
-                      <div>
-                        <p className="text-sm font-medium">Settings</p>
-                        <p className="text-[10px] text-gray-400">Preferences & notifications</p>
-                      </div>
-                    </Link>
-
-                    <Link
-                      href="/profile/performance"
-                      onClick={() => setShowProfileMenu(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-                    >
-                      <span className="text-base">📊</span>
-                      <div>
-                        <p className="text-sm font-medium">My Performance</p>
-                        <p className="text-[10px] text-gray-400">View your progress</p>
-                      </div>
-                    </Link>
-
-                    <div className="h-px bg-white/10 my-1.5" />
-
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-red-500/20 transition-colors text-red-400 hover:text-red-300"
-                    >
-                      <span className="text-base">🚪</span>
-                      <p className="text-sm font-medium">Logout</p>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="px-4 py-2 bg-gradient-to-r from-accent to-blue-600 rounded-lg text-white font-medium hover:opacity-90 transition-opacity"
-            >
-              Sign In
-            </Link>
-          )}
-        </div>
-
-        {/* Navigation Tabs */}
-        <nav className="flex gap-6 text-[13px] border-t border-white/10 pt-4 overflow-x-auto">
-          {tabs.map(tab => {
-            let bgClass = "";
-            if (tab.name === "CAT" && pathname.startsWith("/cat")) {
-              bgClass = "bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-lg";
-            } else if (tab.name === "NEET" && pathname.startsWith("/neet")) {
-              bgClass = "bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 rounded-lg";
-            }
-
-            return (
+                )}
+              </div>
+            ) : (
               <Link
-                key={tab.href}
-                href={tab.href}
-                className={`font-medium transition-colors whitespace-nowrap flex items-center gap-1.5 ${
-                  bgClass || (pathname === tab.href
-                    ? "text-accent border-b-2 border-accent pb-2"
-                    : "text-gray-500 hover:text-accent pb-2")
-                }`}
+                href="/login"
+                className="relative group px-6 py-2 font-semibold text-sm text-white overflow-hidden rounded-lg transition-all duration-300"
               >
-                <span className="text-sm">{tab.icon}</span>
-                {tab.name}
+                <div className="absolute inset-0 bg-gradient-to-r from-accent via-blue-500 to-cyan-500 transition-all duration-300 opacity-100 group-hover:opacity-0" />
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-accent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                <span className="relative">Sign In →</span>
               </Link>
-            );
-          })}
-        </nav>
+            )}
+          </div>
+        </div>
       </div>
     </header>
   );

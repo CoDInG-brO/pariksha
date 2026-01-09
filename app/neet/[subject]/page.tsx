@@ -423,24 +423,24 @@ export default function NEETSubjectTest() {
         </div>
       </div>
 
-      <div className="pt-28 pb-6">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="pt-6 pb-4">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
           {/* Main Question Area */}
           <div className="lg:col-span-3">
             <motion.div
               key={currentQuestionIndex}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10"
+              transition={{ duration: 0.2 }}
+              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-4 border border-white/10"
             >
               {/* Question Header */}
-              <div className="mb-8 flex items-start justify-between">
+              <div className="mb-1.5 flex items-start justify-between">
                 <div>
-                  <p className="text-gray-400 text-sm mb-4">Question {currentQuestionIndex + 1}</p>
-                  <h2 className="text-2xl font-bold text-white">{currentQuestion.question}</h2>
+                  <p className="text-gray-400 text-[10px] mb-0.5">Question {currentQuestionIndex + 1}</p>
+                  <h2 className="text-base font-semibold text-white leading-tight">{currentQuestion.question}</h2>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap ${
                   currentQuestion.difficulty === "Easy"
                     ? "bg-green-500/20 text-green-300 border border-green-500/30"
                     : currentQuestion.difficulty === "Medium"
@@ -452,7 +452,7 @@ export default function NEETSubjectTest() {
               </div>
 
               {/* Options */}
-              <div className="space-y-3 mb-8">
+              <div className="space-y-0.5 mb-1.5">
                 {currentQuestion.options.map((option, index) => {
                   const isSelected = selectedAnswers[currentQuestionIndex] === index;
                   const isCorrect = index === currentQuestion.correctAnswer;
@@ -462,22 +462,22 @@ export default function NEETSubjectTest() {
                   return (
                     <motion.button
                       key={index}
-                      whileHover={{ x: 4 }}
+                      whileHover={{ x: 0.5 }}
                       onClick={() => handleAnswerClick(index)}
                       disabled={testSubmitted}
-                      className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
+                      className={`w-full p-3 rounded-lg border text-left transition-all ${
                         showCorrect
                           ? "bg-green-500/20 border-green-500 text-green-300"
                           : showIncorrect
                           ? "bg-red-500/20 border-red-500 text-red-300"
                           : isSelected
-                          ? "bg-blue-500/20 border-blue-500 text-blue-300"
-                          : "bg-white/5 border-white/20 text-white hover:bg-white/10"
+                          ? "bg-blue-500/16 border-blue-500 text-blue-300"
+                          : "bg-white/5 border-white/16 text-white hover:bg-white/6"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1.5">
                         <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-bold ${
+                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center text-[9px] font-bold ${
                             showCorrect
                               ? "bg-green-500 border-green-500"
                               : showIncorrect
@@ -489,9 +489,9 @@ export default function NEETSubjectTest() {
                         >
                           {isSelected ? "✓" : String.fromCharCode(65 + index)}
                         </div>
-                        <span>{option}</span>
-                        {showCorrect && <span className="ml-auto">✓ Correct</span>}
-                        {showIncorrect && <span className="ml-auto">✗ Incorrect</span>}
+                        <span className="text-sm">{option}</span>
+                        {showCorrect && <span className="ml-auto text-[9px]">✓</span>}
+                        {showIncorrect && <span className="ml-auto text-[9px]">✗</span>}
                       </div>
                     </motion.button>
                   );
@@ -504,43 +504,46 @@ export default function NEETSubjectTest() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="mb-8 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg"
+                  className="mb-1.5 p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg"
                 >
-                  <p className="text-orange-200 text-sm">
+                  <p className="text-orange-200 text-xs">
                     <strong>Explanation:</strong> {currentQuestion.explanation}
                   </p>
                 </motion.div>
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-3 flex-wrap">
-                {/* Show Answer Button */}
+              <div className="flex gap-2 flex-wrap">
                 <motion.button
-                  onClick={() => setShowAnswer(!showAnswer)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleShowAnswer}
                   className={showAnswer ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                  style={{padding: '0.5rem 1rem'}}
+                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswer ? (
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        <line x1="12" y1="3" x2="12" y2="21" stroke="currentColor" strokeWidth={2} />
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.94 17.94L6.06 6.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M10.58 10.58A3 3 0 1113.42 13.42 3 3 0 0110.58 10.58z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6-9.1-6-9.1-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     ) : (
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.9 12s3.6-6 9.1-6 9.1 6 9.1 6-3.6 6-9.1 6S2.9 12 2.9 12z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     )}
                     <span>{showAnswer ? 'Hide Answer' : 'Show Answer'}</span>
                   </span>
                 </motion.button>
 
-                {/* Mark for Review Button */}
                 <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
                   className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
-                  style={{padding: '0.5rem 1rem'}}
+                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
                 >
                   <span className="inline-flex items-center gap-2">
                     <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked ✓' : '☆ Mark for Review'}</span>
@@ -549,23 +552,23 @@ export default function NEETSubjectTest() {
               </div>
 
               {/* Navigation */}
-              <div className="flex gap-3 mt-8 pt-8 border-t border-white/10">
+              <div className="flex gap-2 mt-3 pt-3 border-t border-white/10">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
                 >
                   ← Previous
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleNext}
                   disabled={currentQuestionIndex === questions.length - 1}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all"
+                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
                 >
                   Next →
                 </motion.button>
@@ -574,7 +577,7 @@ export default function NEETSubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-lg"
+                  className="ml-auto btn-gradient-cyan-sm"
                 >
                   Submit Practice
                 </motion.button>
@@ -584,9 +587,9 @@ export default function NEETSubjectTest() {
 
           {/* Question Navigator */}
           <div className="lg:col-span-1">
-            <div className="sticky top-28 bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10">
-              <h3 className="text-white font-bold mb-4">Questions</h3>
-              <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
+            <div className="sticky top-8 bg-gradient-to-br from-surface to-elevated rounded-2xl p-2 border border-white/10 space-y-2">
+              <h3 className="text-white font-bold mb-4 text-xs">Questions</h3>
+              <div className="flex flex-wrap gap-0.5">
                 {questions.map((_, index) => {
                   const answered = selectedAnswers[index] !== null;
                   const isCurrent = index === currentQuestionIndex;
@@ -596,17 +599,17 @@ export default function NEETSubjectTest() {
                   return (
                     <motion.button
                       key={index}
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleJumpToQuestion(index)}
-                      className={`aspect-square rounded-lg font-bold text-sm transition-all border-2 relative ${
+                      className={`w-5 h-5 rounded inline-flex items-center justify-center text-[9px] font-bold transition-all border relative ${
                         isCurrent
-                          ? "bg-orange-500 border-orange-500 text-white"
+                          ? "bg-blue-500 border-blue-500 text-white"
                           : answered
                           ? "bg-green-500/30 border-green-500 text-green-300"
                           : isMarked
                           ? "bg-yellow-500/30 border-yellow-500 text-yellow-300"
-                          : "bg-white/10 border-white/20 text-gray-400 hover:bg-white/20"
+                          : "bg-white/5 border-white/20 text-gray-500 hover:bg-white/10"
                       }`}
                     >
                       {index + 1}
