@@ -279,8 +279,13 @@ export default function JEEFullMock() {
               </div>
             </div>
 
-            <div className="mb-8 p-6 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-              <p className="text-amber-100">⚠️ <strong>Important:</strong> Once you advance to the next subject, the previous one locks. Plan 55 minutes per subject and keep a buffer for numerical answers.</p>
+            <div className="mb-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-left">
+              <p className="text-amber-900 text-base font-semibold mb-2">⚠️ Exam protocol</p>
+              <ul className="text-amber-800 text-sm space-y-1 list-disc pl-5">
+                <li>Advancing to the next subject permanently locks the previous section.</li>
+                <li>Budget 55 minutes per subject and keep a buffer for numerical answers.</li>
+                <li>Pause and alert the invigilator before refreshing or leaving the window.</li>
+              </ul>
             </div>
 
             {/* Camera Monitoring Toggle */}
