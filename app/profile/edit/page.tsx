@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
-const PROFILE_STORAGE_KEY = "pariksha_user_profile";
-const PROFILE_PHOTO_KEY = "pariksha_profile_photo";
+const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
+const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
 
 const defaultProfile = {
   name: "Student Name",

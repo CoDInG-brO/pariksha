@@ -807,43 +807,53 @@ export default function CATFullMock() {
               <p className="text-yellow-200">⚠️ <strong>Important:</strong> You cannot go back to previous sections once you move forward. Plan carefully!</p>
             </div>
 
-            {/* Camera Monitoring Toggle (improved contrast & unified accent) */}
+            {/* Camera Monitoring Toggle */}
             <div className="mb-8 p-6 bg-surface rounded-lg border border-white/8">
               <div className="flex items-center justify-between">
                 <div className="text-left">
-                  <p className="text-accent font-semibold flex items-center gap-2">
+                  <p className="text-accent text-sm font-semibold flex items-center gap-2">
                     <span>📷</span> Camera Monitoring
                   </p>
-                  <p className="text-gray-400 text-sm mt-1">
+                  <p className="text-gray-400 text-xs mt-1">
                     Display your webcam feed during the exam
                   </p>
                 </div>
                 <button
                   onClick={() => setCameraEnabled(!cameraEnabled)}
-                  className={`relative w-14 h-8 rounded-full transition-colors ${
+                  className={`relative w-11 h-6 rounded-full transition-colors ${
                     cameraEnabled ? "bg-accent" : "bg-gray-600"
                   }`}
                 >
                   <span
-                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${
-                      cameraEnabled ? "translate-x-6" : "translate-x-0"
+                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${
+                      cameraEnabled ? "translate-x-5" : "translate-x-0"
                     }`}
                   />
                 </button>
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                startTimeRef.current = Date.now();
-                setTestStarted(true);
-              }}
-              className="btn-gradient-blue-lg"
-            >
-              Start Full Mock →
-            </motion.button>
+            <div className="flex gap-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/cat")}
+                className="btn-gradient-gray-lg flex-1"
+              >
+                ← Back to Dashboard
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  startTimeRef.current = Date.now();
+                  setTestStarted(true);
+                }}
+                className="btn-gradient-blue-lg flex-1"
+              >
+                Start Full Mock →
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -947,12 +957,12 @@ export default function CATFullMock() {
       </div>
 
       <div className="pt-8 pb-4">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2 items-start">
           {/* Main Question Area */}
           <div className="lg:col-span-3">
-            <motion.div key={currentQuestionIndex} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-2 border border-white/10">
+            <motion.div key={currentQuestionIndex} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-4 border border-white/10">
               {/* Section Indicator */}
-              <div className="mb-0.5 pb-0.5 border-b border-white/10">
+              <div className="mb-1.5 pb-1 border-b border-white/10">
                 <p className="text-[10px] text-gray-400">
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
                     currentSection === 0 ? "bg-blue-500/30 text-blue-300" : currentSection === 1 ? "bg-purple-500/30 text-purple-300" : "bg-orange-500/10 text-orange-300"
@@ -963,13 +973,13 @@ export default function CATFullMock() {
               </div>
 
               {/* Question */}
-              <div className="mb-2">
-                <p className="text-gray-400 text-[10px] mb-1">Question {questionIndexInSection + 1} of {currentSectionQuestions.length}</p>
-                <h2 className="text-base font-medium text-white leading-tight">{currentQuestion.question}</h2>
+              <div className="mb-1.5">
+                <p className="text-gray-400 text-[10px] mb-0.5">Question {questionIndexInSection + 1} of {currentSectionQuestions.length}</p>
+                <h2 className="text-base font-semibold text-white leading-tight">{currentQuestion.question}</h2>
               </div>
 
               {/* Options */}
-              <div className="space-y-0.5 mb-2">
+              <div className="space-y-0.5 mb-1.5">
                 {currentQuestion.options.map((option, index) => {
                   const isSelected = selectedAnswers[currentQuestionIndex] === index;
 
@@ -979,7 +989,7 @@ export default function CATFullMock() {
                       whileHover={{ x: 0.5 }}
                       onClick={() => handleAnswerClick(index)}
                       disabled={testSubmitted}
-                      className={`w-full p-1 rounded-lg border text-left text-xs transition-all ${
+                      className={`w-full p-3 rounded-lg border text-left transition-all ${
                         isSelected
                           ? "bg-blue-500/16 border-blue-500 text-blue-300"
                           : "bg-white/5 border-white/16 text-white hover:bg-white/6"
@@ -1050,7 +1060,7 @@ export default function CATFullMock() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-lg"
+                  className="ml-auto btn-gradient-cyan-md"
                 >
                   Submit
                 </motion.button>
@@ -1060,7 +1070,7 @@ export default function CATFullMock() {
 
           {/* Progress Panel */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-gradient-to-br from-surface to-elevated rounded-2xl p-1.5 border border-white/10 space-y-2">
+            <div className="sticky top-8 bg-gradient-to-br from-surface to-elevated rounded-2xl p-2 border border-white/10 space-y-2">
               {/* Question Grid by Section */}
               {sections.map((section, idx) => {
                 const sectionStart = sections.slice(0, idx).reduce((acc, s) => acc + s.questions.length, 0);
@@ -1068,7 +1078,7 @@ export default function CATFullMock() {
 
                 return (
                   <div key={idx} className={`${isCurrentSection ? "" : "opacity-60"}`}>
-                    <div className="flex items-center gap-1 mb-1">
+                    <div className="flex items-center gap-1 mb-2">
                       <span className={`text-[10px] font-semibold ${
                         idx === 0 ? "text-blue-300" : idx === 1 ? "text-purple-300" : "text-orange-300"
                       }`}>
@@ -1112,15 +1122,15 @@ export default function CATFullMock() {
 
               {/* Overall Stats */}
               <div className="pt-6 border-t border-white/10">
-                <h3 className="text-white font-bold mb-4 text-sm">Overall Stats</h3>
+                <h3 className="text-white font-bold mb-4 text-xs">Overall Stats</h3>
                 <div className="space-y-2">
                   <div>
                     <p className="text-gray-400 text-xs">Answered</p>
-                    <p className="text-xl font-bold text-green-400">{selectedAnswers.filter((a) => a !== null).length}/{allQuestions.length}</p>
+                    <p className="text-lg font-bold text-green-400">{selectedAnswers.filter((a) => a !== null).length}/{allQuestions.length}</p>
                   </div>
                   <div>
                     <p className="text-gray-400 text-xs">Marked for Review</p>
-                    <p className="text-xl font-bold text-yellow-400">{markedForReview.size}</p>
+                    <p className="text-lg font-bold text-yellow-400">{markedForReview.size}</p>
                   </div>
                 </div>
               </div>

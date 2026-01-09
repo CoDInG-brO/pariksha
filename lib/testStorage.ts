@@ -26,7 +26,7 @@ export interface SavedQuestion {
   subject?: string;
 }
 
-const STORAGE_KEY = "pariksha_test_attempts";
+const STORAGE_KEY = "iyotaprep_test_attempts";
 
 // Get all test attempts from localStorage
 export function getTestAttempts(): TestAttempt[] {
@@ -127,7 +127,7 @@ export function formatTimeSpent(seconds: number): string {
 }
 
 // Practice Mode Progress Types and Functions
-const PRACTICE_KEY = "pariksha_practice_progress";
+const PRACTICE_KEY = "iyotaprep_practice_progress";
 
 export interface PracticeProgress {
   examType: "CAT" | "NEET";

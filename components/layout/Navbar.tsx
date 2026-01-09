@@ -6,8 +6,8 @@ import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 
-const PROFILE_PHOTO_KEY = "pariksha_profile_photo";
-const PROFILE_STORAGE_KEY = "pariksha_user_profile";
+const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
+const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 
 const tabs = [
   { name: "Dashboard", href: "/dashboard", icon: "📊" },
@@ -133,7 +133,7 @@ export function Navbar() {
             </svg>
             
             <span className="font-bold text-xl text-white tracking-tight">
-              Pariksha
+              IYOTAPREP
             </span>
           </Link>
           

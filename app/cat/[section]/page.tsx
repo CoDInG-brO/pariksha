@@ -517,7 +517,7 @@ export default function CATSectionTest() {
       </div>
 
       <div className="pt-28 pb-6">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           {/* Main Question Area */}
           <div className="lg:col-span-3">
             <motion.div
@@ -525,16 +525,16 @@ export default function CATSectionTest() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10"
+              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-5 border border-white/10"
             >
               {/* Question */}
-              <div className="mb-8">
-                <p className="text-gray-400 text-sm mb-4">Question {currentQuestionIndex + 1}</p>
-                <h2 className="text-2xl font-bold text-white">{currentQuestion.question}</h2>
+              <div className="mb-5">
+                <p className="text-gray-400 text-xs mb-4">Question {currentQuestionIndex + 1}</p>
+                <h2 className="text-xl font-bold text-white">{currentQuestion.question}</h2>
               </div>
 
               {/* Options */}
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 mb-5">
                 {currentQuestion.options.map((option, index) => {
                   const isSelected = selectedAnswers[currentQuestionIndex] === index;
                   const isCorrect = index === currentQuestion.correctAnswer;
@@ -547,7 +547,7 @@ export default function CATSectionTest() {
                       whileHover={{ x: 4 }}
                       onClick={() => handleAnswerClick(index)}
                       disabled={testSubmitted}
-                      className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
+                      className={`w-full p-3 rounded-lg border-2 text-left transition-all ${
                         showCorrect
                           ? "bg-green-500/20 border-green-500 text-green-300"
                           : showIncorrect
@@ -634,7 +634,7 @@ export default function CATSectionTest() {
               </div>
 
               {/* Navigation */}
-              <div className="flex gap-3 mt-8 pt-8 border-t border-white/10">
+              <div className="flex gap-3 mt-5 pt-5 border-t border-white/10">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -659,9 +659,9 @@ export default function CATSectionTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-lg"
+                  className="ml-auto btn-gradient-cyan-md"
                 >
-                  Submit Practice
+                  Submit
                 </motion.button>
               </div>
             </motion.div>
@@ -669,7 +669,7 @@ export default function CATSectionTest() {
 
           {/* Question Navigator */}
           <div className="lg:col-span-1">
-            <div className="sticky top-28 bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10">
+            <div className="sticky top-28 bg-gradient-to-br from-surface to-elevated rounded-2xl p-6.5 border border-white/10">
               <h3 className="text-white font-bold mb-4">Questions</h3>
               <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
                 {questions.map((_, index) => {
@@ -703,13 +703,13 @@ export default function CATSectionTest() {
               <div className="mt-6 space-y-3 pt-6 border-t border-white/10">
                 <div>
                   <p className="text-gray-400 text-xs">Answered</p>
-                  <p className="text-2xl font-bold text-green-400">
+                  <p className="text-lg font-bold text-green-400">
                     {selectedAnswers.filter((a) => a !== null).length}/{questions.length}
                   </p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs">Marked</p>
-                  <p className="text-2xl font-bold text-yellow-400">{markedForReview.size}</p>
+                  <p className="text-lg font-bold text-yellow-400">{markedForReview.size}</p>
                 </div>
               </div>
             </div>

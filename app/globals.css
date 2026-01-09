@@ -3,11 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom padding override */
-.pt-20 {
-  padding-top: 2rem;
-}
-
 /* Custom Button Classes with Gradients */
 @layer components {
   .btn-gradient-blue {
@@ -391,6 +386,31 @@
 
   .btn-gradient-cyan-lg,
   .light .btn-gradient-cyan-lg {
+    color: white !important;
+  }
+
+  .btn-gradient-cyan-md {
+    padding: 0.65rem 1.75rem;
+    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+    background-size: 200% auto;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    transition: all 0.5s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-gradient-cyan-md:hover {
+    background-position: right center !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-gradient-cyan-md,
+  .light .btn-gradient-cyan-md {
     color: white !important;
   }
 }

@@ -65,7 +65,7 @@ export function playIncorrectSound(): void {
 // Check if sound effects are enabled in localStorage
 export function isSoundEnabled(): boolean {
   if (typeof window === "undefined") return false;
-  const settings = localStorage.getItem("pariksha_settings");
+  const settings = localStorage.getItem("iyotaprep_settings");
   if (settings) {
     try {
       const parsed = JSON.parse(settings);
@@ -80,7 +80,7 @@ export function isSoundEnabled(): boolean {
 // Save sound settings
 export function setSoundEnabled(enabled: boolean): void {
   if (typeof window === "undefined") return;
-  const settings = localStorage.getItem("pariksha_settings");
+  const settings = localStorage.getItem("iyotaprep_settings");
   let parsed: Record<string, any> = {};
   if (settings) {
     try {
@@ -90,5 +90,5 @@ export function setSoundEnabled(enabled: boolean): void {
     }
   }
   parsed.soundEffects = enabled;
-  localStorage.setItem("pariksha_settings", JSON.stringify(parsed));
+  localStorage.setItem("iyotaprep_settings", JSON.stringify(parsed));
 }

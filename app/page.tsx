@@ -99,7 +99,7 @@ export default function Home() {
               <rect x="24" y="10" width="5" height="16" rx="1" fill="#06B6D4" />
               <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
             </svg>
-            <span className="font-bold text-xl text-white">Pariksha</span>
+            <span className="font-bold text-xl text-white">IYOTAPREP</span>
           </motion.div>
           
           <motion.div
@@ -206,7 +206,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">Why Choose Pariksha?</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">Why Choose IYOTAPREP?</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
               Our AI-powered platform adapts to your learning style and helps you prepare more efficiently than ever before.
             </p>
@@ -327,7 +327,7 @@ export default function Home() {
           >
             <h2 className="text-4xl font-bold text-white mb-4">Success Stories</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Join thousands of successful aspirants who cracked their dream exams with Pariksha.
+              Join thousands of successful aspirants who cracked their dream exams with IYOTAPREP.
             </p>
           </motion.div>
 
@@ -337,7 +337,7 @@ export default function Home() {
                 name: "Priya Sharma",
                 exam: "CAT 2025 - 99.5%ile",
                 college: "IIM Ahmedabad",
-                quote: "Pariksha's AI-powered analytics helped me identify my weak areas. The personalized study plan was a game-changer!"
+                quote: "IYOTAPREP's AI-powered analytics helped me identify my weak areas. The personalized study plan was a game-changer!"
               },
               {
                 name: "Rahul Verma",
@@ -389,7 +389,7 @@ export default function Home() {
               Ready to Start Your Journey?
             </h2>
             <p className="text-xl text-gray-400 mb-10">
-              Join 1,00,000+ aspirants already preparing with Pariksha. 
+              Join 1,00,000+ aspirants already preparing with IYOTAPREP. 
               Start your free trial today – no credit card required.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -413,7 +413,7 @@ export default function Home() {
               <div className="w-8 h-8 bg-gradient-to-br from-accent to-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-sm">📚</span>
               </div>
-              <span className="font-bold text-white">Pariksha</span>
+              <span className="font-bold text-white">IYOTAPREP</span>
             </div>
             <div className="flex items-center gap-6 text-gray-400 text-sm">
               <a href="#" className="hover:text-white transition-colors">About</a>

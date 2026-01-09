@@ -74,7 +74,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-12 px-6">
+    <div className="min-h-screen pt-20 pb-12 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div

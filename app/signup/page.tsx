@@ -95,7 +95,7 @@ export default function SignUpPage() {
               <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
             </svg>
           </motion.div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Join Pariksha</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Join IYOTAPREP</h1>
           <p className="text-gray-500 dark:text-gray-400">Start your exam preparation journey</p>
         </div>
 
