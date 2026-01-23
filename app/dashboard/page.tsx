@@ -74,7 +74,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen pt-25 pb-8 px-5">
+    <div className="min-h-screen pt-4 pb-8 px-5">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -84,11 +84,11 @@ export default function Dashboard() {
           className="mb-5 flex items-start justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 mb-1">Monitor your Progress</h1>
-            <p className="text-slate-500 text-sm">Track your preparation in real-time across JEE & NEET</p>
+            <h1 className="text-xl font-semibold text-slate-900 dark:text-white mb-1">Monitor your Progress</h1>
+            <p className="text-slate-500 dark:text-slate-400 text-xs">Track your preparation in real-time across JEE & NEET</p>
           </div>
           {attempts.length > 0 && (
-            <div className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-[11px] font-semibold">
+            <div className="rounded-full bg-sky-100 dark:bg-sky-900/30 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-sky-700 dark:text-sky-300">
               {attempts.length} test{attempts.length > 1 ? 's' : ''}
             </div>
           )}
@@ -103,19 +103,19 @@ export default function Dashboard() {
         >
           {/* JEE Performance Card */}
           <motion.div variants={itemVariants}>
-            <div className="bg-white rounded-xl p-5 border border-blue-200/50 h-full hover:shadow-lg transition-all duration-300 shadow-sm">
+            <div className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.08)] dark:shadow-none transition-all duration-300">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center text-lg shadow-sm">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-base shadow-sm">
                     📊
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900 leading-tight">JEE Performance</h2>
-                    <p className="text-slate-500 text-[11px]">Joint Entrance Examination</p>
+                    <h2 className="text-base font-semibold text-slate-900 dark:text-white leading-tight">JEE Performance</h2>
+                    <p className="text-slate-500 dark:text-slate-400 text-[0.65rem] uppercase tracking-[0.3em]">Joint Entrance Examination</p>
                   </div>
                 </div>
                 {jeeStats && (
-                  <span className="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                  <span className="rounded-full bg-sky-100 dark:bg-sky-900/30 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-sky-700 dark:text-sky-300">
                     {jeeStats.totalAttempts} attempt{jeeStats.totalAttempts > 1 ? "s" : ""}
                   </span>
                 )}
@@ -124,23 +124,23 @@ export default function Dashboard() {
               {jeeStats ? (
                 <>
                   <div className="grid grid-cols-2 gap-2.5 mb-5">
-                    <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Best Score</p>
-                      <p className="text-2xl font-bold text-blue-600 mb-0.5">{jeeStats.bestScore}%</p>
-                      <p className="text-blue-600/70 text-[10px] font-medium">{jeeStats.bestPercentile}%ile</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Best Score</p>
+                      <p className="text-xl font-semibold text-sky-600 dark:text-sky-400 mb-0.5">{jeeStats.bestScore}%</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[0.65rem]">{jeeStats.bestPercentile}%ile</p>
                     </div>
-                    <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Latest Score</p>
-                      <p className="text-2xl font-bold text-slate-900 mb-0.5">{jeeStats.latestScore}%</p>
-                      <p className="text-slate-600 text-[10px] font-medium">{jeeStats.latestPercentile}%ile</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Latest Score</p>
+                      <p className="text-xl font-semibold text-slate-900 dark:text-white mb-0.5">{jeeStats.latestScore}%</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[0.65rem]">{jeeStats.latestPercentile}%ile</p>
                     </div>
-                    <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Average</p>
-                      <p className="text-xl font-bold text-slate-800">{jeeStats.avgPercentage}%</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Average</p>
+                      <p className="text-lg font-semibold text-slate-800 dark:text-slate-200">{jeeStats.avgPercentage}%</p>
                     </div>
-                    <div className="bg-gradient-to-br from-blue-50 to-blue-50/50 rounded-xl p-3 border border-blue-100/50 hover:border-blue-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Accuracy</p>
-                      <p className="text-xl font-bold text-blue-600">
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Accuracy</p>
+                      <p className="text-lg font-semibold text-sky-600 dark:text-sky-400">
                         {((jeeStats.totalCorrect / jeeStats.totalQuestions) * 100).toFixed(1)}%
                       </p>
                     </div>
@@ -151,7 +151,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => router.push("/jee/full-mock")}
-                      className="flex-1 btn-gradient-blue"
+                      className="rounded-full bg-[#0ea5e9] px-3.5 py-2 text-[0.65rem] font-semibold text-white shadow-sm transition-all hover:bg-sky-500"
                     >
                       Take New Test
                     </motion.button>
@@ -159,7 +159,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => router.push(`/analytics/review?id=${jeeAttempts[0]?.id}`)}
-                      className="px-3.5 py-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-blue-700 text-[11px] font-bold transition-all"
+                      className="rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-[0.65rem] font-semibold text-slate-700 dark:text-slate-300 transition-all hover:bg-slate-50 dark:hover:bg-slate-700"
                     >
                       Review Last
                     </motion.button>
@@ -167,12 +167,12 @@ export default function Dashboard() {
                 </>
               ) : (
                 <div className="text-center py-5">
-                  <p className="text-gray-400 mb-2 text-sm">No JEE tests attempted yet</p>
+                  <p className="text-slate-500 dark:text-slate-400 mb-2 text-xs">No JEE tests attempted yet</p>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => router.push("/jee/full-mock")}
-                    className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all text-sm"
+                    className="rounded-full bg-[#0ea5e9] px-5 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-sky-500"
                   >
                     Take Your First JEE Mock →
                   </motion.button>
@@ -183,19 +183,19 @@ export default function Dashboard() {
 
           {/* NEET Performance Card */}
           <motion.div variants={itemVariants}>
-            <div className="bg-white rounded-xl p-5 border border-green-200/50 h-full hover:shadow-lg transition-all duration-300 shadow-sm">
+            <div className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.08)] dark:shadow-none transition-all duration-300">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center text-lg shadow-sm">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-base shadow-sm">
                     🔬
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900 leading-tight">NEET Performance</h2>
-                    <p className="text-slate-500 text-[11px]">National Eligibility cum Entrance Test</p>
+                    <h2 className="text-base font-semibold text-slate-900 dark:text-white leading-tight">NEET Performance</h2>
+                    <p className="text-slate-500 dark:text-slate-400 text-[0.65rem] uppercase tracking-[0.3em]">National Eligibility cum Entrance Test</p>
                   </div>
                 </div>
                 {neetStats && (
-                  <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                  <span className="rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-emerald-700 dark:text-emerald-300">
                     {neetStats.totalAttempts} attempt{neetStats.totalAttempts > 1 ? "s" : ""}
                   </span>
                 )}
@@ -204,23 +204,23 @@ export default function Dashboard() {
               {neetStats ? (
                 <>
                   <div className="grid grid-cols-2 gap-2.5 mb-5">
-                    <div className="bg-gradient-to-br from-green-50 to-green-50/50 rounded-xl p-3 border border-green-100/50 hover:border-green-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Best Score</p>
-                      <p className="text-2xl font-bold text-green-600 mb-0.5">{neetStats.bestScore}%</p>
-                      <p className="text-green-600/70 text-[10px] font-medium">{neetStats.bestPercentile}%ile</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Best Score</p>
+                      <p className="text-xl font-semibold text-emerald-600 dark:text-emerald-400 mb-0.5">{neetStats.bestScore}%</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[0.65rem]">{neetStats.bestPercentile}%ile</p>
                     </div>
-                    <div className="bg-gradient-to-br from-green-50 to-green-50/50 rounded-xl p-3 border border-green-100/50 hover:border-green-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Latest Score</p>
-                      <p className="text-2xl font-bold text-slate-900 mb-0.5">{neetStats.latestScore}%</p>
-                      <p className="text-slate-600 text-[10px] font-medium">{neetStats.latestPercentile}%ile</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Latest Score</p>
+                      <p className="text-xl font-semibold text-slate-900 dark:text-white mb-0.5">{neetStats.latestScore}%</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[0.65rem]">{neetStats.latestPercentile}%ile</p>
                     </div>
-                    <div className="bg-gradient-to-br from-green-50 to-green-50/50 rounded-xl p-3 border border-green-100/50 hover:border-green-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Average</p>
-                      <p className="text-xl font-bold text-slate-800">{neetStats.avgPercentage}%</p>
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Average</p>
+                      <p className="text-lg font-semibold text-slate-800 dark:text-slate-200">{neetStats.avgPercentage}%</p>
                     </div>
-                    <div className="bg-gradient-to-br from-green-50 to-green-50/50 rounded-xl p-3 border border-green-100/50 hover:border-green-200 transition-all">
-                      <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Accuracy</p>
-                      <p className="text-xl font-bold text-green-600">
+                    <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3">
+                      <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Accuracy</p>
+                      <p className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
                         {((neetStats.totalCorrect / neetStats.totalQuestions) * 100).toFixed(1)}%
                       </p>
                     </div>
@@ -231,7 +231,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => router.push("/neet/full-mock")}
-                      className="flex-1 btn-gradient-green"
+                      className="rounded-full bg-[#10b981] px-3.5 py-2 text-[0.65rem] font-semibold text-white shadow-sm transition-all hover:bg-emerald-500"
                     >
                       Take New Test
                     </motion.button>
@@ -239,7 +239,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => router.push(`/analytics/review?id=${neetAttempts[0]?.id}`)}
-                      className="px-3.5 py-2 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-700 text-[11px] font-bold transition-all"
+                      className="rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-[0.65rem] font-semibold text-slate-700 dark:text-slate-300 transition-all hover:bg-slate-50 dark:hover:bg-slate-700"
                     >
                       Review Last
                     </motion.button>
@@ -247,12 +247,12 @@ export default function Dashboard() {
                 </>
               ) : (
                 <div className="text-center py-5">
-                  <p className="text-gray-400 mb-2 text-sm">No NEET tests attempted yet</p>
+                  <p className="text-slate-500 dark:text-slate-400 mb-2 text-xs">No NEET tests attempted yet</p>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => router.push("/neet/full-mock")}
-                      className="btn-gradient-green text-sm px-5 py-2.5"
+                      className="rounded-full bg-[#10b981] px-5 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-emerald-500"
                   >
                     Take Your First NEET Mock →
                   </motion.button>
@@ -270,15 +270,15 @@ export default function Dashboard() {
           className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6"
         >
           {/* Practice Mode Card */}
-          <div className="bg-white rounded-xl p-5 border border-purple-200/50 hover:shadow-lg transition-all duration-300 shadow-sm">
+          <div className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.08)] dark:shadow-none transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center text-lg shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-base shadow-sm">
                   ✏️
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 leading-tight">Practice Mode</h2>
-                  <p className="text-slate-500 text-[11px]">
+                  <h2 className="text-base font-semibold text-slate-900 dark:text-white leading-tight">Practice Mode</h2>
+                  <p className="text-slate-500 dark:text-slate-400 text-[11px]">
                     {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions
                       ? `${practiceProgress.examType} Session`
                       : "JEE & NEET Questions"}
@@ -286,7 +286,7 @@ export default function Dashboard() {
                 </div>
               </div>
               {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions && (
-                <span className="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                <span className="rounded-full bg-sky-100 dark:bg-sky-900/30 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-sky-700 dark:text-sky-300">
                   In Progress
                 </span>
               )}
@@ -295,19 +295,19 @@ export default function Dashboard() {
             {practiceProgress && practiceProgress.answeredQuestions.length > 0 && practiceProgress.answeredQuestions.length < practiceProgress.totalQuestions ? (
               <>
                 <div className="grid grid-cols-3 gap-2.5 mb-5">
-                  <div className="bg-gradient-to-br from-purple-50 to-purple-50/50 rounded-xl p-3 border border-purple-100/50 hover:border-purple-200 transition-all text-center">
-                    <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Answered</p>
-                    <p className="text-2xl font-bold text-purple-600 mb-0.5">
+                  <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3 text-center">
+                    <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Answered</p>
+                    <p className="text-lg font-semibold text-sky-600 dark:text-sky-400 mb-0.5">
                       {practiceProgress.answeredQuestions.length}/{practiceProgress.totalQuestions}
                     </p>
                   </div>
-                  <div className="bg-gradient-to-br from-green-50 to-green-50/50 rounded-xl p-3 border border-green-100/50 hover:border-green-200 transition-all text-center">
-                    <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Correct</p>
-                    <p className="text-2xl font-bold text-green-600">{practiceProgress.correctAnswers}</p>
+                  <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3 text-center">
+                    <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Correct</p>
+                    <p className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">{practiceProgress.correctAnswers}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-50/50 rounded-xl p-3 border border-orange-100/50 hover:border-orange-200 transition-all text-center">
-                    <p className="text-slate-500 text-[9px] font-bold mb-1 uppercase tracking-wider">Remaining</p>
-                    <p className="text-2xl font-bold text-orange-600">
+                  <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3 text-center">
+                    <p className="mb-1 text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">Remaining</p>
+                    <p className="text-lg font-semibold text-amber-600 dark:text-amber-400">
                       {practiceProgress.totalQuestions - practiceProgress.answeredQuestions.length}
                     </p>
                   </div>
@@ -315,16 +315,16 @@ export default function Dashboard() {
 
                 {/* Progress Bar */}
                 <div className="mb-6">
-                  <div className="flex justify-between text-[11px] text-slate-600 mb-2 font-semibold">
-                    <span className="uppercase tracking-wider">Progress</span>
+                  <div className="mb-2 flex justify-between text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
+                    <span>Progress</span>
                     <span>{Math.round((practiceProgress.answeredQuestions.length / practiceProgress.totalQuestions) * 100)}%</span>
                   </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300">
+                  <div className="h-2 w-full overflow-hidden rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${(practiceProgress.answeredQuestions.length / practiceProgress.totalQuestions) * 100}%` }}
                       transition={{ duration: 1 }}
-                      className="h-full bg-gradient-to-r from-purple-600 to-purple-700"
+                      className="h-full bg-gradient-to-r from-sky-500 to-indigo-500"
                     />
                   </div>
                 </div>
@@ -333,19 +333,19 @@ export default function Dashboard() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => router.push("/practice")}
-                  className="w-full btn-gradient-blue"
+                  className="w-auto rounded-full bg-[#0ea5e9] px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_32px_rgba(14,165,233,0.15)] transition-all hover:bg-sky-500"
                 >
                   Continue Practice →
                 </motion.button>
               </>
             ) : (
               <div className="flex flex-col items-center justify-center py-8">
-                <p className="text-slate-500 text-center mb-3 text-sm">Practice with random JEE & NEET questions</p>
+                <p className="text-slate-500 dark:text-slate-400 text-center mb-3 text-xs">Practice with random JEE & NEET questions</p>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => router.push("/practice")}
-                  className="w-full btn-gradient-blue"
+                  className="w-auto rounded-full bg-[#0ea5e9] px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_32px_rgba(14,165,233,0.15)] transition-all hover:bg-sky-500"
                 >
                   Start Practice →
                 </motion.button>
@@ -354,18 +354,18 @@ export default function Dashboard() {
           </div>
 
           {/* Recent Tests Card */}
-          <div className="bg-white rounded-xl p-5 border border-slate-200/50 hover:shadow-lg transition-all duration-300 shadow-sm">
+          <div className="rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-[0_25px_60px_rgba(15,23,42,0.08)] dark:shadow-none transition-all duration-300">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-lg shadow-sm">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-base shadow-sm">
                   📋
                 </div>
-                <h2 className="text-lg font-bold text-slate-900">Recent Tests</h2>
+                <h2 className="text-base font-semibold text-slate-900 dark:text-white">Recent Tests</h2>
               </div>
               {attempts.length > 0 && (
                 <button
                   onClick={() => router.push("/analytics")}
-                  className="text-indigo-600 hover:text-indigo-700 text-[11px] font-bold uppercase tracking-wider transition-all"
+                  className="text-sky-600 hover:text-sky-700 text-[0.6rem] font-semibold uppercase tracking-[0.3em] transition-all"
                 >
                   View All →
                 </button>
@@ -380,28 +380,26 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                    className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${
-                      attempt.examType === "JEE" 
-                        ? "bg-blue-50/50 border-blue-100/50 hover:border-blue-200 hover:bg-blue-50" 
-                        : "bg-green-50/50 border-green-100/50 hover:border-green-200 hover:bg-green-50"
+                    className={`flex items-center justify-between rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/50 p-3 transition-all cursor-pointer hover:border-slate-200 ${
+                      attempt.examType === "JEE" ? "" : ""
                     }`}
                     onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
                   >
                     <div className="flex items-center gap-3">
-                      <span className={`text-lg w-8 h-8 rounded-lg flex items-center justify-center font-bold ${attempt.examType === "JEE" ? "bg-blue-100 text-blue-600" : "bg-green-100 text-green-600"}`}>
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-base font-semibold ${attempt.examType === "JEE" ? "bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300" : "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"}`}>
                         {attempt.examType === "JEE" ? "🧮" : "🔬"}
                       </span>
                       <div>
-                        <p className="text-slate-900 font-semibold text-xs">{attempt.examType} Mock</p>
-                        <p className="text-slate-500 text-[10px] font-medium">
+                        <p className="text-slate-900 dark:text-white font-semibold text-xs">{attempt.examType} Mock</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-[0.65rem]">
                           {formatTimestamp(attempt.timestamp)}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`text-lg font-bold ${
-                        parseFloat(attempt.percentage) >= 70 ? "text-green-600" : 
-                        parseFloat(attempt.percentage) >= 50 ? "text-orange-600" : "text-red-600"
+                      <p className={`text-base font-semibold ${
+                        parseFloat(attempt.percentage) >= 70 ? "text-green-600 dark:text-green-400" : 
+                        parseFloat(attempt.percentage) >= 50 ? "text-orange-600 dark:text-orange-400" : "text-red-600 dark:text-red-400"
                       }`}>
                         {attempt.percentage}%
                       </p>
@@ -411,13 +409,13 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8">
-                <p className="text-slate-500 text-center mb-4 text-xs">No tests attempted yet - start with a mock</p>
+                <p className="text-slate-500 dark:text-slate-400 text-center mb-4 text-xs">No tests attempted yet - start with a mock</p>
                 <div className="flex gap-2.5 w-full">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => router.push("/jee/full-mock")}
-                    className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 border border-blue-200 rounded-lg text-blue-50 text-[11px] font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg"
+                    className="flex-1 rounded-full bg-sky-600 px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white shadow-[0_12px_32px_rgba(14,165,233,0.25)] transition-all hover:bg-sky-500"
                   >
                     🧮 JEE Mock
                   </motion.button>
@@ -425,7 +423,7 @@ export default function Dashboard() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => router.push("/neet/full-mock")}
-                    className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 border border-green-200 rounded-lg text-green-50 text-[11px] font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg"
+                    className="flex-1 rounded-full bg-emerald-600 px-3 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.3em] text-white shadow-[0_12px_32px_rgba(16,185,129,0.25)] transition-all hover:bg-emerald-500"
                   >
                     🔬 NEET Mock
                   </motion.button>
@@ -443,10 +441,10 @@ export default function Dashboard() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-center py-8"
           >
-            <div className="bg-white rounded-xl p-6 border border-slate-200/50 max-w-2xl mx-auto hover:shadow-lg transition-all shadow-sm">
-              <span className="text-4xl mb-3 block">🎯</span>
-              <h2 className="text-xl font-bold text-slate-900 mb-2">Start Your Preparation Journey!</h2>
-              <p className="text-slate-600 mb-4 text-sm">
+            <div className="mx-auto max-w-2xl rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-[0_25px_60px_rgba(15,23,42,0.08)] dark:shadow-none transition-all">
+              <span className="mb-3 block text-3xl">🎯</span>
+              <h2 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">Start Your Preparation Journey!</h2>
+              <p className="mb-4 text-xs text-slate-600 dark:text-slate-400">
                 Take your first mock test to see your performance analytics here.
                 Track your progress, identify weak areas, and ace your exams!
               </p>
@@ -455,7 +453,7 @@ export default function Dashboard() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => router.push("/jee/full-mock")}
-                  className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold shadow-md hover:shadow-lg transition-all text-sm"
+                  className="rounded-full bg-sky-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_32px_rgba(14,165,233,0.25)] transition-all hover:bg-sky-500"
                 >
                   🧮 Start JEE Mock
                 </motion.button>
@@ -463,7 +461,7 @@ export default function Dashboard() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => router.push("/neet/full-mock")}
-                  className="px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg text-white font-semibold shadow-md hover:shadow-lg transition-all text-sm"
+                  className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_32px_rgba(16,185,129,0.25)] transition-all hover:bg-emerald-500"
                 >
                   🔬 Start NEET Mock
                 </motion.button>

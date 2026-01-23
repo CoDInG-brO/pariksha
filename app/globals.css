@@ -440,48 +440,22 @@
   }
 }
 
-/* Dark theme (default) */
 :root {
-  color-scheme: dark;
-  --background: #0B0F19;
-  --surface: #111827;
-  --elevated: #0F172A;
-  --accent: #6366F1;
-  --text-primary: #F9FAFB;
-  --text-secondary: #9CA3AF;
-  --text-muted: #CBD5E1;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --navbar-bg: rgba(0, 0, 0, 0.4);
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --background-gradient:
-    radial-gradient(circle at -10% 45%, rgba(5, 46, 94, 0.4), transparent 55%),
-    radial-gradient(circle at 110% 45%, rgba(7, 26, 64, 0.4), transparent 55%),
-    linear-gradient(90deg, #001632 0%, #000a1d 40%, #00040f 50%, #000a1d 60%, #001632 100%);
-
-  /* Theme-aware utility fills */
-  --tile-bg: rgba(255, 255, 255, 0.02);
-  --tile-border: rgba(255, 255, 255, 0.06);
-  --row-bg: rgba(255, 255, 255, 0.02);
-  --row-border: rgba(255, 255, 255, 0.06);
-  --btn-toggle-border: rgba(255, 255, 255, 0.08);
-}
-
-/* Light theme */
-.light {
-  color-scheme: light;
-  --background: #FFFFFF;
-  --surface: #FFFFFF;
-  --elevated: #F0F7FC;
-  --accent: #4F46E5;
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --text-muted: #475569;
-  --border-color: rgba(0, 0, 0, 0.08);
+  --background: #f4f7fb;
+  --foreground: #0f172a;
+  --granite: #ffffff;
+  --accent: #0ea5e9;
+  
+  /* Compatible mappings for mockexam-ai-ui components */
+  --surface: #ffffff;
+  --elevated: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: rgba(15, 23, 42, 0.08);
   --navbar-bg: rgba(255, 255, 255, 0.9);
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --background-gradient: linear-gradient(to right, #c4e5f5 0%, #FFFFFF 30%, #FFFFFF 70%, #c4e5f5 100%);
-
-  /* Theme-aware utility fills */
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
   --tile-bg: rgba(15, 23, 42, 0.02);
   --tile-border: rgba(15, 23, 42, 0.06);
   --row-bg: rgba(15, 23, 42, 0.02);
@@ -489,95 +463,142 @@
   --btn-toggle-border: rgba(15, 23, 42, 0.08);
 }
 
-html, body {
-  height: 100%;
-}
-
-html {
-  background-color: var(--background);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-grotesk);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  @apply antialiased;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(238, 242, 255, 0.8), transparent 35%),
+    linear-gradient(135deg, #fefefe, #edf2fb 60%, #f4f7fb);
+  color: var(--foreground);
+  font-family: var(--font-grotesk), "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5f5' fill-opacity='0.35'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+  pointer-events: none;
+}
+
+/* Legacy Dark theme support (if needed, but overridden by default above) */
+.dark {
+  color-scheme: dark;
+  --background: #0B0F19;
+  --foreground: #F9FAFB;
+  --surface: #111827;
+  --elevated: #0F172A;
+  --accent: #6366F1;
+  --text-primary: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --text-muted: #CBD5E1;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+.light body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(238, 242, 255, 0.8), transparent 35%),
+    linear-gradient(135deg, #fefefe, #edf2fb 60%, #f4f7fb);
   color: var(--text-primary);
-  background-color: var(--background);
-  background-image: var(--background-gradient, var(--background));
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: cover;
-  font-size: 0.95rem;
-  line-height: 1.45;
-  letter-spacing: -0.005em;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  font-feature-settings: "cv11", "ss01";
+  font-family: var(--font-inter), "Space Grotesk", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
 }
 
-/* Dark mode compatibility for light-only utility classes */
-.dark .bg-white,
-.dark .bg-gray-50,
-.dark .bg-gray-100,
-.dark .bg-gray-200,
-.dark .bg-slate-50,
-.dark .bg-slate-100,
-.dark .bg-slate-200,
-.dark .bg-blue-50,
-.dark .bg-blue-100,
-.dark .bg-green-50,
-.dark .bg-purple-50 {
-  background-color: var(--surface) !important;
-  color: var(--text-primary);
+.light body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23cbd5f5' fill-opacity='0.35'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+  pointer-events: none;
 }
 
-.dark .border-slate-200\/50,
-.dark .border-slate-100,
-.dark .border-gray-200,
-.dark .border-gray-200\/50,
-.dark .border-gray-300,
-.dark .border-blue-200\/50,
-.dark .border-green-200\/50,
-.dark .border-purple-200\/50,
-.dark .border-slate-100\/50 {
-  border-color: var(--border-color) !important;
+::selection {
+  background: rgba(56, 189, 248, 0.4);
+  color: black;
 }
 
-.dark .text-slate-700,
-.dark .text-slate-800,
-.dark .text-slate-900,
-.dark .text-gray-700,
-.dark .text-gray-800,
-.dark .text-gray-900,
-.dark .text-slate-950,
-.dark .text-gray-950 {
-  color: var(--text-primary) !important;
+main {
+  position: relative;
+  z-index: 1;
 }
 
-.dark .text-slate-500,
-.dark .text-slate-600,
-.dark .text-gray-500,
-.dark .text-gray-600,
-.dark .text-gray-400,
-.dark .text-slate-400 {
-  color: var(--text-secondary) !important;
+nextjs-portal-root {
+  display: none !important;
 }
 
-.dark input,
-.dark textarea,
-.dark select,
-.dark .bg-white input,
-.dark .bg-white textarea,
-.dark .bg-white select {
-  background-color: var(--surface) !important;
-  border-color: var(--border-color) !important;
-  color: var(--text-primary) !important;
+/* Admin-style button overrides */
+.light [class^="btn-gradient-"],
+.light [class*=" btn-gradient-"] {
+  padding: 0.5rem 1.25rem !important;
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+  background-size: auto !important;
 }
 
-.dark input::placeholder,
-.dark textarea::placeholder,
-.dark select::placeholder {
-  color: var(--text-secondary);
+.light .btn-gradient-blue,
+.light .btn-gradient-blue-lg,
+.light .btn-gradient-blue-md,
+.light .btn-gradient-blue-sm {
+  background-image: none !important;
+  background-color: #0ea5e9 !important;
 }
+
+.light .btn-gradient-green,
+.light .btn-gradient-green-lg,
+.light .btn-gradient-green-md,
+.light .btn-gradient-green-sm {
+  background-image: none !important;
+  background-color: #10b981 !important;
+}
+
+.light .btn-gradient-purple,
+.light .btn-gradient-purple-lg,
+.light .btn-gradient-purple-md,
+.light .btn-gradient-purple-sm {
+  background-image: none !important;
+  background-color: #6366f1 !important;
+}
+
+.light .btn-gradient-gray,
+.light .btn-gradient-gray-lg,
+.light .btn-gradient-gray-md,
+.light .btn-gradient-gray-sm {
+  background-image: none !important;
+  background-color: #64748b !important;
+}
+
+/* Restored original Dark Mode behavior by removing forced overrides */
+.dark body {
+  background: #0B0F19; /* Deep blue background */
+  background-image: none;
+}
+
+.dark body::before {
+  display: none;
+}
+
+/* 
+   REMOVED: Dark mode compatibility overrides that were flattening the theme.
+   This allows the original dark:bg-* utility classes to work as intended.
+*/
 
 /* Slightly smaller text sizes globally (text only, not layout) */
 h1, .text-4xl, .text-5xl { font-size: 0.85em; }
