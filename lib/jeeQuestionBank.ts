@@ -1,8 +1,10 @@
-export type JEESubject = "physics" | "chemistry" | "mathematics";
+export type JEESubject = "physics" | "chemistry" | "mathematics" | "biology";
 
 export interface JEEQuestion {
   id: number;
   section: JEESubject;
+  topic: string;
+  subtopic: string;
   question: string;
   options: string[];
   correctAnswer: number;
@@ -14,6 +16,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 1,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Newton's Laws",
     question: "A 4 kg block is pulled by a horizontal 20 N force on a frictionless surface. What is its acceleration?",
     options: ["2.0 m/s^2", "3.0 m/s^2", "4.0 m/s^2", "5.0 m/s^2"],
     correctAnswer: 3,
@@ -22,6 +26,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 2,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Energy",
     question: "A 2 kg object moves at 10 m/s. What is its kinetic energy?",
     options: ["40 J", "50 J", "80 J", "100 J"],
     correctAnswer: 3,
@@ -30,6 +36,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 3,
     section: "physics",
+    topic: "Electricity",
+    subtopic: "Circuit Analysis",
     question: "Two resistors of 3 ohm and 6 ohm are connected in series with a 12 V battery. What current flows through the circuit?",
     options: ["0.5 A", "1.0 A", "1.33 A", "2.0 A"],
     correctAnswer: 2,
@@ -38,6 +46,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 4,
     section: "physics",
+    topic: "Electricity",
+    subtopic: "Circuit Analysis",
     question: "Two resistors of 4 ohm and 12 ohm are connected in parallel across a 9 V source. What is the total current drawn?",
     options: ["1.5 A", "2.0 A", "2.5 A", "3.0 A"],
     correctAnswer: 3,
@@ -46,6 +56,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 5,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Projectile Motion",
     question: "A projectile is launched at 20 m/s making 30 deg with the horizontal. What is the time of flight? (g = 10 m/s^2)",
     options: ["1 s", "2 s", "3 s", "4 s"],
     correctAnswer: 1,
@@ -54,6 +66,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 6,
     section: "physics",
+    topic: "Optics",
+    subtopic: "Lenses",
     question: "An object is placed 30 cm in front of a convex lens of focal length 15 cm. Where is the image formed?",
     options: ["15 cm", "30 cm", "45 cm", "60 cm"],
     correctAnswer: 1,
@@ -62,6 +76,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 7,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Oscillations",
     question: "A 0.5 kg mass is attached to a spring with k = 200 N/m. What is the frequency of oscillation?",
     options: ["1.6 Hz", "3.2 Hz", "5.0 Hz", "6.4 Hz"],
     correctAnswer: 1,
@@ -70,6 +86,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 8,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Waves",
     question: "A string 2 m long has a mass of 10 g and is under 40 N tension. What is the speed of a transverse wave on it?",
     options: ["40 m/s", "60 m/s", "80 m/s", "90 m/s"],
     correctAnswer: 3,
@@ -78,6 +96,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 9,
     section: "physics",
+    topic: "Magnetism",
+    subtopic: "Magnetic Field",
     question: "What is the magnetic field at the center of a circular loop of radius 0.20 m carrying 5 A? (mu0 = 4pi * 10^-7 T*m/A)",
     options: ["1.6 * 10^-5 T", "3.1 * 10^-5 T", "6.3 * 10^-5 T", "1.0 * 10^-4 T"],
     correctAnswer: 0,
@@ -86,6 +106,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 10,
     section: "physics",
+    topic: "Electricity",
+    subtopic: "Capacitors",
     question: "Capacitors of 6 uF and 3 uF are connected in series across 12 V. What is the charge on each capacitor?",
     options: ["12 uC", "18 uC", "24 uC", "36 uC"],
     correctAnswer: 2,
@@ -94,6 +116,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 11,
     section: "physics",
+    topic: "Thermodynamics",
+    subtopic: "Ideal Gas",
     question: "An ideal gas expands isothermally from 3 L to 6 L at 2 atm. What is the final pressure?",
     options: ["0.5 atm", "1 atm", "1.5 atm", "2 atm"],
     correctAnswer: 1,
@@ -102,6 +126,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 12,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Kinematics",
     question: "A car moving at 20 m/s brakes uniformly at 5 m/s^2. What distance does it take to stop?",
     options: ["20 m", "30 m", "40 m", "50 m"],
     correctAnswer: 2,
@@ -110,6 +136,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 13,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Oscillations",
     question: "A simple pendulum has length 1 m (g = 10 m/s^2). What is its time period?",
     options: ["1.4 s", "2.0 s", "2.5 s", "3.1 s"],
     correctAnswer: 1,
@@ -118,6 +146,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 14,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Oscillations",
     question: "A particle in SHM has amplitude 5 cm and maximum speed 1.5 m/s. What is its angular frequency?",
     options: ["10 rad/s", "15 rad/s", "30 rad/s", "45 rad/s"],
     correctAnswer: 2,
@@ -126,6 +156,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 15,
     section: "physics",
+    topic: "Modern Physics",
+    subtopic: "Nuclear Physics",
     question: "A radioactive sample has half-life 10 minutes. From 16 g, how much remains after 30 minutes?",
     options: ["2 g", "4 g", "6 g", "8 g"],
     correctAnswer: 0,
@@ -134,6 +166,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 16,
     section: "physics",
+    topic: "Magnetism",
+    subtopic: "Magnetic Field",
     question: "A long solenoid has 500 turns in 0.5 m and carries 3 A. What is the magnetic field inside?",
     options: ["1.9 * 10^-3 T", "2.8 * 10^-3 T", "3.8 * 10^-3 T", "4.8 * 10^-3 T"],
     correctAnswer: 2,
@@ -142,6 +176,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 17,
     section: "physics",
+    topic: "Electricity",
+    subtopic: "Electromagnetic Induction",
     question: "A coil of 50 turns and area 0.02 m^2 lies in a field that changes from 0 to 0.3 T in 0.1 s. What emf is induced?",
     options: ["1.5 V", "3.0 V", "4.5 V", "6.0 V"],
     correctAnswer: 1,
@@ -150,6 +186,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 18,
     section: "physics",
+    topic: "Electricity",
+    subtopic: "Electrostatics",
     question: "Two positive charges +4 uC and +1 uC are 0.30 m apart. What is the electrostatic force between them?",
     options: ["0.04 N", "0.2 N", "0.4 N", "0.8 N"],
     correctAnswer: 2,
@@ -158,6 +196,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 19,
     section: "physics",
+    topic: "Mechanics",
+    subtopic: "Fluids",
     question: "A metal plate of area 0.02 m^2 is 5 m below the water surface. What is the force due to water on the plate? (rho = 1000 kg/m^3, g = 10 m/s^2)",
     options: ["200 N", "400 N", "600 N", "1000 N"],
     correctAnswer: 3,
@@ -166,6 +206,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 20,
     section: "physics",
+    topic: "Modern Physics",
+    subtopic: "Wave-Particle Duality",
     question: "An electron has momentum 3.0 * 10^-24 kg*m/s. What is its de Broglie wavelength? (h = 6.63 * 10^-34 J*s)",
     options: ["0.11 nm", "0.22 nm", "0.44 nm", "0.88 nm"],
     correctAnswer: 1,
@@ -176,6 +218,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 21,
     section: "chemistry",
+    topic: "Stoichiometry",
+    subtopic: "Moles",
     question: "How many moles are present in 11 g of CO2? (Molar mass = 44 g/mol)",
     options: ["0.20 mol", "0.25 mol", "0.30 mol", "0.40 mol"],
     correctAnswer: 1,
@@ -184,6 +228,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 22,
     section: "chemistry",
+    topic: "Stoichiometry",
+    subtopic: "Gas Laws",
     question: "What volume will 2 moles of an ideal gas occupy at STP (22.4 L/mol)?",
     options: ["11.2 L", "22.4 L", "33.6 L", "44.8 L"],
     correctAnswer: 3,
@@ -192,6 +238,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 23,
     section: "chemistry",
+    topic: "Thermodynamics",
+    subtopic: "Free Energy",
     question: "For a reaction with DeltaH = -40 kJ and DeltaS = -50 J/mol*K at 500 K, what is DeltaG?",
     options: ["-65 kJ", "-15 kJ", "0 kJ", "+15 kJ"],
     correctAnswer: 1,
@@ -200,6 +248,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 24,
     section: "chemistry",
+    topic: "Kinetics",
+    subtopic: "Reaction Rate",
     question: "The rate constant of a second-order reaction has what units?",
     options: ["s^-1", "mol*L^-1*s^-1", "L*mol^-1*s^-1", "L^2*mol^-2*s^-1"],
     correctAnswer: 2,
@@ -208,6 +258,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 25,
     section: "chemistry",
+    topic: "Equilibrium",
+    subtopic: "pH",
     question: "What is the pH of a 1.0 * 10^-4 M HCl solution?",
     options: ["2", "3", "4", "5"],
     correctAnswer: 2,
@@ -216,6 +268,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 26,
     section: "chemistry",
+    topic: "Equilibrium",
+    subtopic: "Solubility",
     question: "If Ksp of AgCl is 1.7 * 10^-10, what is the molar solubility in pure water?",
     options: ["4.1 * 10^-6 M", "1.3 * 10^-5 M", "2.5 * 10^-5 M", "4.1 * 10^-5 M"],
     correctAnswer: 1,
@@ -224,120 +278,150 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 27,
     section: "chemistry",
+    topic: "Coordination",
+    subtopic: "Complex Ions",
     question: "What is the oxidation state of Co in [Co(NH3)6]Cl3?",
     options: ["0", "+1", "+2", "+3"],
     correctAnswer: 3,
-    explanation: "Complex is overall +3 to balance 3 Cl^-; NH3 is neutral, so Co is +3."
+    explanation: "NH3 is neutral; 3 Cl- give -3, so Co is +3."
   },
   {
     id: 28,
     section: "chemistry",
-    question: "What is the hybridization of each carbon atom in ethyne (C2H2)?",
-    options: ["sp", "sp2", "sp3", "sp3d"],
-    correctAnswer: 0,
-    explanation: "Each carbon forms two sigma bonds and two pi bonds, so the hybridization is sp."
+    topic: "Organic Chemistry",
+    subtopic: "Hydrocarbons",
+    question: "How many sigma bonds are present in CH3-CH=CH-CH3?",
+    options: ["9", "10", "11", "12"],
+    correctAnswer: 2,
+    explanation: "C-C (3), C-H (10), plus 1 pi bond. Count of sigma bonds is 11."
   },
   {
     id: 29,
     section: "chemistry",
-    question: "What is the standard emf of the cell Zn | Zn2+ || Cu2+ | Cu? (EZn = -0.76 V, ECu = +0.34 V)",
-    options: ["0.34 V", "0.76 V", "1.10 V", "1.40 V"],
+    topic: "Atomic Structure",
+    subtopic: "Quantum Numbers",
+    question: "How many electrons can fit in a subshell with l = 2?",
+    options: ["2", "6", "10", "14"],
     correctAnswer: 2,
-    explanation: "Ecell = Ecathode - Eanode = 0.34 - (-0.76) = 1.10 V."
+    explanation: "For l = 2 (d-subshell), max electrons = 2(2l+1) = 10."
   },
   {
     id: 30,
     section: "chemistry",
-    question: "Oxidation of ethanol with acidified K2Cr2O7 gives which major product?",
-    options: ["Methanol", "Ethanal", "Acetic acid", "Acetone"],
-    correctAnswer: 2,
-    explanation: "Primary alcohol oxidizes to aldehyde and then to carboxylic acid (acetic acid)."
+    topic: "Thermodynamics",
+    subtopic: "Enthalpy",
+    question: "For an exothermic reaction, which statement is true?",
+    options: ["DeltaH > 0", "DeltaH < 0", "DeltaH = 0", "DeltaH depends on pressure"],
+    correctAnswer: 1,
+    explanation: "Exothermic reactions release heat, so DeltaH < 0."
   },
   {
     id: 31,
     section: "chemistry",
-    question: "Caprolactam is the monomer used to form which polymer?",
-    options: ["Nylon-6", "Teflon", "Bakelite", "PVC"],
-    correctAnswer: 0,
-    explanation: "Caprolactam polymerizes to form Nylon-6."
+    topic: "Redox",
+    subtopic: "Oxidation-Reduction",
+    question: "In the reaction 2KMnO4 + 16HCl -> 2KCl + 2MnCl2 + 5Cl2 + 8H2O, what is oxidized?",
+    options: ["K", "Mn", "Cl from HCl", "H"],
+    correctAnswer: 2,
+    explanation: "Cl- (oxidation state -1) goes to Cl2 (0), so it is oxidized."
   },
   {
     id: 32,
     section: "chemistry",
-    question: "Which amino acid lacks a chiral carbon atom?",
-    options: ["Alanine", "Valine", "Glycine", "Serine"],
+    topic: "Inorganic Chemistry",
+    subtopic: "Periodicity",
+    question: "Which element has the highest electronegativity?",
+    options: ["O", "N", "F", "Cl"],
     correctAnswer: 2,
-    explanation: "Glycine has -H as its side chain, so the alpha carbon is achiral."
+    explanation: "Fluorine has the highest electronegativity (4.0)."
   },
   {
     id: 33,
     section: "chemistry",
-    question: "Arrange B, C, N, O in increasing order of first ionization enthalpy.",
-    options: ["B < C < N < O", "B < O < C < N", "B < C < O < N", "C < B < O < N"],
-    correctAnswer: 2,
-    explanation: "Due to half-filled stability, order is B < C < O < N."
+    topic: "Organic Chemistry",
+    subtopic: "Functional Groups",
+    question: "What is the general formula for alkanes?",
+    options: ["CnH2n", "CnH2n+2", "CnH2n-2", "CnHn"],
+    correctAnswer: 1,
+    explanation: "Alkanes follow the formula CnH2n+2 (for acyclic)."
   },
   {
     id: 34,
     section: "chemistry",
-    question: "Which type of adsorption is dominated by van der Waals interactions?",
-    options: ["Chemisorption", "Physisorption", "Ion exchange", "Catalytic adsorption"],
+    topic: "Polymers",
+    subtopic: "Macromolecules",
+    question: "What monomer forms nylon-6?",
+    options: ["Ethene", "Caprolactam", "Adipic acid", "Benzene"],
     correctAnswer: 1,
-    explanation: "Physisorption arises from weak van der Waals forces."
+    explanation: "Nylon-6 is formed from caprolactam through ring-opening polymerization."
   },
   {
     id: 35,
     section: "chemistry",
-    question: "Which is a colligative property?",
-    options: ["Refractive index", "Surface tension", "Depression in freezing point", "Viscosity"],
+    topic: "Atomic Structure",
+    subtopic: "Isotopes",
+    question: "Isotopes of an element differ in their:",
+    options: ["Atomic number", "Number of protons", "Number of neutrons", "Chemical properties"],
     correctAnswer: 2,
-    explanation: "Colligative properties depend on solute particle number; DeltaTf is one such property."
+    explanation: "Isotopes have the same atomic number but different numbers of neutrons."
   },
   {
     id: 36,
     section: "chemistry",
-    question: "A first-order reaction has a half-life of 30 minutes. What is its rate constant?",
-    options: ["0.010 min^-1", "0.019 min^-1", "0.023 min^-1", "0.030 min^-1"],
-    correctAnswer: 2,
-    explanation: "k = 0.693 / t1/2 = 0.693 / 30 approx 0.023 min^-1."
+    topic: "Bonding",
+    subtopic: "Chemical Bonds",
+    question: "Which bond is formed between two atoms by sharing a pair of electrons?",
+    options: ["Ionic", "Covalent", "Hydrogen", "Metallic"],
+    correctAnswer: 1,
+    explanation: "A covalent bond is formed by the sharing of electron pairs."
   },
   {
     id: 37,
     section: "chemistry",
-    question: "A weak acid (Ka = 1.0 * 10^-5) at 0.10 M concentration has [H+] approximately equal to?",
-    options: ["1.0 * 10^-2 M", "1.0 * 10^-3 M", "1.0 * 10^-4 M", "1.0 * 10^-5 M"],
+    topic: "Solution Chemistry",
+    subtopic: "Concentration",
+    question: "What is molarity of a solution containing 10 g NaOH in 500 mL solution? (MW = 40)",
+    options: ["0.25 M", "0.5 M", "1.0 M", "2.0 M"],
     correctAnswer: 1,
-    explanation: "[H+] approx sqrt(Ka * C) = sqrt(1*10^-6) = 1*10^-3 M."
+    explanation: "n = 10/40 = 0.25 mol; M = 0.25/0.5 = 0.5 M."
   },
   {
     id: 38,
     section: "chemistry",
-    question: "Which reagent distinguishes aldehydes from ketones in aqueous solution?",
-    options: ["Fehling's solution", "Grignard reagent", "Lindlar catalyst", "H2/Pd"],
-    correctAnswer: 0,
-    explanation: "Fehling's (or Tollen's) test is positive for aldehydes but not for ketones."
+    topic: "Halides",
+    subtopic: "Alkyl Halides",
+    question: "Which alkyl halide undergoes SN1 reaction readily?",
+    options: ["CH3Br", "C2H5Br", "(CH3)2CHBr", "(CH3)3CBr"],
+    correctAnswer: 3,
+    explanation: "Tertiary carbocations are most stable, favoring SN1 for (CH3)3CBr."
   },
   {
     id: 39,
     section: "chemistry",
-    question: "What is the coordination number of Na+ in a rock salt (NaCl) structure?",
-    options: ["4", "6", "8", "12"],
+    topic: "Acids & Bases",
+    subtopic: "Buffer Solutions",
+    question: "Which pair can form a buffer solution?",
+    options: ["HCl + NaCl", "CH3COOH + CH3COONa", "NaOH + KOH", "H2SO4 + H2O"],
     correctAnswer: 1,
-    explanation: "NaCl adopts octahedral coordination; CN of both ions is 6."
+    explanation: "A buffer needs a weak acid and its conjugate base (CH3COOH + CH3COONa)."
   },
   {
     id: 40,
     section: "chemistry",
-    question: "In electrolytic refining of copper, which electrode is pure copper deposited on?",
-    options: ["Anode", "Cathode", "Both electrodes", "In solution"],
+    topic: "Alloys",
+    subtopic: "Metals",
+    question: "Brass is an alloy of copper and:",
+    options: ["Iron", "Zinc", "Tin", "Aluminum"],
     correctAnswer: 1,
-    explanation: "Pure copper plates at the cathode while the impure slab is the anode."
+    explanation: "Brass is composed of copper and zinc (30-40%)."
   },
 
   // Mathematics
   {
     id: 41,
     section: "mathematics",
+    topic: "Calculus",
+    subtopic: "Derivatives",
     question: "What is the derivative of x^3 evaluated at x = 2?",
     options: ["6", "8", "12", "18"],
     correctAnswer: 2,
@@ -346,6 +430,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 42,
     section: "mathematics",
+    topic: "Calculus",
+    subtopic: "Integration",
     question: "Evaluate ∫0^2 3x^2 dx.",
     options: ["6", "8", "10", "12"],
     correctAnswer: 1,
@@ -354,6 +440,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 43,
     section: "mathematics",
+    topic: "Calculus",
+    subtopic: "Limits",
     question: "lim (x→0) (sin x)/x equals?",
     options: ["0", "1", "∞", "Does not exist"],
     correctAnswer: 1,
@@ -362,6 +450,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 44,
     section: "mathematics",
+    topic: "Probability",
+    subtopic: "Dice & Cards",
     question: "What is the probability of getting a sum of 9 when two dice are rolled?",
     options: ["1/6", "1/9", "1/12", "1/18"],
     correctAnswer: 1,
@@ -370,6 +460,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 45,
     section: "mathematics",
+    topic: "Linear Algebra",
+    subtopic: "Matrices",
     question: "The determinant of [[2,3],[1,4]] equals?",
     options: ["2", "5", "6", "8"],
     correctAnswer: 1,
@@ -378,6 +470,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 46,
     section: "mathematics",
+    topic: "Vectors",
+    subtopic: "Dot Product",
     question: "Find the dot product of (2, -1, 3) and (1, 4, 2).",
     options: ["2", "4", "6", "8"],
     correctAnswer: 1,
@@ -386,6 +480,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 47,
     section: "mathematics",
+    topic: "Complex Numbers",
+    subtopic: "Modulus",
     question: "What is the modulus of the complex number 3 - 4i?",
     options: ["3", "4", "5", "7"],
     correctAnswer: 2,
@@ -394,6 +490,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 48,
     section: "mathematics",
+    topic: "Coordinate Geometry",
+    subtopic: "Circle",
     question: "Equation of the circle with center (1, -2) and radius 3 is?",
     options: ["x^2 + y^2 = 9", "(x+1)^2 + (y-2)^2 = 9", "(x-1)^2 + (y+2)^2 = 9", "(x-3)^2 + (y+1)^2 = 9"],
     correctAnswer: 2,
@@ -402,6 +500,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 49,
     section: "mathematics",
+    topic: "Sequences & Series",
+    subtopic: "GP",
     question: "Sum of the first four terms of a GP with a = 2 and r = 3 is?",
     options: ["20", "40", "80", "162"],
     correctAnswer: 2,
@@ -410,6 +510,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 50,
     section: "mathematics",
+    topic: "Combinatorics",
+    subtopic: "Combinations",
     question: "Evaluate 10C4.",
     options: ["120", "180", "210", "252"],
     correctAnswer: 2,
@@ -418,6 +520,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 51,
     section: "mathematics",
+    topic: "Calculus",
+    subtopic: "Integration",
     question: "Compute the integral from 0 to pi/2 of cos x dx.",
     options: ["0", "1", "2", "pi/2"],
     correctAnswer: 1,
@@ -426,6 +530,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 52,
     section: "mathematics",
+    topic: "Calculus",
+    subtopic: "Differential Equations",
     question: "Solve dy/dx = 3x^2.",
     options: ["y = x^3 + C", "y = x^2 + C", "y = 3x + C", "y = 3x^2 + C"],
     correctAnswer: 0,
@@ -434,6 +540,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 53,
     section: "mathematics",
+    topic: "Combinatorics",
+    subtopic: "Permutations",
     question: "How many distinct permutations are possible for the word LEVEL?",
     options: ["12", "24", "30", "60"],
     correctAnswer: 2,
@@ -442,6 +550,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 54,
     section: "mathematics",
+    topic: "Trigonometry",
+    subtopic: "Trigonometric Values",
     question: "Evaluate tan^2 45 deg - sec^2 30 deg.",
     options: ["-1/3", "0", "1/3", "1"],
     correctAnswer: 0,
@@ -450,6 +560,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 55,
     section: "mathematics",
+    topic: "Coordinate Geometry",
+    subtopic: "Straight Line",
     question: "Slope of the line joining (1, 2) and (3, 7) is?",
     options: ["2", "5/2", "3", "7/3"],
     correctAnswer: 1,
@@ -458,6 +570,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 56,
     section: "mathematics",
+    topic: "Functions",
+    subtopic: "Inverse Functions",
     question: "Find the inverse of f(x) = 2x + 3.",
     options: ["(x + 3)/2", "(x - 3)/2", "2x - 3", "-2x + 3"],
     correctAnswer: 1,
@@ -466,6 +580,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 57,
     section: "mathematics",
+    topic: "Sequences & Series",
+    subtopic: "Summation",
     question: "Evaluate the sum Σ_{k=1}^{5} k.",
     options: ["10", "12", "14", "15"],
     correctAnswer: 3,
@@ -474,6 +590,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 58,
     section: "mathematics",
+    topic: "Algebra",
+    subtopic: "Inequalities",
     question: "Solve the inequality 2x - 5 > 7.",
     options: ["x > 5", "x > 6", "x > 7", "x > 8"],
     correctAnswer: 1,
@@ -482,6 +600,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 59,
     section: "mathematics",
+    topic: "Algebra",
+    subtopic: "Quadratic Equations",
     question: "Roots of x^2 - 5x + 6 = 0 are?",
     options: ["1 and 6", "2 and 3", "3 and 4", "2 and 4"],
     correctAnswer: 1,
@@ -490,6 +610,8 @@ export const jeeQuestionBank: JEEQuestion[] = [
   {
     id: 60,
     section: "mathematics",
+    topic: "Probability",
+    subtopic: "Card Probability",
     question: "Probability of drawing an ace from a standard 52-card deck is?",
     options: ["1/52", "1/26", "1/13", "1/4"],
     correctAnswer: 2,
