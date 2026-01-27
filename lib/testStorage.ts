@@ -129,12 +129,25 @@ export function formatTimeSpent(seconds: number): string {
 // Practice Mode Progress Types and Functions
 const PRACTICE_KEY = "iyotaprep_practice_progress";
 
+export interface PracticeQuestion {
+  id: number;
+  section: string;
+  topic: string;
+  subtopic: string;
+  question: string;
+  options: string[];
+  answer: string;
+  explanation: string;
+}
+
 export interface PracticeProgress {
   examType: "JEE" | "NEET";
   currentQuestionIndex: number;
   totalQuestions: number;
   answeredQuestions: number[];
   correctAnswers: number;
+  questions: PracticeQuestion[];
+  selectedOptions: Record<string, string>;
   timestamp: string;
 }
 

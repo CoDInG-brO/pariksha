@@ -219,33 +219,6 @@ export default function JEEDashboard() {
         </div>
       </motion.div>
 
-      {/* Full Mock Option */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="max-w-7xl mx-auto mb-8"
-      >
-        <Link href="/jee/full-mock">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/50 transition-all duration-300 cursor-pointer hover:shadow-lg shadow-sm">
-            <div className="flex items-center justify-between gap-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-1">🎯 Full JEE Mock Test</h3>
-                <p className="text-slate-600 text-sm">Attempt the complete 3-subject paper in one sitting (180 minutes total).</p>
-                <p className="text-xs text-emerald-600 mt-3 font-semibold">✓ Real exam experience with accurate marking scheme</p>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-6 py-3 btn-gradient-blue whitespace-nowrap text-sm"
-              >
-                Start Full Mock →
-              </motion.button>
-            </div>
-          </div>
-        </Link>
-      </motion.div>
-
       {/* Tips Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

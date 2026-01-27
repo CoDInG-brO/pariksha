@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { saveTestAttempt } from "@/lib/testStorage";
 import WebcamPreview from "@/components/WebcamPreview";
 import AlertDialog from "@/components/AlertDialog";
@@ -25,6 +25,7 @@ interface SubjectData {
 
 export default function NEETFullMock() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([]);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -33,6 +34,7 @@ export default function NEETFullMock() {
   const [markedForReview, setMarkedForReview] = useState<Set<number>>(new Set());
   const [testStarted, setTestStarted] = useState(false);
   const [cameraEnabled, setCameraEnabled] = useState(true);
+  const [mockType, setMockType] = useState<"full" | "half">("full");
   const [showBackAlert, setShowBackAlert] = useState(false);
   const startTimeRef = useRef<number>(0);
 
@@ -83,6 +85,17 @@ export default function NEETFullMock() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [testStarted, testSubmitted]);
+
+  useEffect(() => {
+    const mockTypeParam = searchParams.get("mockType");
+    if (mockTypeParam === "half") {
+      setMockType("half");
+      setTimeRemaining(90 * 60); // 90 minutes for half mock
+    } else {
+      setMockType("full");
+      setTimeRemaining(180 * 60); // 180 minutes for full mock
+    }
+  }, [searchParams]);
 
   const allQuestions: Question[] = [
     // PHYSICS (15 questions)
@@ -452,29 +465,40 @@ export default function NEETFullMock() {
     }
   ];
 
-  const subjectsData: Record<string, SubjectData> = {
-    physics: {
-      id: "physics",
-      name: "Physics",
-      icon: "⚛️",
-      color: "from-blue-500 to-cyan-600",
-      questions: allQuestions.filter((q) => q.subject === "physics")
-    },
-    chemistry: {
-      id: "chemistry",
-      name: "Chemistry",
-      icon: "🧪",
-      color: "from-green-500 to-emerald-600",
-      questions: allQuestions.filter((q) => q.subject === "chemistry")
-    },
-    biology: {
-      id: "biology",
-      name: "Biology",
-      icon: "🧬",
-      color: "from-orange-500 to-red-600",
-      questions: allQuestions.filter((q) => q.subject === "biology")
-    }
-  };
+  const subjectsData: Record<string, SubjectData> = useMemo(() => {
+    return {
+      physics: {
+        id: "physics",
+        name: "Physics",
+        icon: "⚛️",
+        color: "from-blue-500 to-cyan-600",
+        questions: (() => {
+          const physicsQs = allQuestions.filter((q) => q.subject === "physics");
+          return mockType === "half" ? physicsQs.slice(0, Math.ceil(physicsQs.length / 2)) : physicsQs;
+        })()
+      },
+      chemistry: {
+        id: "chemistry",
+        name: "Chemistry",
+        icon: "🧪",
+        color: "from-green-500 to-emerald-600",
+        questions: (() => {
+          const chemistryQs = allQuestions.filter((q) => q.subject === "chemistry");
+          return mockType === "half" ? chemistryQs.slice(0, Math.ceil(chemistryQs.length / 2)) : chemistryQs;
+        })()
+      },
+      biology: {
+        id: "biology",
+        name: "Biology",
+        icon: "🧬",
+        color: "from-orange-500 to-red-600",
+        questions: (() => {
+          const biologyQs = allQuestions.filter((q) => q.subject === "biology");
+          return mockType === "half" ? biologyQs.slice(0, Math.ceil(biologyQs.length / 2)) : biologyQs;
+        })()
+      }
+    };
+  }, [mockType, allQuestions]);
 
   const [currentSubject, setCurrentSubject] = useState(0);
   const subjects = Object.values(subjectsData);
@@ -621,29 +645,49 @@ export default function NEETFullMock() {
             className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
           >
             <div className="text-6xl mb-4">🏥</div>
-            <h1 className="text-4xl font-bold text-white mb-4">NEET Full Mock Test</h1>
-            <p className="text-gray-400 text-lg mb-8">Complete exam experience with all 3 subjects</p>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              NEET {mockType === "half" ? "Half" : "Full"} Mock Test
+            </h1>
+            <p className="text-gray-400 text-lg mb-8">
+              {mockType === "half" 
+                ? "Half 90-minute exam (50% questions) with all 3 subjects" 
+                : "Complete exam experience with all 3 subjects"}
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Physics</p>
-                <p className="text-2xl font-bold text-blue-300">15 Qs</p>
-                <p className="text-xs text-gray-500 mt-2">60 marks | 60 min</p>
+                <p className="text-2xl font-bold text-blue-300">
+                  {mockType === "half" ? "8 Qs" : "15 Qs"}
+                </p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
+                </p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Chemistry</p>
-                <p className="text-2xl font-bold text-green-300">15 Qs</p>
-                <p className="text-xs text-gray-500 mt-2">60 marks | 60 min</p>
+                <p className="text-2xl font-bold text-green-300">
+                  {mockType === "half" ? "8 Qs" : "15 Qs"}
+                </p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
+                </p>
               </div>
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Biology</p>
-                <p className="text-2xl font-bold text-orange-300">15 Qs</p>
-                <p className="text-xs text-gray-500 mt-2">60 marks | 60 min</p>
+                <p className="text-2xl font-bold text-orange-300">
+                  {mockType === "half" ? "8 Qs" : "15 Qs"}
+                </p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
+                </p>
               </div>
             </div>
 
             <div className="mb-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-              <p className="text-yellow-200">⚠️ <strong>Important:</strong> 180 marks in 180 minutes. Manage time wisely across all subjects!</p>
+              <p className="text-yellow-200">
+                ⚠️ <strong>Important:</strong> {mockType === "half" ? "90 marks in 90 minutes" : "180 marks in 180 minutes"}. Manage time wisely across all subjects!
+              </p>
             </div>
 
             {/* Camera Monitoring Toggle */}
@@ -690,7 +734,7 @@ export default function NEETFullMock() {
                 }}
                 className="btn-gradient-blue-lg flex-1"
               >
-                Start Full Mock →
+                Start {mockType === "half" ? "Half" : "Full"} Mock →
               </motion.button>
             </div>
           </motion.div>

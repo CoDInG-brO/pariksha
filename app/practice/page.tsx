@@ -15,6 +15,7 @@ import {
   isSoundEnabled
 } from "@/lib/sounds";
 import { jeeQuestionBank } from "@/lib/jeeQuestionBank";
+import { hintBank } from "@/lib/hintBank";
 
 // Sample question banks
 const jeePracticeQuestions = jeeQuestionBank.map((question) => ({
@@ -141,6 +142,8 @@ export default function Practice() {
         totalQuestions: questions.length,
         answeredQuestions,
         correctAnswers: correctCount,
+        questions: questions,
+        selectedOptions: selectedOptions,
       });
     }
   }, [selectedOptions, selectedExam, questions]);
@@ -166,9 +169,30 @@ export default function Practice() {
     setSelectedSubtopic(null);
   };
 
+  const handleRestorePractice = () => {
+    if (savedProgress) {
+      setSelectedExam(savedProgress.examType);
+      setQuestions(savedProgress.questions as any);
+      setSelectedOptions(savedProgress.selectedOptions);
+      setPracticeStep("practice");
+      // Scroll to the first unanswered question
+      setTimeout(() => {
+        const firstUnanswered = savedProgress.questions.find(q => !savedProgress.selectedOptions[q.id]);
+        if (firstUnanswered) {
+          document.getElementById(`question-${firstUnanswered.id}`)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
   const handleSubjectSelect = (subject: string) => {
     setSelectedSubject(subject);
-    setPracticeStep("topic");
+    if (subject === "Random") {
+      // Skip to question count selection for Random
+      setPracticeStep("count");
+    } else {
+      setPracticeStep("topic");
+    }
     setSelectedTopic(null);
     setSelectedSubtopic(null);
     setTopicInput("");
@@ -192,20 +216,32 @@ export default function Practice() {
   };
 
   const handleStartPractice = () => {
-    if (selectedExam && selectedSubject && selectedTopic && selectedSubtopic) {
+    if (selectedExam && selectedSubject) {
       const allQuestions = getAllQuestions();
-      const subjectMap: Record<string, string> = {
-        "Physics": "physics",
-        "Chemistry": "chemistry",
-        "Mathematics": "mathematics",
-        "Zoology": "biology",
-        "Botany": "biology"
-      };
-      const questionSubject = subjectMap[selectedSubject];
+      
+      let filteredQuestions = allQuestions;
 
-      const filteredQuestions = allQuestions.filter(
-        q => q.section === questionSubject && q.topic === selectedTopic && q.subtopic === selectedSubtopic
-      );
+      if (selectedSubject === "Random") {
+        // For Random, use all questions from the selected exam
+        filteredQuestions = allQuestions;
+      } else if (selectedTopic && selectedSubtopic) {
+        // For specific subject/topic/subtopic
+        const subjectMap: Record<string, string> = {
+          "Physics": "physics",
+          "Chemistry": "chemistry",
+          "Mathematics": "mathematics",
+          "Zoology": "biology",
+          "Botany": "biology"
+        };
+        const questionSubject = subjectMap[selectedSubject];
+
+        filteredQuestions = allQuestions.filter(
+          q => q.section === questionSubject && q.topic === selectedTopic && q.subtopic === selectedSubtopic
+        );
+      } else {
+        // Safety check - shouldn't reach here if flow is correct
+        return;
+      }
 
       const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5);
       const selectedQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
@@ -232,13 +268,6 @@ export default function Practice() {
     }));
   };
 
-  // Extract hint from explanation (first 20 words without full answer)
-  const getHint = (explanation: string) => {
-    const words = explanation.split(' ');
-    const hintWords = words.slice(0, 20).join(' ');
-    return hintWords.length < explanation.length ? hintWords + '...' : hintWords;
-  };
-
   const handleOptionSelect = (questionId: number, option: string, correctAnswer: string) => {
     if (!selectedOptions[questionId] && isSoundEnabled()) {
       if (option === correctAnswer) {
@@ -262,9 +291,16 @@ export default function Practice() {
       setSelectedOptions({});
       clearPracticeProgress();
     } else if (practiceStep === "count") {
-      setPracticeStep("subtopic");
-      setSelectedSubtopic(null);
-      setSubtopicInput("");
+      if (selectedSubject === "Random") {
+        // For Random, go back to subject selection
+        setPracticeStep("subject");
+        setSelectedSubject(null);
+      } else {
+        // For regular subjects, go back to subtopic selection
+        setPracticeStep("subtopic");
+        setSelectedSubtopic(null);
+        setSubtopicInput("");
+      }
       setQuestionCount(15);
     } else if (practiceStep === "subtopic") {
       setPracticeStep("topic");
@@ -295,11 +331,48 @@ export default function Practice() {
 
   // Exam Selection
   if (practiceStep === "exam") {
+    const hasActivePractice = savedProgress && 
+      savedProgress.questions &&
+      savedProgress.questions.length > 0 &&
+      savedProgress.answeredQuestions.length > 0 && 
+      savedProgress.answeredQuestions.length < savedProgress.totalQuestions;
+
     return (
       <div className="min-h-[70vh] flex items-center justify-center pt-25">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
           <h1 className="text-3xl font-bold text-white mb-3">Practice Mode</h1>
           <p className="text-gray-400 mb-8 text-base">Choose your exam to start practicing</p>
+          
+          {hasActivePractice && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 p-4 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30 rounded-2xl"
+            >
+              <p className="text-blue-300 mb-3 text-sm font-medium">You have an active {savedProgress.examType} practice session</p>
+              <div className="flex justify-center gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleRestorePractice}
+                  className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold text-sm transition-all"
+                >
+                  Continue ({savedProgress.answeredQuestions.length}/{savedProgress.totalQuestions})
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    clearPracticeProgress();
+                    setSavedProgress(null);
+                  }}
+                  className="px-6 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg font-semibold text-sm transition-all border border-red-500/30"
+                >
+                  Start New
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.button
@@ -347,7 +420,7 @@ export default function Practice() {
             <p className="text-gray-400">Choose a subject for {selectedExam} practice</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {subjects.map(subject => (
               <motion.button
                 key={subject}
@@ -359,6 +432,17 @@ export default function Practice() {
                 <p className="text-gray-400 text-sm">Practice {subject}</p>
               </motion.button>
             ))}
+            <motion.button
+              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+              onClick={() => handleSubjectSelect("Random")}
+              className="p-6 bg-surface rounded-xl border border-purple-300/20 hover:border-purple-500/50 hover:bg-purple-500/10 transition-all text-center"
+            >
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                🎲
+              </div>
+              <h3 className="text-lg font-semibold text-white mb-2">Random</h3>
+              <p className="text-gray-400 text-sm">Mixed from all subjects</p>
+            </motion.button>
           </div>
         </motion.div>
       </div>
@@ -481,6 +565,7 @@ export default function Practice() {
 
   // Question Count Selection
   if (practiceStep === "count") {
+    const isRandom = selectedSubject === "Random";
     return (
       <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
@@ -489,7 +574,11 @@ export default function Practice() {
               ← Back
             </button>
             <h1 className="text-3xl font-bold text-white mb-2">Number of Questions</h1>
-            <p className="text-gray-400">How many questions do you want to practice?</p>
+            <p className="text-gray-400">
+              {isRandom 
+                ? "How many random questions from all subjects?" 
+                : "How many questions do you want to practice?"}
+            </p>
           </div>
 
           <div className="bg-surface rounded-2xl p-8 border border-white/10 space-y-8">
@@ -558,6 +647,7 @@ export default function Practice() {
       <div className="space-y-4">
         {questions.map((q, index) => (
           <motion.div
+            id={`question-${q.id}`}
             key={q.id}
             ref={index === 2 ? thirdQuestionRef : null}
             initial={{ opacity: 0, y: 20 }}
@@ -638,7 +728,7 @@ export default function Practice() {
                   style={{padding: '0.4rem 0.9rem'}}
                 >
                   <span className="inline-flex items-center gap-2">
-                    {showAnswers[q.id] ? 'Hide Answer' : 'View Answer'}
+                    {showAnswers[q.id] ? 'Hide Solution' : 'View Solution'}
                   </span>
                 </button>
               )}
@@ -652,7 +742,7 @@ export default function Practice() {
               >
                 <p className="text-sm text-gray-300">
                   <span className="text-blue-400 font-medium">Hint: </span>
-                  {getHint(q.explanation)}
+                  {hintBank[q.id] || "Think about the key concepts related to this question."}
                 </p>
               </motion.div>
             )}
@@ -664,7 +754,7 @@ export default function Practice() {
                 className="mt-3 ml-10 p-3 rounded-lg bg-black/30 border border-accent/20"
               >
                 <p className="text-sm text-gray-300">
-                  <span className="text-accent font-medium">Explanation: </span>
+                  <span className="text-accent font-medium">Solution: </span>
                   {q.explanation}
                 </p>
               </motion.div>

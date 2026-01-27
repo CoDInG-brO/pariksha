@@ -11,8 +11,7 @@ const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 
 const tabs = [
   { name: "Dashboard", href: "/dashboard", icon: "📊" },
-  { name: "JEE", href: "/jee", icon: "🧮" },
-  { name: "NEET", href: "/neet", icon: "🔬" },
+  { name: "Examination", href: "/examination", icon: "📋" },
   { name: "Practice Mode", href: "/practice", icon: "✏️" },
   { name: "Analytics", href: "/analytics", icon: "📉" }
 ];
@@ -170,8 +169,7 @@ export function Navbar() {
           <nav className="hidden lg:flex items-center gap-1">
             {tabs.map(tab => {
               const isActive = 
-                (tab.name === "JEE" && pathname.startsWith("/jee")) ||
-                (tab.name === "NEET" && pathname.startsWith("/neet")) ||
+                (tab.name === "Examination" && pathname.startsWith("/examination")) ||
                 (tab.name === "Dashboard" && pathname === "/dashboard") ||
                 (tab.name === "Practice Mode" && pathname.startsWith("/practice")) ||
                 (tab.name === "Analytics" && pathname.startsWith("/analytics"));
@@ -192,8 +190,7 @@ export function Navbar() {
                   {isActive && (
                     <div className="absolute inset-0 -z-10 rounded-lg">
                       <div className={`absolute inset-0 rounded-lg opacity-20 ${
-                        tab.name === "JEE" ? "bg-gradient-to-r from-blue-500 to-blue-600" :
-                        tab.name === "NEET" ? "bg-gradient-to-r from-green-500 to-green-600" :
+                        tab.name === "Examination" ? "bg-gradient-to-r from-purple-500 to-pink-600" :
                         tab.name === "Analytics" ? "bg-gradient-to-r from-purple-500 to-purple-600" :
                         tab.name === "Practice Mode" ? "bg-gradient-to-r from-pink-500 to-pink-600" :
                         "bg-gradient-to-r from-cyan-500 to-blue-600"

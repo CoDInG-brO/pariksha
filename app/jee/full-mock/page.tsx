@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { saveTestAttempt } from "@/lib/testStorage";
 import WebcamPreview from "@/components/WebcamPreview";
 import AlertDialog from "@/components/AlertDialog";
@@ -26,6 +26,8 @@ interface SectionData {
 
 export default function JEEFullMock() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [mockType, setMockType] = useState<"full" | "half">("full");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([]);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -36,6 +38,18 @@ export default function JEEFullMock() {
   const [cameraEnabled, setCameraEnabled] = useState(true);
   const [showBackAlert, setShowBackAlert] = useState(false);
   const startTimeRef = useRef<number>(0);
+
+  // Initialize mock type from query parameters
+  useEffect(() => {
+    const mockTypeParam = searchParams.get("mockType");
+    if (mockTypeParam === "half") {
+      setMockType("half");
+      setTimeRemaining(90 * 60); // 90 minutes for half mock
+    } else {
+      setMockType("full");
+      setTimeRemaining(180 * 60); // 180 minutes for full mock
+    }
+  }, [searchParams]);
 
   // Prevent back button, refresh and keyboard shortcuts during exam
   useEffect(() => {
@@ -85,15 +99,27 @@ export default function JEEFullMock() {
     };
   }, [testStarted, testSubmitted]);
 
-  const physicsQuestions = jeeQuestionBank.filter((question) => question.section === "physics");
-  const chemistryQuestions = jeeQuestionBank.filter((question) => question.section === "chemistry");
-  const mathematicsQuestions = jeeQuestionBank.filter((question) => question.section === "mathematics");
+  const { physicsQuestions, chemistryQuestions, mathematicsQuestions, allQuestions } = useMemo(() => {
+    const physicsQs = jeeQuestionBank.filter((question) => question.section === "physics");
+    const chemistryQs = jeeQuestionBank.filter((question) => question.section === "chemistry");
+    const mathematicsQs = jeeQuestionBank.filter((question) => question.section === "mathematics");
 
-  const allQuestions: Question[] = [
-    ...physicsQuestions,
-    ...chemistryQuestions,
-    ...mathematicsQuestions,
-  ];
+    // For half mock, use 50% of questions from each section
+    const actualPhysicsQuestions = mockType === "half" ? physicsQs.slice(0, Math.ceil(physicsQs.length / 2)) : physicsQs;
+    const actualChemistryQuestions = mockType === "half" ? chemistryQs.slice(0, Math.ceil(chemistryQs.length / 2)) : chemistryQs;
+    const actualMathematicsQuestions = mockType === "half" ? mathematicsQs.slice(0, Math.ceil(mathematicsQs.length / 2)) : mathematicsQs;
+
+    return {
+      physicsQuestions: actualPhysicsQuestions,
+      chemistryQuestions: actualChemistryQuestions,
+      mathematicsQuestions: actualMathematicsQuestions,
+      allQuestions: [
+        ...actualPhysicsQuestions,
+        ...actualChemistryQuestions,
+        ...actualMathematicsQuestions,
+      ]
+    };
+  }, [mockType]);
 
   const sectionsData: Record<string, SectionData> = {
     physics: {
@@ -258,24 +284,36 @@ export default function JEEFullMock() {
             className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
           >
             <div className="text-6xl mb-4">🚀</div>
-            <h1 className="text-4xl font-bold text-white mb-4">JEE Full Mock Test</h1>
-            <p className="text-gray-400 text-lg mb-8">Full 180-minute PCM simulation with +4 / -1 scoring.</p>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              JEE {mockType === "half" ? "Half" : "Full"} Mock Test
+            </h1>
+            <p className="text-gray-400 text-lg mb-8">
+              {mockType === "half" 
+                ? "Half 90-minute PCM simulation (50% questions) with +4 / -1 scoring." 
+                : "Full 180-minute PCM simulation with +4 / -1 scoring."}
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Section 1</p>
                 <p className="text-2xl font-bold text-cyan-300">Physics</p>
-                <p className="text-xs text-gray-500 mt-2">20 questions | 60 min</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "10 questions | 30 min" : "20 questions | 60 min"}
+                </p>
               </div>
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Section 2</p>
                 <p className="text-2xl font-bold text-amber-300">Chemistry</p>
-                <p className="text-xs text-gray-500 mt-2">20 questions | 60 min</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "10 questions | 30 min" : "20 questions | 60 min"}
+                </p>
               </div>
               <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-6">
                 <p className="text-gray-400 text-sm mb-2">Section 3</p>
                 <p className="text-2xl font-bold text-purple-300">Mathematics</p>
-                <p className="text-xs text-gray-500 mt-2">20 questions | 60 min</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {mockType === "half" ? "10 questions | 30 min" : "20 questions | 60 min"}
+                </p>
               </div>
             </div>
 
@@ -332,7 +370,7 @@ export default function JEEFullMock() {
                 }}
                 className="btn-gradient-blue-lg flex-1"
               >
-                Start Full Mock →
+                Start {mockType === "half" ? "Half" : "Full"} Mock →
               </motion.button>
             </div>
           </motion.div>

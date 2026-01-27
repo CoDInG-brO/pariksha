@@ -191,33 +191,6 @@ export default function NEETDashboard() {
         </div>
       </motion.div>
 
-      {/* Full Mock Option */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="max-w-7xl mx-auto mb-8"
-      >
-        <Link href="/neet/full-mock">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/50 hover:shadow-lg transition-all shadow-sm cursor-pointer">
-            <div className="flex items-center justify-between gap-6">
-              <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-1">🎯 Full NEET Mock Test</h3>
-                <p className="text-slate-600 text-sm">Take all 3 subjects with flexible navigation. (180 minutes total)</p>
-                <p className="text-xs text-emerald-600 mt-3 font-semibold">✓ Test your readiness with complete exam simulation including all NCERT topics</p>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 btn-gradient-green whitespace-nowrap text-sm"
-              >
-                Start Full Mock →
-              </motion.button>
-            </div>
-          </div>
-        </Link>
-      </motion.div>
-
       {/* Tips Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
