@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import JeeIcon from '@/components/icons/JeeIcon';
 import NeetIcon from '@/components/icons/NeetIcon';
 import { useState, useEffect, useRef, useMemo } from "react";
@@ -43,14 +44,16 @@ const neetQuestions = [
 ];
 
 export default function Practice() {
+  const searchParams = useSearchParams();
   const [selectedExam, setSelectedExam] = useState<"JEE" | "NEET" | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [subjectFromSidebar, setSubjectFromSidebar] = useState<string | null>(null);
   const [practiceStep, setPracticeStep] = useState<"exam" | "subject" | "topic" | "subtopic" | "count" | "practice">("exam");
   
   const [topicInput, setTopicInput] = useState("");
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [subtopicInput, setSubtopicInput] = useState("");
-  const [selectedSubtopic, setSelectedSubtopic] = useState<string | null>(null);
+  const [selectedSubtopics, setSelectedSubtopics] = useState<string[]>([]);
   const [questionCount, setQuestionCount] = useState(15);
   
   const [questions, setQuestions] = useState<typeof jeePracticeQuestions>([]);
@@ -63,9 +66,28 @@ export default function Practice() {
   const [topicDropdownOpen, setTopicDropdownOpen] = useState(false);
   const [subtopicDropdownOpen, setSubtopicDropdownOpen] = useState(false);
 
+  const normalizeSubject = (value: string | null) => {
+    if (!value) return null;
+    const normalized = value.toLowerCase();
+    if (normalized === "physics") return "Physics";
+    if (normalized === "chemistry") return "Chemistry";
+    if (normalized === "zoology") return "Zoology";
+    if (normalized === "botany") return "Botany";
+    if (normalized === "maths" || normalized === "mathematics") return "Maths";
+    return null;
+  };
+
+  const allowedExams = useMemo<("JEE" | "NEET")[]>(() => {
+    if (!selectedSubject || selectedSubject === "Random") return ["JEE", "NEET"];
+    if (selectedSubject === "Maths" || selectedSubject === "Mathematics") return ["JEE"];
+    if (selectedSubject === "Zoology" || selectedSubject === "Botany") return ["NEET"];
+    if (selectedSubject === "Physics" || selectedSubject === "Chemistry") return ["JEE", "NEET"];
+    return ["JEE", "NEET"];
+  }, [selectedSubject]);
+
   // Get subjects based on exam
   const getSubjects = () => {
-    if (selectedExam === "JEE") return ["Physics", "Chemistry", "Mathematics"];
+    if (selectedExam === "JEE") return ["Physics", "Chemistry", "Maths"];
     return ["Physics", "Chemistry", "Zoology", "Botany"];
   };
 
@@ -82,6 +104,7 @@ export default function Practice() {
     const subjectMap: Record<string, string> = {
       "Physics": "physics",
       "Chemistry": "chemistry",
+      "Maths": "mathematics",
       "Mathematics": "mathematics",
       "Zoology": "biology",
       "Botany": "biology"
@@ -93,11 +116,12 @@ export default function Practice() {
 
   // Get available subtopics for selected topic
   const getAvailableSubtopics = useMemo(() => {
-    if (!selectedTopic || !selectedSubject) return [];
+    if (!selectedSubject || selectedTopics.length === 0) return [];
     const allQuestions = getAllQuestions();
     const subjectMap: Record<string, string> = {
       "Physics": "physics",
       "Chemistry": "chemistry",
+      "Maths": "mathematics",
       "Mathematics": "mathematics",
       "Zoology": "biology",
       "Botany": "biology"
@@ -105,11 +129,11 @@ export default function Practice() {
     const questionSubject = subjectMap[selectedSubject];
     const subtopics = new Set(
       allQuestions
-        .filter(q => q.section === questionSubject && q.topic === selectedTopic)
+        .filter(q => q.section === questionSubject && selectedTopics.includes(q.topic))
         .map(q => q.subtopic)
     );
     return Array.from(subtopics).sort();
-  }, [selectedTopic, selectedSubject, selectedExam]);
+  }, [selectedTopics, selectedSubject, selectedExam]);
 
   // Filter topics based on input
   const filteredTopics = getAvailableTopics.filter(topic =>
@@ -121,11 +145,33 @@ export default function Practice() {
     subtopic.toLowerCase().includes(subtopicInput.toLowerCase())
   );
 
+  useEffect(() => {
+    setSelectedSubtopics([]);
+    setSubtopicInput("");
+  }, [selectedTopics]);
+
   // Load saved progress on mount
   useEffect(() => {
     const progress = getPracticeProgress();
     setSavedProgress(progress);
   }, []);
+
+  // Preselect subject from sidebar query param
+  useEffect(() => {
+    const subjectParam = normalizeSubject(searchParams.get("subject"));
+    if (subjectParam) {
+      setSelectedSubject(subjectParam);
+      setSubjectFromSidebar(subjectParam);
+      setSelectedExam(null);
+      setPracticeStep("exam");
+      setSelectedTopics([]);
+      setSelectedSubtopics([]);
+      setTopicInput("");
+      setSubtopicInput("");
+    } else {
+      setSubjectFromSidebar(null);
+    }
+  }, [searchParams]);
 
   // Save progress whenever user answers a question
   useEffect(() => {
@@ -163,10 +209,18 @@ export default function Practice() {
 
   const handleExamSelect = (exam: "JEE" | "NEET") => {
     setSelectedExam(exam);
-    setPracticeStep("subject");
-    setSelectedSubject(null);
-    setSelectedTopic(null);
-    setSelectedSubtopic(null);
+    if (selectedSubject) {
+      setPracticeStep("topic");
+    } else {
+      setPracticeStep("subject");
+    }
+    if (!selectedSubject) {
+      setSelectedSubject(null);
+    }
+    setSelectedTopics([]);
+    setSelectedSubtopics([]);
+    setTopicInput("");
+    setSubtopicInput("");
   };
 
   const handleRestorePractice = () => {
@@ -193,26 +247,22 @@ export default function Practice() {
     } else {
       setPracticeStep("topic");
     }
-    setSelectedTopic(null);
-    setSelectedSubtopic(null);
+    setSelectedTopics([]);
+    setSelectedSubtopics([]);
     setTopicInput("");
     setSubtopicInput("");
   };
 
-  const handleTopicSelect = (topic: string) => {
-    setSelectedTopic(topic);
-    setTopicInput(topic);
-    setTopicDropdownOpen(false);
-    setPracticeStep("subtopic");
-    setSelectedSubtopic(null);
-    setSubtopicInput("");
+  const handleTopicToggle = (topic: string) => {
+    setSelectedTopics(prev =>
+      prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]
+    );
   };
 
-  const handleSubtopicSelect = (subtopic: string) => {
-    setSelectedSubtopic(subtopic);
-    setSubtopicInput(subtopic);
-    setSubtopicDropdownOpen(false);
-    setPracticeStep("count");
+  const handleSubtopicToggle = (subtopic: string) => {
+    setSelectedSubtopics(prev =>
+      prev.includes(subtopic) ? prev.filter(s => s !== subtopic) : [...prev, subtopic]
+    );
   };
 
   const handleStartPractice = () => {
@@ -224,11 +274,12 @@ export default function Practice() {
       if (selectedSubject === "Random") {
         // For Random, use all questions from the selected exam
         filteredQuestions = allQuestions;
-      } else if (selectedTopic && selectedSubtopic) {
-        // For specific subject/topic/subtopic
+      } else if (selectedTopics.length > 0 && selectedSubtopics.length > 0) {
+        // For specific subject/topic/subtopic selections
         const subjectMap: Record<string, string> = {
           "Physics": "physics",
           "Chemistry": "chemistry",
+          "Maths": "mathematics",
           "Mathematics": "mathematics",
           "Zoology": "biology",
           "Botany": "biology"
@@ -236,7 +287,7 @@ export default function Practice() {
         const questionSubject = subjectMap[selectedSubject];
 
         filteredQuestions = allQuestions.filter(
-          q => q.section === questionSubject && q.topic === selectedTopic && q.subtopic === selectedSubtopic
+          q => q.section === questionSubject && selectedTopics.includes(q.topic) && selectedSubtopics.includes(q.subtopic)
         );
       } else {
         // Safety check - shouldn't reach here if flow is correct
@@ -298,29 +349,32 @@ export default function Practice() {
       } else {
         // For regular subjects, go back to subtopic selection
         setPracticeStep("subtopic");
-        setSelectedSubtopic(null);
+        setSelectedSubtopics([]);
         setSubtopicInput("");
       }
       setQuestionCount(15);
     } else if (practiceStep === "subtopic") {
       setPracticeStep("topic");
-      setSelectedTopic(null);
+      setSelectedSubtopics([]);
       setTopicInput("");
-      setSelectedSubtopic(null);
       setSubtopicInput("");
     } else if (practiceStep === "topic") {
-      setPracticeStep("subject");
-      setSelectedSubject(null);
-      setSelectedTopic(null);
-      setSelectedSubtopic(null);
+      if (subjectFromSidebar) {
+        setPracticeStep("exam");
+      } else {
+        setPracticeStep("subject");
+        setSelectedSubject(null);
+      }
+      setSelectedTopics([]);
+      setSelectedSubtopics([]);
       setTopicInput("");
       setSubtopicInput("");
     } else if (practiceStep === "subject") {
       setPracticeStep("exam");
       setSelectedExam(null);
       setSelectedSubject(null);
-      setSelectedTopic(null);
-      setSelectedSubtopic(null);
+      setSelectedTopics([]);
+      setSelectedSubtopics([]);
       setTopicInput("");
       setSubtopicInput("");
       setQuestionCount(15);
@@ -341,7 +395,11 @@ export default function Practice() {
       <div className="min-h-[70vh] flex items-center justify-center pt-25">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
           <h1 className="text-3xl font-bold text-white mb-3">Practice Mode</h1>
-          <p className="text-gray-400 mb-8 text-base">Choose your exam to start practicing</p>
+          <p className="text-gray-400 mb-8 text-base">
+            {selectedSubject
+              ? `Choose your exam for ${selectedSubject}`
+              : "Choose your exam to start practicing"}
+          </p>
           
           {hasActivePractice && (
             <motion.div
@@ -375,29 +433,37 @@ export default function Practice() {
           )}
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.button
-              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-              onClick={() => handleExamSelect("JEE")} aria-label="Start JEE Practice"
-              className="w-56 p-5 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
-            >
-              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
-                <JeeIcon className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-0.5">JEE</h3>
-              <p className="text-gray-300 text-sm">Physics, Chemistry & Mathematics</p>
-            </motion.button>
+            {allowedExams.includes("JEE") && (
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+                onClick={() => handleExamSelect("JEE")} aria-label="Start JEE Practice"
+                className="w-56 p-5 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
+              >
+                <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
+                  <JeeIcon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-0.5">JEE</h3>
+                <p className="text-gray-300 text-sm">
+                  {selectedSubject && selectedSubject !== "Random" ? selectedSubject : "Physics, Chemistry & Mathematics"}
+                </p>
+              </motion.button>
+            )}
 
-            <motion.button
-              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-              onClick={() => handleExamSelect("NEET")} aria-label="Start NEET Practice"
-              className="w-56 p-5 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
-            >
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
-                <NeetIcon className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-0.5">NEET</h3>
-              <p className="text-gray-300 text-sm">Physics, Chemistry, Zoology & Botany</p>
-            </motion.button>
+            {allowedExams.includes("NEET") && (
+              <motion.button
+                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
+                onClick={() => handleExamSelect("NEET")} aria-label="Start NEET Practice"
+                className="w-56 p-5 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
+              >
+                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
+                  <NeetIcon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-0.5">NEET</h3>
+                <p className="text-gray-300 text-sm">
+                  {selectedSubject && selectedSubject !== "Random" ? selectedSubject : "Physics, Chemistry, Zoology & Botany"}
+                </p>
+              </motion.button>
+            )}
           </div>
         </motion.div>
       </div>
@@ -451,6 +517,7 @@ export default function Practice() {
 
   // Topic Selection with Typeahead
   if (practiceStep === "topic") {
+    const allTopicsSelected = selectedTopics.length === getAvailableTopics.length && getAvailableTopics.length > 0;
     return (
       <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
@@ -485,21 +552,49 @@ export default function Practice() {
                     <motion.button
                       key={topic}
                       whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                      onClick={() => handleTopicSelect(topic)}
+                      onClick={() => {
+                        handleTopicToggle(topic);
+                        setTopicDropdownOpen(false);
+                      }}
                       className="w-full px-4 py-3 text-left text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
                     >
-                      {topic}
+                      <div className="flex items-center justify-between">
+                        <span>{topic}</span>
+                        {selectedTopics.includes(topic) && <span className="text-accent">✓</span>}
+                      </div>
                     </motion.button>
                   ))}
                 </motion.div>
               )}
             </div>
 
-            {selectedTopic && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 p-3 bg-accent/10 border border-accent/30 rounded-lg">
-                <p className="text-accent text-sm">Selected: <span className="font-semibold">{selectedTopic}</span></p>
-              </motion.div>
-            )}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {selectedTopics.map(topic => (
+                <span key={topic} className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs">
+                  {topic}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button
+                onClick={() => setSelectedTopics(allTopicsSelected ? [] : getAvailableTopics)}
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 transition-all"
+              >
+                {allTopicsSelected ? "Clear Topics" : "Select All Topics"}
+              </button>
+              <button
+                onClick={() => setPracticeStep("subtopic")}
+                disabled={selectedTopics.length === 0}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  selectedTopics.length === 0
+                    ? "bg-white/5 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-accent to-blue-600 text-white"
+                }`}
+              >
+                Continue
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -508,6 +603,7 @@ export default function Practice() {
 
   // Subtopic Selection with Typeahead
   if (practiceStep === "subtopic") {
+    const allSubtopicsSelected = selectedSubtopics.length === getAvailableSubtopics.length && getAvailableSubtopics.length > 0;
     return (
       <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
@@ -542,21 +638,49 @@ export default function Practice() {
                     <motion.button
                       key={subtopic}
                       whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                      onClick={() => handleSubtopicSelect(subtopic)}
+                      onClick={() => {
+                        handleSubtopicToggle(subtopic);
+                        setSubtopicDropdownOpen(false);
+                      }}
                       className="w-full px-4 py-3 text-left text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
                     >
-                      {subtopic}
+                      <div className="flex items-center justify-between">
+                        <span>{subtopic}</span>
+                        {selectedSubtopics.includes(subtopic) && <span className="text-accent">✓</span>}
+                      </div>
                     </motion.button>
                   ))}
                 </motion.div>
               )}
             </div>
 
-            {selectedSubtopic && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 p-3 bg-accent/10 border border-accent/30 rounded-lg">
-                <p className="text-accent text-sm">Selected: <span className="font-semibold">{selectedSubtopic}</span></p>
-              </motion.div>
-            )}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {selectedSubtopics.map(subtopic => (
+                <span key={subtopic} className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs">
+                  {subtopic}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button
+                onClick={() => setSelectedSubtopics(allSubtopicsSelected ? [] : getAvailableSubtopics)}
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 transition-all"
+              >
+                {allSubtopicsSelected ? "Clear Subtopics" : "Select All Subtopics"}
+              </button>
+              <button
+                onClick={() => setPracticeStep("count")}
+                disabled={selectedSubtopics.length === 0}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  selectedSubtopics.length === 0
+                    ? "bg-white/5 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-accent to-blue-600 text-white"
+                }`}
+              >
+                Continue
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -627,6 +751,9 @@ export default function Practice() {
   }
 
   // Practice Screen (displaying questions)
+  const topicLabel = selectedTopics.length > 0 ? selectedTopics.join(", ") : "All Topics";
+  const subtopicLabel = selectedSubtopics.length > 0 ? selectedSubtopics.join(", ") : "All Subtopics";
+
   return (
     <div className="max-w-4xl mx-auto pb-8 pt-[6.5rem] px-5">
       <div className="flex items-center justify-between mb-5 sticky top-20 bg-background/80 backdrop-blur-lg py-3 z-10 border-b border-white/10">
@@ -635,8 +762,8 @@ export default function Practice() {
             ← Back
           </button>
           <div>
-            <h1 className="text-xl font-bold text-white">{selectedExam} - {selectedSubject} - {selectedTopic}</h1>
-            <p className="text-sm text-gray-400">{selectedSubtopic}</p>
+            <h1 className="text-xl font-bold text-white">{selectedExam} - {selectedSubject} - {topicLabel}</h1>
+            <p className="text-sm text-gray-400">{subtopicLabel}</p>
           </div>
         </div>
         <div className={`px-3 py-1.5 rounded-lg text-sm ${selectedExam === "JEE" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"}`}>

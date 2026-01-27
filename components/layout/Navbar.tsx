@@ -9,12 +9,7 @@ import { useTheme } from "next-themes";
 const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
 const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 
-const tabs = [
-  { name: "Dashboard", href: "/dashboard", icon: "📊" },
-  { name: "Examination", href: "/examination", icon: "📋" },
-  { name: "Practice Mode", href: "/practice", icon: "✏️" },
-  { name: "Analytics", href: "/analytics", icon: "📉" }
-];
+const tabs = [];
 
 export function Navbar() {
   const pathname = usePathname();
@@ -165,142 +160,122 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Navigation Tabs - Center */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {tabs.map(tab => {
-              const isActive = 
-                (tab.name === "Examination" && pathname.startsWith("/examination")) ||
-                (tab.name === "Dashboard" && pathname === "/dashboard") ||
-                (tab.name === "Practice Mode" && pathname.startsWith("/practice")) ||
-                (tab.name === "Analytics" && pathname.startsWith("/analytics"));
-
-              return (
-                <Link
-                  key={tab.href}
-                  href={tab.href}
-                  className={`relative px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 flex items-center gap-1.5 group ${
-                    isActive 
-                      ? "text-white" 
-                      : "text-gray-400 hover:text-gray-200"
-                  }`}
-                >
-                  <span className="text-base">{tab.icon}</span>
-                  <span>{tab.name}</span>
-                  
-                  {isActive && (
-                    <div className="absolute inset-0 -z-10 rounded-lg">
-                      <div className={`absolute inset-0 rounded-lg opacity-20 ${
-                        tab.name === "Examination" ? "bg-gradient-to-r from-purple-500 to-pink-600" :
-                        tab.name === "Analytics" ? "bg-gradient-to-r from-purple-500 to-purple-600" :
-                        tab.name === "Practice Mode" ? "bg-gradient-to-r from-pink-500 to-pink-600" :
-                        "bg-gradient-to-r from-cyan-500 to-blue-600"
-                      }`} />
-                    </div>
-                  )}
-                  
-                  {!isActive && (
-                    <div className="absolute bottom-1 left-4 right-4 h-0.5 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Navigation placeholder - removed tabs */}
+          <div className="hidden lg:block" />
 
           {/* Right Side - Profile & Auth */}
-          <div className="flex items-center gap-3">
-            {/* Mobile Menu Indicator */}
-            <div className="lg:hidden flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-xs font-medium text-gray-400">Menu</span>
-            </div>
-
+          <div className="flex items-center gap-2 lg:gap-4">
             {session ? (
-              <div className="relative" ref={menuRef}>
-                <button
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="group relative"
+              <>
+                {/* Header action buttons */}
+                <Link
+                  href="/dashboard"
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200"
                 >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-accent via-blue-500 to-cyan-500 rounded-full opacity-0 group-hover:opacity-40 blur transition-all duration-300 group-hover:duration-200" />
-                  <div className="relative w-11 h-11 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300 border border-white/20 overflow-hidden">
-                    {getProfileImage() ? (
-                      <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-sm">{getInitials(session.user?.name)}</span>
-                    )}
-                  </div>
+                  <span>🏠</span>
+                  <span className="hidden lg:inline">Dashboard</span>
+                </Link>
+
+                <Link
+                  href="/profile/edit"
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200"
+                >
+                  <span>✏️</span>
+                  <span className="hidden lg:inline">Edit Profile</span>
+                </Link>
+
+                <Link
+                  href="/profile/settings"
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200"
+                >
+                  <span>⚙️</span>
+                  <span className="hidden lg:inline">Settings</span>
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200"
+                >
+                  <span>🚪</span>
+                  <span className="hidden lg:inline">Logout</span>
                 </button>
 
-                {/* Dropdown Menu */}
-                {showProfileMenu && (
-                  <div className="absolute right-0 mt-3 w-56 bg-gradient-to-b from-surface to-elevated rounded-2xl border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl">
-                    {/* User Info Header */}
-                    <div className="bg-gradient-to-br from-accent/10 via-blue-600/10 to-transparent p-4 border-b border-white/5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold overflow-hidden border border-white/20 shadow-lg shadow-accent/20">
-                          {getProfileImage() ? (
-                            <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
-                          ) : (
-                            <span>{getInitials(session.user?.name)}</span>
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-white font-semibold text-sm">{getDisplayName().split(' ')[0]}</p>
-                          <p className="text-gray-400 text-xs">Exam Candidate</p>
+                {/* Profile Avatar with dropdown for mobile */}
+                <div className="relative" ref={menuRef}>
+                  <button
+                    onClick={() => setShowProfileMenu(!showProfileMenu)}
+                    className="group relative"
+                  >
+                    <div className="absolute -inset-1 bg-gradient-to-r from-accent via-blue-500 to-cyan-500 rounded-full opacity-0 group-hover:opacity-40 blur transition-all duration-300 group-hover:duration-200" />
+                    <div className="relative w-11 h-11 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300 border border-white/20 overflow-hidden">
+                      {getProfileImage() ? (
+                        <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-sm">{getInitials(session.user?.name)}</span>
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Mobile Dropdown Menu */}
+                  {showProfileMenu && (
+                    <div className="absolute right-0 mt-3 w-56 bg-gradient-to-b from-surface to-elevated rounded-2xl border border-white/10 shadow-2xl overflow-hidden backdrop-blur-xl md:hidden">
+                      {/* User Info Header */}
+                      <div className="bg-gradient-to-br from-accent/10 via-blue-600/10 to-transparent p-4 border-b border-white/5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold overflow-hidden border border-white/20 shadow-lg shadow-accent/20">
+                            {getProfileImage() ? (
+                              <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
+                            ) : (
+                              <span>{getInitials(session.user?.name)}</span>
+                            )}
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold text-sm">{getDisplayName().split(' ')[0]}</p>
+                            <p className="text-gray-400 text-xs">Exam Candidate</p>
+                          </div>
                         </div>
                       </div>
+
+                      {/* Menu Items */}
+                      <div className="p-2">
+                        <Link
+                          href="/profile/edit"
+                          onClick={() => setShowProfileMenu(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
+                        >
+                          <span className="text-lg group-hover:scale-110 transition-transform">✏️</span>
+                          <div>
+                            <p className="text-sm font-medium">Edit Profile</p>
+                            <p className="text-[11px] text-gray-400">Update information</p>
+                          </div>
+                        </Link>
+
+                        <Link
+                          href="/profile/settings"
+                          onClick={() => setShowProfileMenu(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
+                        >
+                          <span className="text-lg group-hover:scale-110 transition-transform">⚙️</span>
+                          <div>
+                            <p className="text-sm font-medium">Settings</p>
+                            <p className="text-[11px] text-gray-400">Preferences</p>
+                          </div>
+                        </Link>
+
+                        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
+
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-red-500/20 transition-all duration-200 text-red-400 hover:text-red-300 group"
+                        >
+                          <span className="text-lg group-hover:scale-110 transition-transform">🚪</span>
+                          <p className="text-sm font-medium">Logout</p>
+                        </button>
+                      </div>
                     </div>
-
-                    {/* Menu Items */}
-                    <div className="p-2">
-                      <Link
-                        href="/profile/edit"
-                        onClick={() => setShowProfileMenu(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
-                      >
-                        <span className="text-lg group-hover:scale-110 transition-transform">✏️</span>
-                        <div>
-                          <p className="text-sm font-medium">Edit Profile</p>
-                          <p className="text-[11px] text-gray-400">Update information</p>
-                        </div>
-                      </Link>
-
-                      <Link
-                        href="/profile/settings"
-                        onClick={() => setShowProfileMenu(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
-                      >
-                        <span className="text-lg group-hover:scale-110 transition-transform">⚙️</span>
-                        <div>
-                          <p className="text-sm font-medium">Settings</p>
-                          <p className="text-[11px] text-gray-400">Preferences</p>
-                        </div>
-                      </Link>
-
-                      <Link
-                        href="/profile/performance"
-                        onClick={() => setShowProfileMenu(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/10 transition-all duration-200 text-gray-300 hover:text-white group"
-                      >
-                        <span className="text-lg group-hover:scale-110 transition-transform">📊</span>
-                        <div>
-                          <p className="text-sm font-medium">My Performance</p>
-                          <p className="text-[11px] text-gray-400">View progress</p>
-                        </div>
-                      </Link>
-
-                      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-2" />
-
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-red-500/20 transition-all duration-200 text-red-400 hover:text-red-300 group"
-                      >
-                        <span className="text-lg group-hover:scale-110 transition-transform">🚪</span>
-                        <p className="text-sm font-medium">Logout</p>
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              </>
             ) : (
               <Link
                 href="/login"
