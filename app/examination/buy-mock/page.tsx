@@ -63,22 +63,25 @@ export default function BuyMock() {
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-12 px-5">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="mb-4"
         >
-          <button
-            onClick={() => router.back()}
-            className="mb-4 text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
-          >
-            ← Back
-          </button>
-          <h1 className="text-4xl font-bold text-white mb-3">Buy Mock Test</h1>
-          <p className="text-gray-400 text-lg">Select your exam and mock type</p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.back()}
+              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+              aria-label="Back"
+            >
+              ←
+            </button>
+            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Buy Mock Test</h1>
+          </div>
+          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Select your exam and mock type</p>
         </motion.div>
 
         {/* Step 1: Exam Selection */}
@@ -86,10 +89,10 @@ export default function BuyMock() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-16"
+            className="mb-6"
           >
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Step 1: Choose Exam</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">Step 1: Choose Exam</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
               {exams.map((exam) => {
                 const IconComponent = exam.icon;
                 return (
@@ -98,13 +101,13 @@ export default function BuyMock() {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedExam(exam.id as "jee" | "neet")}
-                    className={`group p-8 rounded-2xl border ${exam.borderColor} ${exam.hoverBorder} bg-surface hover:bg-surface/80 transition-all duration-300 flex flex-col items-center text-center`}
+                    className={`group p-4 rounded-xl border ${exam.borderColor} ${exam.hoverBorder} bg-surface hover:bg-surface/80 transition-all duration-300 flex flex-col items-center text-center`}
                   >
                     <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${exam.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                       <IconComponent className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">{exam.name}</h3>
-                    <p className="text-gray-400 text-sm">{exam.description}</p>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">{exam.name}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">{exam.description}</p>
                   </motion.button>
                 );
               })}
@@ -117,34 +120,34 @@ export default function BuyMock() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-16"
+            className="mb-6"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Step 2: Choose Mock Type</h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Step 2: Choose Mock Type</h2>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedExam(null)}
-                className="text-gray-400 hover:text-white transition-colors text-sm"
+                className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors text-sm"
               >
                 Change Exam
               </motion.button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
               {mockTypes.map((mockType) => (
                 <motion.div
                   key={mockType.id}
                   whileHover={{ scale: 1.02 }}
-                  className={`p-8 rounded-2xl border ${mockType.borderColor} ${mockType.hoverBorder} bg-surface hover:bg-surface/80 transition-all duration-300 flex flex-col items-center text-center`}
+                  className={`p-4 rounded-xl border ${mockType.borderColor} ${mockType.hoverBorder} bg-surface hover:bg-surface/80 transition-all duration-300 flex flex-col items-center text-center`}
                 >
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${mockType.color} flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                     {mockType.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{mockType.name}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{mockType.description}</p>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">{mockType.name}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">{mockType.description}</p>
                   
-                  <div className="space-y-2 mb-6 text-sm text-gray-300">
+                  <div className="space-y-1.5 mb-4 text-sm text-slate-500 dark:text-slate-400">
                     <p>⏱️ Duration: {mockType.duration}</p>
                     <p>📝 Questions: {mockType.questionCount}</p>
                   </div>

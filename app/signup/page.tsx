@@ -63,7 +63,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-background dark:via-surface dark:to-background flex items-center justify-center px-6 py-12">
+    <div className="bg-slate-100/60 dark:bg-slate-950 px-4 pt-5 pb-6">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl" />
@@ -76,12 +76,12 @@ export default function SignUpPage() {
         className="relative w-full max-w-md"
       >
         {/* Logo & Title */}
-        <div className="text-center mb-8">
+        <div className="text-left mb-5">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", delay: 0.1 }}
-            className="w-20 h-20 bg-gradient-to-br from-accent to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-accent/30"
+            className="w-12 h-12 bg-gradient-to-br from-accent to-blue-600 rounded-lg flex items-center justify-center mb-3"
           >
             {/* Book Stack SVG Logo */}
             <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,8 +95,8 @@ export default function SignUpPage() {
               <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
             </svg>
           </motion.div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Join IYOTAPREP</h1>
-          <p className="text-gray-500 dark:text-gray-400">Start your exam preparation journey</p>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">Join IYOTAPREP</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-xs">Start your exam preparation journey</p>
         </div>
 
         {/* Sign Up Card */}
@@ -104,9 +104,9 @@ export default function SignUpPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gradient-to-br dark:from-surface dark:to-elevated rounded-2xl p-8 border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl"
+          className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-gray-200 dark:border-slate-800"
         >
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">Create Account</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-left">Create Account</h2>
 
           {/* Error Message */}
           {error && (
@@ -119,7 +119,7 @@ export default function SignUpPage() {
           <button
             onClick={handleGoogleSignUp}
             disabled={isGoogleLoading}
-            className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white hover:bg-gray-100 rounded-xl text-gray-800 font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+            className="w-full h-9 flex items-center justify-center gap-2 px-3 bg-white hover:bg-gray-100 rounded-md text-gray-800 font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-3"
           >
             {isGoogleLoading ? (
               <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -147,23 +147,23 @@ export default function SignUpPage() {
           </button>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-6">
+          <div className="flex items-center gap-3 my-4">
             <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
-            <span className="text-gray-400 dark:text-gray-500 text-sm">or sign up with email</span>
+            <span className="text-gray-400 dark:text-gray-500 text-xs">or sign up with email</span>
             <div className="flex-1 h-px bg-gray-200 dark:bg-white/10" />
           </div>
 
           {/* Email Sign Up Form */}
-          <form onSubmit={handleEmailSignUp} className="space-y-4">
+          <form onSubmit={handleEmailSignUp} className="space-y-3">
             <div>
-              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-2">Full Name</label>
+              <label className="block text-gray-600 dark:text-gray-300 font-medium mb-1.5 text-sm">Full Name</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="John Doe"
                 required
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
+                className="w-full h-9 px-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-accent transition-colors"
               />
             </div>
 

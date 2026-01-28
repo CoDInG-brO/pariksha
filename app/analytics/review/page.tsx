@@ -30,31 +30,33 @@ function ReviewContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-slate-600 dark:text-slate-300 text-sm">Loading...</div>
+        </div>
       </div>
     );
   }
 
   if (!attemptId) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <p className="text-6xl mb-6">📋</p>
-            <h1 className="text-3xl font-bold text-white mb-4">No Test Selected</h1>
-            <p className="text-gray-400 mb-8">
+            <p className="text-2xl mb-2">📋</p>
+            <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">No Test Selected</h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
               Please select a test attempt from the Analytics page to review your answers.
             </p>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => router.push("/analytics")}
-              className="px-8 py-4 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-bold text-lg"
+              className="h-8 px-3 rounded-md bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium"
             >
               Go to Analytics
             </motion.button>
@@ -66,23 +68,23 @@ function ReviewContent() {
 
   if (!attempt) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-4xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <p className="text-6xl mb-6">❌</p>
-            <h1 className="text-3xl font-bold text-white mb-4">Test Not Found</h1>
-            <p className="text-gray-400 mb-8">
+            <p className="text-2xl mb-2">❌</p>
+            <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">Test Not Found</h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
               The test attempt you&apos;re looking for doesn&apos;t exist or has been deleted.
             </p>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => router.push("/analytics")}
-              className="px-8 py-4 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 rounded-xl text-white font-bold text-lg"
+              className="h-8 px-3 rounded-md bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium"
             >
               Go to Analytics
             </motion.button>
@@ -365,27 +367,28 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto px-6 mb-3"
+      className="max-w-6xl mx-auto px-4 mb-3"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => router.push("/analytics")}
-              className="text-gray-400 hover:text-white transition-all text-xs"
+              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-all text-xs"
+              aria-label="Back"
             >
-              ← Back
+              ←
             </motion.button>
+            <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Review</h1>
             <span className={`px-2 py-0.5 rounded text-xs font-bold ${
               attempt.examType === "JEE" ? "bg-cyan-500/20 text-cyan-300" : "bg-green-500/20 text-green-300"
             }`}>
               {attempt.examType}
             </span>
           </div>
-          <h1 className="text-lg font-bold text-white">Review</h1>
-          <p className="text-gray-500 text-xs">
+          <p className="text-slate-500 text-xs mt-1">
             {formatTimestamp(attempt.timestamp)} • {formatTimeSpent(attempt.timeSpent)}
           </p>
         </div>
@@ -476,8 +479,10 @@ function FilterButtons({
 export default function ReviewPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-slate-600 dark:text-slate-300 text-sm">Loading...</div>
+        </div>
       </div>
     }>
       <ReviewContent />

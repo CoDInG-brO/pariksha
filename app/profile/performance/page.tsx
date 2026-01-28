@@ -42,28 +42,30 @@ export default function PerformancePage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-25 pb-12">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-6xl mx-auto px-6"
+        className="max-w-6xl mx-auto px-4"
       >
-        <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
-        >
-          ← Back
-        </button>
-
-        <h1 className="text-4xl font-bold text-white mb-2">📊 My Performance</h1>
-        <p className="text-gray-400 mb-8">Track your progress and achievements</p>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => router.back()}
+            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            aria-label="Back"
+          >
+            ←
+          </button>
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">📊 My Performance</h1>
+        </div>
+        <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 mb-4">Track your progress and achievements</p>
 
         {/* Overall Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-4"
         >
           <StatCard icon="📝" label="Tests Completed" value={performanceData.overall.testsCompleted} />
           <StatCard icon="🎯" label="Avg Score" value={`${performanceData.overall.avgScore}%`} />

@@ -48,7 +48,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-25 pb-12">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
       {/* Success Dialog */}
       <AnimatePresence>
         {showSuccessToast && (
@@ -90,17 +90,19 @@ export default function SettingsPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mx-auto px-6"
+        className="max-w-4xl mx-auto px-4"
       >
-        <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
-        >
-          ← Back
-        </button>
-
-        <h1 className="text-4xl font-bold text-white mb-2">⚙️ Settings</h1>
-        <p className="text-gray-400 mb-8">Customize your experience</p>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => router.back()}
+            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            aria-label="Back"
+          >
+            ←
+          </button>
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">⚙️ Settings</h1>
+        </div>
+        <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 mb-4">Customize your experience</p>
 
         <div className="space-y-6">
           {/* Notifications */}

@@ -65,7 +65,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
       {/* Hero Section */}
       <header className="relative overflow-hidden">
         {/* Background decoration */}

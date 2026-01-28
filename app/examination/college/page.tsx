@@ -39,22 +39,25 @@ export default function CollegeLevelExamination() {
   ];
 
   return (
-    <div className="min-h-screen pt-32 pb-12 px-5">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="mb-4"
         >
-          <button
-            onClick={() => router.back()}
-            className="mb-4 text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
-          >
-            ← Back
-          </button>
-          <h1 className="text-4xl font-bold text-white mb-3">College Level Examinations</h1>
-          <p className="text-gray-400 text-lg">JEE & NEET Preparation</p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.back()}
+              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+              aria-label="Back"
+            >
+              ←
+            </button>
+            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">College Level Examinations</h1>
+          </div>
+          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">JEE & NEET Preparation</p>
         </motion.div>
 
         {/* Options Cards */}
@@ -62,7 +65,7 @@ export default function CollegeLevelExamination() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl"
         >
           {options.map((option) => (
             <motion.button

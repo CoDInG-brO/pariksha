@@ -636,62 +636,62 @@ function NEETFullMockContent() {
 
   if (!testStarted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-12">
-        <div className="max-w-4xl mx-auto px-6">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
+            transition={{ duration: 0.3 }}
+            className="bg-surface rounded-xl p-4 border border-white/10"
           >
-            <div className="text-6xl mb-4">🏥</div>
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <div className="text-3xl mb-2">🏥</div>
+            <h1 className="text-xl font-semibold text-white mb-1">
               NEET {mockType === "half" ? "Half" : "Full"} Mock Test
             </h1>
-            <p className="text-gray-400 text-lg mb-8">
+            <p className="text-gray-400 text-sm mb-4">
               {mockType === "half" 
                 ? "Half 90-minute exam (50% questions) with all 3 subjects" 
                 : "Complete exam experience with all 3 subjects"}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-6">
-                <p className="text-gray-400 text-sm mb-2">Physics</p>
-                <p className="text-2xl font-bold text-blue-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <p className="text-gray-400 text-xs mb-1">Physics</p>
+                <p className="text-lg font-semibold text-blue-300">
                   {mockType === "half" ? "8 Qs" : "15 Qs"}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 mt-1">
                   {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
                 </p>
               </div>
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-6">
-                <p className="text-gray-400 text-sm mb-2">Chemistry</p>
-                <p className="text-2xl font-bold text-green-300">
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                <p className="text-gray-400 text-xs mb-1">Chemistry</p>
+                <p className="text-lg font-semibold text-green-300">
                   {mockType === "half" ? "8 Qs" : "15 Qs"}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 mt-1">
                   {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
                 </p>
               </div>
-              <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-6">
-                <p className="text-gray-400 text-sm mb-2">Biology</p>
-                <p className="text-2xl font-bold text-orange-300">
+              <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
+                <p className="text-gray-400 text-xs mb-1">Biology</p>
+                <p className="text-lg font-semibold text-orange-300">
                   {mockType === "half" ? "8 Qs" : "15 Qs"}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 mt-1">
                   {mockType === "half" ? "30 marks | 30 min" : "60 marks | 60 min"}
                 </p>
               </div>
             </div>
 
-            <div className="mb-8 p-6 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-              <p className="text-yellow-200">
+            <div className="mb-4 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+              <p className="text-yellow-200 text-sm">
                 ⚠️ <strong>Important:</strong> {mockType === "half" ? "90 marks in 90 minutes" : "180 marks in 180 minutes"}. Manage time wisely across all subjects!
               </p>
             </div>
 
             {/* Camera Monitoring Toggle */}
-            <div className="mb-8 p-6 bg-surface rounded-lg border border-white/8">
+            <div className="mb-4 p-4 bg-surface rounded-lg border border-white/8">
               <div className="flex items-center justify-between">
                 <div className="text-left">
                   <p className="text-accent text-sm font-semibold flex items-center gap-2">
@@ -716,14 +716,14 @@ function NEETFullMockContent() {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex items-center justify-between gap-3">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/neet")}
-                className="btn-gradient-gray-lg flex-1"
+                className="btn-gradient-gray"
               >
-                ← Back to Dashboard
+                Dashboard
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -732,7 +732,7 @@ function NEETFullMockContent() {
                   startTimeRef.current = Date.now();
                   setTestStarted(true);
                 }}
-                className="btn-gradient-blue-lg flex-1"
+                className="btn-gradient-blue ml-auto"
               >
                 Start {mockType === "half" ? "Half" : "Full"} Mock →
               </motion.button>
@@ -748,22 +748,28 @@ function NEETFullMockContent() {
 
   if (testSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-12">
-        <div className="max-w-4xl mx-auto px-6">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
+            transition={{ duration: 0.3 }}
+            className="bg-surface rounded-xl p-4 border border-white/10"
           >
-            <div className="text-6xl mb-4">
-              {parseFloat(score.percentage) >= 70 ? "🎉" : "📊"}
+            <div className="flex items-center gap-2 mb-2">
+              <button
+                onClick={() => router.push("/neet")}
+                className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+                aria-label="Back"
+              >
+                ←
+              </button>
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Full Mock Completed</h2>
+              <span className="text-lg">{parseFloat(score.percentage) >= 70 ? "🎉" : "📊"}</span>
             </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">NEET Simulation Results</p>
 
-            <h2 className="text-4xl font-bold text-white mb-2">Full Mock Completed!</h2>
-            <p className="text-gray-400 text-lg mb-8">NEET Simulation Results</p>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <p className="text-gray-400 text-sm">Correct</p>
                 <p className="text-3xl font-bold text-green-400">{score.correct}</p>
@@ -785,29 +791,29 @@ function NEETFullMockContent() {
               </motion.div>
             </div>
 
-            <div className="mb-8 p-6 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg border border-orange-500/30">
-              <p className="text-gray-400 text-sm mb-2">Score Percentage</p>
-              <p className="text-5xl font-bold text-white">{score.percentage}%</p>
-              <p className="text-gray-400 text-sm mt-4">
-                Estimated Percentile: <span className="text-2xl font-bold text-orange-300">{score.estimated_percentile}%ile</span>
+            <div className="mb-4 p-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-lg border border-orange-500/30">
+              <p className="text-slate-500 text-xs mb-1">Score Percentage</p>
+              <p className="text-2xl font-semibold text-white">{score.percentage}%</p>
+              <p className="text-slate-500 text-xs mt-2">
+                Estimated Percentile: <span className="text-base font-semibold text-orange-300">{score.estimated_percentile}%ile</span>
               </p>
             </div>
 
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-3 justify-start">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/neet")}
                 className="btn-gradient-gray-lg"
               >
-                ← Back to Dashboard
+                Dashboard
               </motion.button>
               {savedAttemptId && (
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => router.push(`/analytics/review?id=${savedAttemptId}`)}
-                  className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-lg text-white font-semibold transition-all"
+                  className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-md text-white text-sm font-semibold transition-all"
                 >
                   📝 Review Answers →
                 </motion.button>
@@ -1039,7 +1045,13 @@ function NEETFullMockContent() {
 
 export default function NEETFullMock() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div></div>}>
+    <Suspense fallback={
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500" />
+        </div>
+      </div>
+    }>
       <NEETFullMockContent />
     </Suspense>
   );

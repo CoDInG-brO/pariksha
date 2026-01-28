@@ -27,7 +27,7 @@ export default function Examination() {
   ];
 
   return (
-    <div className="min-h-screen pt-32 pb-12 px-5">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

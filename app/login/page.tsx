@@ -49,7 +49,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-background dark:via-surface dark:to-background flex flex-col items-center justify-center px-6 py-8">
+    <div className="bg-slate-100/60 dark:bg-slate-950 px-4 pt-5 pb-6">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl" />
@@ -62,7 +62,7 @@ export default function LoginPage() {
         className="relative w-full max-w-sm"
       >
         {/* Logo & Title */}
-        <div className="text-center mb-5">
+        <div className="text-left mb-4">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -81,8 +81,8 @@ export default function LoginPage() {
               <rect x="25.2" y="12" width="2.5" height="10" rx="0.5" fill="#67E8F9" />
             </svg>
           </motion.div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">IYOTAPREP</h1>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Your AI-powered exam preparation partner</p>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">IYOTAPREP</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-xs">Your AI-powered exam preparation partner</p>
         </div>
 
         {/* Login Card */}
@@ -90,11 +90,23 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gradient-to-br dark:from-surface dark:to-elevated rounded-xl p-6 border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl"
+          className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-gray-200 dark:border-slate-800"
         >
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 text-center">
-            {showEmailLogin ? "Sign in with Email" : "Welcome Back"}
-          </h2>
+          <div className="flex items-center gap-2 mb-3">
+            {showEmailLogin && (
+              <button
+                type="button"
+                onClick={() => setShowEmailLogin(false)}
+                className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-colors"
+                aria-label="Back"
+              >
+                ←
+              </button>
+            )}
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white text-left">
+              {showEmailLogin ? "Sign in with Email" : "Welcome Back"}
+            </h2>
+          </div>
 
           {/* Error Message */}
           {error && (
@@ -109,7 +121,7 @@ export default function LoginPage() {
               <button
                 onClick={handleGoogleLogin}
                 disabled={isGoogleLoading}
-                className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-white hover:bg-gray-100 rounded-lg text-gray-800 font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-3"
+                className="w-full h-9 flex items-center justify-center gap-2 px-3 bg-white hover:bg-gray-100 rounded-md text-gray-800 font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-3"
               >
                 {isGoogleLoading ? (
                   <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -146,7 +158,7 @@ export default function LoginPage() {
               {/* Email Sign In Button */}
               <button
                 onClick={() => setShowEmailLogin(true)}
-                className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-lg text-gray-700 dark:text-white font-semibold transition-all border border-gray-200 dark:border-white/10"
+                className="w-full h-9 flex items-center justify-center gap-2 px-3 bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 rounded-md text-gray-700 dark:text-white font-semibold text-sm transition-all border border-gray-200 dark:border-white/10"
               >
                 <span className="text-xl">✉️</span>
                 Continue with Email
@@ -202,13 +214,6 @@ export default function LoginPage() {
                 )}
               </button>
 
-              <button
-                type="button"
-                onClick={() => setShowEmailLogin(false)}
-                className="w-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white text-sm transition-colors"
-              >
-                ← Back to other options
-              </button>
             </form>
           )}
 

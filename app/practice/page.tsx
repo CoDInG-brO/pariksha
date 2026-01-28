@@ -476,14 +476,16 @@ function PracticeContent() {
     const isJEE = selectedExam === "JEE";
 
     return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl w-full">
-          <div className="text-center mb-8">
-            <button onClick={resetPractice} className="text-gray-400 hover:text-white mb-4 inline-flex items-center gap-2">
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-white mb-2">Select Subject</h1>
-            <p className="text-gray-400">Choose a subject for {selectedExam} practice</p>
+          <div className="mb-4">
+            <div className="flex items-center gap-2">
+              <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
+                ←
+              </button>
+              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Select Subject</h1>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Choose a subject for {selectedExam} practice</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -519,14 +521,16 @@ function PracticeContent() {
   if (practiceStep === "topic") {
     const allTopicsSelected = selectedTopics.length === getAvailableTopics.length && getAvailableTopics.length > 0;
     return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
-          <div className="text-center mb-8">
-            <button onClick={resetPractice} className="text-gray-400 hover:text-white mb-4 inline-flex items-center gap-2">
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-white mb-2">Select Topic</h1>
-            <p className="text-gray-400">Select a topic you want to practice today</p>
+          <div className="mb-4">
+            <div className="flex items-center gap-2">
+              <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
+                ←
+              </button>
+              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Select Topic</h1>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Select a topic you want to practice today</p>
           </div>
 
           <div className="bg-surface rounded-2xl p-8 border border-white/10">
@@ -605,14 +609,16 @@ function PracticeContent() {
   if (practiceStep === "subtopic") {
     const allSubtopicsSelected = selectedSubtopics.length === getAvailableSubtopics.length && getAvailableSubtopics.length > 0;
     return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
-          <div className="text-center mb-8">
-            <button onClick={resetPractice} className="text-gray-400 hover:text-white mb-4 inline-flex items-center gap-2">
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-white mb-2">Select Subtopic</h1>
-            <p className="text-gray-400">Select a sub topic you want to practice today</p>
+          <div className="mb-4">
+            <div className="flex items-center gap-2">
+              <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
+                ←
+              </button>
+              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Select Subtopic</h1>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Select a sub topic you want to practice today</p>
           </div>
 
           <div className="bg-surface rounded-2xl p-8 border border-white/10">
@@ -691,14 +697,16 @@ function PracticeContent() {
   if (practiceStep === "count") {
     const isRandom = selectedSubject === "Random";
     return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-25 px-5">
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
-          <div className="text-center mb-8">
-            <button onClick={resetPractice} className="text-gray-400 hover:text-white mb-4 inline-flex items-center gap-2">
-              ← Back
-            </button>
-            <h1 className="text-3xl font-bold text-white mb-2">Number of Questions</h1>
-            <p className="text-gray-400">
+          <div className="mb-4">
+            <div className="flex items-center gap-2">
+              <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
+                ←
+              </button>
+              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Number of Questions</h1>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
               {isRandom 
                 ? "How many random questions from all subjects?" 
                 : "How many questions do you want to practice?"}
@@ -755,15 +763,15 @@ function PracticeContent() {
   const subtopicLabel = selectedSubtopics.length > 0 ? selectedSubtopics.join(", ") : "All Subtopics";
 
   return (
-    <div className="max-w-4xl mx-auto pb-8 pt-[6.5rem] px-5">
-      <div className="flex items-center justify-between mb-5 sticky top-20 bg-background/80 backdrop-blur-lg py-3 z-10 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <button onClick={resetPractice} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-            ← Back
+    <div className="max-w-4xl mx-auto pb-6 pt-4 px-4">
+      <div className="flex items-center justify-between mb-3 sticky top-10 bg-background/80 backdrop-blur-lg py-2 z-10 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <button onClick={resetPractice} className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Back">
+            ←
           </button>
           <div>
-            <h1 className="text-xl font-bold text-white">{selectedExam} - {selectedSubject} - {topicLabel}</h1>
-            <p className="text-sm text-gray-400">{subtopicLabel}</p>
+            <h1 className="text-lg font-semibold text-white">{selectedExam} - {selectedSubject} - {topicLabel}</h1>
+            <p className="text-xs text-gray-400 mt-1">{subtopicLabel}</p>
           </div>
         </div>
         <div className={`px-3 py-1.5 rounded-lg text-sm ${selectedExam === "JEE" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"}`}>
@@ -907,7 +915,13 @@ function PracticeContent() {
 
 export default function Practice() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div></div>}>
+    <Suspense fallback={
+      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent" />
+        </div>
+      </div>
+    }>
       <PracticeContent />
     </Suspense>
   );

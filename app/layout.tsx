@@ -4,12 +4,12 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { usePathname } from "next/navigation";
 
-const grotesk = Space_Grotesk({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-grotesk",
+  variable: "--font-inter",
 });
 
 const jetbrains = JetBrains_Mono({
@@ -27,8 +27,8 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
     <>
       <Navbar />
       <Sidebar />
-      <main className={`pt-16 min-h-screen ${hideSidebar ? 'px-6 max-w-7xl mx-auto' : 'pl-56 pr-6'}`}>
-        <div className={hideSidebar ? '' : 'max-w-7xl'}>
+      <main className={`bg-slate-100/60 dark:bg-slate-950 ${hideSidebar ? 'px-4 max-w-7xl mx-auto' : 'pl-[220px] pr-3'}`}>
+        <div className={hideSidebar ? 'pt-4' : 'pt-4 max-w-6xl'}>
           {children}
         </div>
       </main>
@@ -39,7 +39,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${grotesk.variable} ${jetbrains.variable} antialiased`}>
+      <body className={`${inter.variable} ${jetbrains.variable} antialiased font-sans`}>
         <Providers>
           <RootLayoutContent>{children}</RootLayoutContent>
         </Providers>

@@ -45,9 +45,9 @@ const menuItems = [
       { name: "Maths", href: "/practice?subject=maths" }
     ]
   },
-  { name: "Prepare your Own Exam", href: "/examination/prepare-own", icon: "🛠️", submenu: [] },
+  { name: "Prepare Exam", href: "/examination/prepare-own", icon: "🛠️", submenu: [] },
   { name: "Analytics", href: "/analytics", icon: "📊", submenu: [] },
-  { name: "Licenses", href: "#", icon: "🎫", submenu: [] }
+  { name: "Licenses", href: "/licenses", icon: "🎫", submenu: [] }
 ];
 
 export function Sidebar() {
@@ -60,37 +60,27 @@ export function Sidebar() {
 
   useEffect(() => {
     setMounted(true);
-    // Load profile photo from localStorage
     const savedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
-    if (savedPhoto) {
-      setProfilePhoto(savedPhoto);
-    }
-    // Load profile name from localStorage
+    if (savedPhoto) setProfilePhoto(savedPhoto);
+    
     const savedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
     if (savedProfile) {
       try {
         const parsed = JSON.parse(savedProfile);
-        if (parsed.name) {
-          setProfileName(parsed.name);
-        }
+        if (parsed.name) setProfileName(parsed.name);
       } catch (e) {
         console.error("Failed to parse profile:", e);
       }
     }
 
-    // Listen for storage updates from profile edit page
     const handleStorageUpdate = () => {
       const updatedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
-      if (updatedPhoto) {
-        setProfilePhoto(updatedPhoto);
-      }
+      if (updatedPhoto) setProfilePhoto(updatedPhoto);
       const updatedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
       if (updatedProfile) {
         try {
           const parsed = JSON.parse(updatedProfile);
-          if (parsed.name) {
-            setProfileName(parsed.name);
-          }
+          if (parsed.name) setProfileName(parsed.name);
         } catch (e) {
           console.error("Failed to parse profile:", e);
         }
@@ -101,7 +91,6 @@ export function Sidebar() {
     return () => window.removeEventListener("storage", handleStorageUpdate);
   }, []);
 
-  // Hide sidebar on auth pages, landing page, and full-mock exam pages
   if (pathname === "/signup" || pathname === "/login" || pathname === "/" || pathname === "/jee/full-mock" || pathname === "/neet/full-mock") {
     return null;
   }
@@ -116,24 +105,19 @@ export function Sidebar() {
 
   const getInitials = (name: string | null | undefined) => {
     const displayName = profileName || name;
-    if (!displayName) return "👤";
+    if (!displayName) return "U";
     return displayName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
   };
 
-  const getProfileImage = () => {
-    return profilePhoto || session?.user?.image || null;
-  };
-
-  const getDisplayName = () => {
-    return profileName || session?.user?.name || "User";
-  };
+  const getProfileImage = () => profilePhoto || session?.user?.image || null;
+  const getDisplayName = () => profileName || session?.user?.name || "User";
 
   if (!mounted) return null;
 
   return (
-    <aside className="fixed left-0 top-16 h-[calc(100vh-64px)] w-56 bg-gradient-to-b from-surface via-surface to-elevated border-r border-white/10 overflow-y-auto z-40 pointer-events-auto">
+    <aside className="fixed left-0 top-10 h-[calc(100vh-40px)] w-[220px] bg-slate-50 dark:bg-slate-900/80 border-r border-slate-200/80 dark:border-slate-800/80 overflow-y-auto z-40 flex flex-col">
       {/* Menu Items */}
-      <nav className="p-4 space-y-2">
+      <nav className="flex-1 px-2 py-2 space-y-0.5">
         {menuItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           const isExpanded = expandedItems.includes(item.name);
@@ -143,10 +127,8 @@ export function Sidebar() {
 
           return (
             <div key={item.name}>
-              <div className={`flex items-center gap-0 rounded-lg ${
-                isActive
-                  ? "bg-gradient-to-r from-accent/20 to-blue-600/20 border border-accent/30"
-                  : ""
+              <div className={`flex items-center rounded-md ${
+                isActive && !hasSubmenu ? "bg-sky-50 dark:bg-sky-900/20" : ""
               }`}>
                 <Link
                   href={item.href}
@@ -156,40 +138,23 @@ export function Sidebar() {
                       toggleExpand(item.name);
                     }
                   }}
-                  className={`flex-1 flex items-center gap-3 px-4 py-2.5 font-medium text-sm transition-all duration-200 ${
-                    !hasSubmenu ? "rounded-lg" : "rounded-l-lg"
-                  } ${
+                  className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 text-[12px] font-medium transition-colors rounded-md ${
                     isActive && !hasSubmenu
-                      ? "bg-gradient-to-r from-accent/20 to-blue-600/20 text-white border border-accent/30"
-                      : isActive && hasSubmenu
-                      ? "text-white"
-                      : "text-gray-400 hover:text-gray-200"
-                  } ${
-                    !isActive && !hasSubmenu ? "hover:bg-white/5" : ""
+                      ? "text-sky-600 dark:text-sky-400"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                   }`}
                 >
-                  <span className="text-lg">{item.icon}</span>
-                  <span className="flex-1 text-left">{item.name}</span>
+                  <span className="text-[18px]">{item.icon}</span>
+                  <span className="flex-1">{item.name}</span>
+                  {hasSubmenu && (
+                    <span className={`text-[9px] text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`}>▼</span>
+                  )}
                 </Link>
-                {hasSubmenu && !isPracticeMenu && !isMockMenu && (
-                  <button
-                    onClick={() => toggleExpand(item.name)}
-                    className={`px-3 py-2.5 rounded-r-lg transition-all duration-200 ${
-                      isActive
-                        ? "text-white"
-                        : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
-                    }`}
-                  >
-                    <span className={`transition-transform duration-300 text-xs ${isExpanded ? "rotate-180" : ""}`}>
-                      ▼
-                    </span>
-                  </button>
-                )}
               </div>
 
               {/* Submenu */}
               {hasSubmenu && isExpanded && (
-                <div className="mt-1 ml-4 space-y-1 border-l border-white/10 pl-4">
+                <div className="mt-0.5 ml-3 pl-2.5 border-l border-slate-200 dark:border-slate-700/50 space-y-0.5">
                   {item.submenu.map((subitem) => {
                     const subKey = `${item.name}:${subitem.name}`;
                     const subHasSubmenu = "submenu" in subitem && Array.isArray(subitem.submenu) && subitem.submenu.length > 0;
@@ -201,21 +166,22 @@ export function Sidebar() {
                         <div key={subitem.name}>
                           <button
                             onClick={() => toggleExpand(subKey)}
-                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all"
+                            className="w-full flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
                           >
                             <span className="flex-1 text-left">{subitem.name}</span>
+                            <span className={`text-[8px] transition-transform ${subExpanded ? "rotate-180" : ""}`}>▼</span>
                           </button>
 
                           {subExpanded && (
-                            <div className="mt-1 ml-3 space-y-1 border-l border-white/10 pl-3">
+                            <div className="mt-0.5 ml-2 pl-2 border-l border-slate-200 dark:border-slate-700/50 space-y-0.5">
                               {subMenuItems.map((leaf) => (
                                 <Link
                                   key={leaf.name}
                                   href={leaf.href}
-                                  className={`block px-3 py-2 rounded-lg text-[11px] font-medium transition-all duration-200 ${
+                                  className={`block px-2 py-1 rounded text-[10px] font-medium transition-colors ${
                                     pathname === leaf.href || pathname.includes(leaf.href)
-                                      ? "text-accent bg-white/5"
-                                      : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                                      ? "text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/20"
+                                      : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                                   }`}
                                 >
                                   {leaf.name}
@@ -231,10 +197,10 @@ export function Sidebar() {
                       <Link
                         key={subitem.name}
                         href={subitem.href}
-                        className={`block px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                        className={`block px-2 py-1 rounded text-[11px] font-medium transition-colors ${
                           pathname === subitem.href || pathname.includes(subitem.href)
-                            ? "text-accent bg-white/5"
-                            : "text-gray-400 hover:text-gray-200 hover:bg-white/5"
+                            ? "text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/20"
+                            : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                         }`}
                       >
                         {subitem.name}
@@ -248,26 +214,23 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mx-4" />
-
-      {/* Profile Section */}
+      {/* Profile Section - Bottom */}
       {session && (
-        <div className="p-4">
+        <div className="border-t border-slate-200/80 dark:border-slate-800/80 px-2 py-2">
           <Link
             href="/profile/edit"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-br from-accent/10 to-blue-600/10 border border-white/5 hover:border-white/20 hover:bg-gradient-to-br hover:from-accent/20 hover:to-blue-600/20 transition-all duration-200 group"
+            className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold overflow-hidden border border-white/20 flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white text-[10px] font-semibold overflow-hidden flex-shrink-0">
               {getProfileImage() ? (
                 <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
               ) : (
-                <span className="text-xs">{getInitials(session.user?.name)}</span>
+                <span>{getInitials(session.user?.name)}</span>
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white font-semibold text-sm truncate">{getDisplayName().split(" ")[0]}</p>
-              <p className="text-gray-400 text-xs truncate">Exam Candidate</p>
+              <p className="text-[11px] font-medium text-slate-700 dark:text-slate-200 truncate">{getDisplayName().split(" ")[0]}</p>
+              <p className="text-[9px] text-slate-500 dark:text-slate-400 truncate">Candidate</p>
             </div>
           </Link>
         </div>

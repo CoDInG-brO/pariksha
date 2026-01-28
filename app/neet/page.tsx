@@ -78,7 +78,7 @@ export default function NEETDashboard() {
   };
 
   return (
-    <div className="min-h-screen pt-25 pb-8 px-5">
+    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
