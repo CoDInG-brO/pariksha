@@ -16,6 +16,12 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (pathname === "/student/examination/prepare-own") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/student/prepare-own";
+    return NextResponse.redirect(url);
+  }
+
   if (pathname.startsWith("/student")) {
     const url = req.nextUrl.clone();
     url.pathname = pathname.replace(/^\/student/, "") || "/";

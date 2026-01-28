@@ -6,7 +6,20 @@ import { useState, useEffect } from "react";
 const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
 const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 
-const menuItems = [
+type SidebarSubItem = {
+  name: string;
+  href: string;
+  submenu?: SidebarSubItem[];
+};
+
+type SidebarItem = {
+  name: string;
+  href: string;
+  icon: string;
+  submenu: SidebarSubItem[];
+};
+
+const menuItems: SidebarItem[] = [
   {
     name: "Mock Tests",
     href: "/student/mock-tests",
@@ -19,7 +32,7 @@ const menuItems = [
     icon: "✏️",
     submenu: []
   },
-  { name: "Prepare Exam", href: "/student/examination/prepare-own", icon: "🛠️", submenu: [] },
+  { name: "Prepare Exam", href: "/student/prepare-own", icon: "🛠️", submenu: [] },
   { name: "Analytics", href: "/student/analytics", icon: "📊", submenu: [] },
   { name: "Licenses", href: "/student/licenses", icon: "🎫", submenu: [] }
 ];
@@ -133,7 +146,7 @@ export function Sidebar() {
                     const subExpanded = expandedItems.includes(subKey);
 
                     if (subHasSubmenu) {
-                      const subMenuItems = subitem.submenu;
+                      const subMenuItems = subitem.submenu ?? [];
                       return (
                         <div key={subitem.name}>
                           <button
@@ -144,7 +157,7 @@ export function Sidebar() {
                             <span className={`text-[8px] transition-transform ${subExpanded ? "rotate-180" : ""}`}>▼</span>
                           </button>
 
-                          {subExpanded && (
+                          {subExpanded && subMenuItems.length > 0 && (
                             <div className="mt-0.5 ml-2 pl-2 border-l border-slate-200 dark:border-slate-700/50 space-y-0.5">
                               {subMenuItems.map((leaf) => (
                                 <Link
