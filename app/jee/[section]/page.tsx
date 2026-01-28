@@ -22,6 +22,11 @@ const sectionMeta: Record<JEESubject, { name: string; icon: string; color: strin
     name: "Mathematics",
     icon: "📐",
     color: "from-purple-500 to-indigo-600"
+  },
+  biology: {
+    name: "Biology",
+    icon: "🧬",
+    color: "from-emerald-500 to-teal-600"
   }
 };
 
