@@ -184,6 +184,8 @@ export default function PrepareOwn() {
 
   const availableTopics = selectedSubjects.flatMap((s) => topicBank[s] || []);
   const availableSubtopics = selectedTopics.flatMap((t) => subtopicBank[t] || []);
+  const allTopicsSelected = availableTopics.length > 0 && selectedTopics.length === availableTopics.length;
+  const allSubtopicsSelected = availableSubtopics.length > 0 && selectedSubtopics.length === availableSubtopics.length;
 
   const resolvedFormat = useMemo<"JEE" | "NEET">(() => {
     if (paperFormat !== "auto") return paperFormat;
@@ -300,6 +302,14 @@ export default function PrepareOwn() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Topics</p>
+                  <div className="mb-2 flex gap-2">
+                    <button
+                      onClick={() => setSelectedTopics(allTopicsSelected ? [] : availableTopics)}
+                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                    >
+                      {allTopicsSelected ? "Clear All" : "Select All"}
+                    </button>
+                  </div>
                   <div className="space-y-2 max-h-40 overflow-y-auto">
                     {availableTopics.length === 0 && (
                       <p className="text-gray-500 text-xs">Select subjects first</p>
@@ -329,6 +339,14 @@ export default function PrepareOwn() {
 
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Subtopics</p>
+                  <div className="mb-2 flex gap-2">
+                    <button
+                      onClick={() => setSelectedSubtopics(allSubtopicsSelected ? [] : availableSubtopics)}
+                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                    >
+                      {allSubtopicsSelected ? "Clear All" : "Select All"}
+                    </button>
+                  </div>
                   <div className="space-y-2 max-h-40 overflow-y-auto">
                     {availableSubtopics.length === 0 && (
                       <p className="text-gray-500 text-xs">Select topics first</p>

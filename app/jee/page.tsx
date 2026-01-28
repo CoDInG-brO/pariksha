@@ -8,7 +8,8 @@ import { jeeQuestionBank, type JEESubject } from '@/lib/jeeQuestionBank';
 
 export default function JEEDashboard() {
   // Per-subject metadata wired to the real question bank counts
-  const subjectConfig: Record<JEESubject, {
+  type JEESection = Exclude<JEESubject, "biology">;
+  const subjectConfig: Record<JEESection, {
     name: string;
     description: string;
     topics: string[];
@@ -47,16 +48,6 @@ export default function JEEDashboard() {
       accentFrom: "#8B5CF6",
       accentTo: "#4C1D95",
       accentHex: "#7C3AED"
-    },
-    biology: {
-      name: "Biology",
-      description: "Cell biology, genetics and human physiology essentials",
-      topics: ["Cell Biology", "Genetics", "Physiology"],
-      icon: "🧬",
-      color: "from-emerald-500 to-teal-600",
-      accentFrom: "#10B981",
-      accentTo: "#0F766E",
-      accentHex: "#10B981"
     }
   };
 
@@ -72,7 +63,7 @@ export default function JEEDashboard() {
     return acc;
   }, baseCounts);
 
-  const sections = (Object.keys(subjectConfig) as JEESubject[]).map((subject) => ({
+  const sections = (Object.keys(subjectConfig) as JEESection[]).map((subject) => ({
     id: subject,
     timeLimit: 60,
     totalQuestions: questionCounts[subject],

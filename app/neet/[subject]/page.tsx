@@ -148,13 +148,68 @@ export default function NEETSubjectTest() {
         }
       ]
     },
-    biology: {
-      id: "biology",
-      name: "Biology",
-      icon: "🧬",
-      color: "from-orange-500 to-red-600",
-      totalQuestions: 90,
-      totalMarks: 360,
+    botany: {
+      id: "botany",
+      name: "Botany",
+      icon: "🌿",
+      color: "from-emerald-500 to-teal-600",
+      totalQuestions: 45,
+      totalMarks: 180,
+      questions: [
+        {
+          id: 1,
+          question: "In photosynthesis, which pigment is primarily responsible for absorbing light?",
+          options: ["Xanthophyll", "Chlorophyll", "Carotenoid", "Anthocyanin"],
+          correctAnswer: 1,
+          explanation: "Chlorophyll is the primary pigment that absorbs light energy, mainly in the blue and red wavelengths.",
+          subject: "botany",
+          difficulty: "Medium"
+        },
+        {
+          id: 2,
+          question: "The site of photosynthesis in plant cells is:",
+          options: ["Mitochondria", "Chloroplast", "Nucleus", "Vacuole"],
+          correctAnswer: 1,
+          explanation: "Chloroplasts contain chlorophyll and are the site of photosynthesis.",
+          subject: "botany",
+          difficulty: "Easy"
+        },
+        {
+          id: 3,
+          question: "Which tissue is responsible for transport of water in plants?",
+          options: ["Phloem", "Xylem", "Epidermis", "Cambium"],
+          correctAnswer: 1,
+          explanation: "Xylem transports water and minerals from roots to leaves.",
+          subject: "botany",
+          difficulty: "Easy"
+        },
+        {
+          id: 4,
+          question: "Stomata are primarily responsible for:",
+          options: ["Photosynthesis", "Transpiration and gas exchange", "Support", "Storage"],
+          correctAnswer: 1,
+          explanation: "Stomata regulate transpiration and gas exchange.",
+          subject: "botany",
+          difficulty: "Medium"
+        },
+        {
+          id: 5,
+          question: "Which hormone promotes cell elongation in plants?",
+          options: ["Auxin", "Gibberellin", "Cytokinin", "Abscisic acid"],
+          correctAnswer: 0,
+          explanation: "Auxin promotes cell elongation and growth.",
+          subject: "botany",
+          difficulty: "Medium"
+        }
+      ]
+    },
+    zoology: {
+      id: "zoology",
+      name: "Zoology",
+      icon: "🦴",
+      color: "from-amber-500 to-orange-600",
+      totalQuestions: 45,
+      totalMarks: 180,
       questions: [
         {
           id: 1,
@@ -162,7 +217,7 @@ export default function NEETSubjectTest() {
           options: ["Nucleus", "Mitochondria", "Golgi apparatus", "Ribosome"],
           correctAnswer: 1,
           explanation: "Mitochondria is the powerhouse of the cell as it produces ATP through cellular respiration.",
-          subject: "biology",
+          subject: "zoology",
           difficulty: "Easy"
         },
         {
@@ -170,8 +225,8 @@ export default function NEETSubjectTest() {
           question: "How many chromosomes do humans have?",
           options: ["23", "46", "92", "48"],
           correctAnswer: 1,
-          explanation: "Humans have 23 pairs (46 total) of chromosomes - 22 pairs of autosomes and 1 pair of sex chromosomes.",
-          subject: "biology",
+          explanation: "Humans have 23 pairs (46 total) of chromosomes.",
+          subject: "zoology",
           difficulty: "Easy"
         },
         {
@@ -179,17 +234,17 @@ export default function NEETSubjectTest() {
           question: "What is the primary function of the enzyme amylase?",
           options: ["Break down fats", "Break down proteins", "Break down carbohydrates", "Break down nucleic acids"],
           correctAnswer: 2,
-          explanation: "Amylase is an enzyme that breaks down starch and other carbohydrates into glucose.",
-          subject: "biology",
+          explanation: "Amylase breaks down starch and carbohydrates into sugars.",
+          subject: "zoology",
           difficulty: "Easy"
         },
         {
           id: 4,
-          question: "In photosynthesis, which pigment is primarily responsible for absorbing light?",
-          options: ["Xanthophyll", "Chlorophyll", "Carotenoid", "Anthocyanin"],
+          question: "The structural and functional unit of the kidney is:",
+          options: ["Neuron", "Nephron", "Alveolus", "Glomerulus"],
           correctAnswer: 1,
-          explanation: "Chlorophyll is the primary pigment that absorbs light energy, mainly in the blue and red wavelengths.",
-          subject: "biology",
+          explanation: "Nephron is the functional unit of the kidney.",
+          subject: "zoology",
           difficulty: "Medium"
         },
         {
@@ -197,15 +252,15 @@ export default function NEETSubjectTest() {
           question: "The process by which one species evolves into two or more different species is called",
           options: ["Adaptation", "Speciation", "Mutation", "Natural selection"],
           correctAnswer: 1,
-          explanation: "Speciation is the evolutionary process by which new species arise. It can occur through various mechanisms like geographic isolation.",
-          subject: "biology",
+          explanation: "Speciation is the evolutionary process by which new species arise.",
+          subject: "zoology",
           difficulty: "Medium"
         }
       ]
     }
   };
 
-  const subjectData = subjectsData[subjectId] || subjectsData.biology;
+  const subjectData = subjectsData[subjectId] || subjectsData.physics;
   let questions = subjectData.questions;
 
   // Filter questions by difficulty

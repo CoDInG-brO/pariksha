@@ -39,22 +39,34 @@ export default function NEETDashboard() {
       color: "from-green-500 to-green-600"
     },
     {
-      id: "biology",
-      name: "Biology (Botany + Zoology)",
-      description: "Cell Biology, Genetics, Human Physiology, Ecology, Plant Physiology",
-      totalQuestions: 90,
-      totalMarks: 360,
-      chapters: 38,
+      id: "botany",
+      name: "Botany",
+      description: "Plant Physiology, Morphology, Cell Biology, Ecology",
+      totalQuestions: 45,
+      totalMarks: 180,
+      chapters: 19,
       averageAccuracy: 82,
-      icon: "🧬",
-      color: "from-orange-500 to-orange-600"
+      icon: "🌿",
+      color: "from-emerald-500 to-teal-600"
+    },
+    {
+      id: "zoology",
+      name: "Zoology",
+      description: "Human Physiology, Genetics, Animal Kingdom, Evolution",
+      totalQuestions: 45,
+      totalMarks: 180,
+      chapters: 19,
+      averageAccuracy: 80,
+      icon: "🦴",
+      color: "from-amber-500 to-orange-600"
     }
   ];
 
   const performanceData = [
     { subject: "Physics", percentage: 68, status: "⚠️ Needs Improvement" },
     { subject: "Chemistry", percentage: 75, status: "✅ Good" },
-    { subject: "Biology", percentage: 82, status: "💪 Excellent" }
+    { subject: "Botany", percentage: 82, status: "💪 Excellent" },
+    { subject: "Zoology", percentage: 80, status: "✅ Good" }
   ];
 
   const containerVariants = {
