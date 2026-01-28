@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import JeeIcon from '@/components/icons/JeeIcon';
 import NeetIcon from '@/components/icons/NeetIcon';
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import {
   savePracticeProgress,
   getPracticeProgress,
@@ -43,7 +43,7 @@ const neetQuestions = [
   { id: 10, section: "biology" as const, topic: "Photosynthesis", subtopic: "Products", question: "The gas released during photosynthesis is:", options: ["Carbon dioxide", "Nitrogen", "Oxygen", "Hydrogen"], answer: "Oxygen", explanation: "During photosynthesis, water molecules are split and oxygen is released as a byproduct." },
 ];
 
-export default function Practice() {
+function PracticeContent() {
   const searchParams = useSearchParams();
   const [selectedExam, setSelectedExam] = useState<"JEE" | "NEET" | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -902,5 +902,13 @@ export default function Practice() {
         </motion.button>
       )}
     </div>
+  );
+}
+
+export default function Practice() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"></div></div>}>
+      <PracticeContent />
+    </Suspense>
   );
 }

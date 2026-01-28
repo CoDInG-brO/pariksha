@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { saveTestAttempt } from "@/lib/testStorage";
@@ -23,7 +23,7 @@ interface SubjectData {
   questions: Question[];
 }
 
-export default function NEETFullMock() {
+function NEETFullMockContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -1034,5 +1034,13 @@ export default function NEETFullMock() {
         message="You cannot go back during the exam. Please complete the exam and click the Submit button."
       />
     </div>
+  );
+}
+
+export default function NEETFullMock() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div></div>}>
+      <NEETFullMockContent />
+    </Suspense>
   );
 }

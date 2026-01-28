@@ -192,10 +192,11 @@ export function Sidebar() {
                 <div className="mt-1 ml-4 space-y-1 border-l border-white/10 pl-4">
                   {item.submenu.map((subitem) => {
                     const subKey = `${item.name}:${subitem.name}`;
-                    const subHasSubmenu = Array.isArray(subitem.submenu) && subitem.submenu.length > 0;
+                    const subHasSubmenu = "submenu" in subitem && Array.isArray(subitem.submenu) && subitem.submenu.length > 0;
                     const subExpanded = expandedItems.includes(subKey);
 
                     if (subHasSubmenu) {
+                      const subMenuItems = subitem.submenu;
                       return (
                         <div key={subitem.name}>
                           <button
@@ -207,7 +208,7 @@ export function Sidebar() {
 
                           {subExpanded && (
                             <div className="mt-1 ml-3 space-y-1 border-l border-white/10 pl-3">
-                              {subitem.submenu.map((leaf) => (
+                              {subMenuItems.map((leaf) => (
                                 <Link
                                   key={leaf.name}
                                   href={leaf.href}

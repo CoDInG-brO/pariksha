@@ -47,13 +47,24 @@ export default function JEEDashboard() {
       accentFrom: "#8B5CF6",
       accentTo: "#4C1D95",
       accentHex: "#7C3AED"
+    },
+    biology: {
+      name: "Biology",
+      description: "Cell biology, genetics and human physiology essentials",
+      topics: ["Cell Biology", "Genetics", "Physiology"],
+      icon: "🧬",
+      color: "from-emerald-500 to-teal-600",
+      accentFrom: "#10B981",
+      accentTo: "#0F766E",
+      accentHex: "#10B981"
     }
   };
 
   const baseCounts: Record<JEESubject, number> = {
     physics: 0,
     chemistry: 0,
-    mathematics: 0
+    mathematics: 0,
+    biology: 0
   };
 
   const questionCounts = jeeQuestionBank.reduce<Record<JEESubject, number>>((acc, question) => {
