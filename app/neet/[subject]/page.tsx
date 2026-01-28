@@ -377,7 +377,7 @@ export default function NEETSubjectTest() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/neet")}
+              onClick={() => router.push("/student/neet")}
               className="px-8 py-3 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 rounded-lg text-white font-semibold transition-all"
             >
               Back to Dashboard →

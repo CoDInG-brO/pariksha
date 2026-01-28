@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 
 const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
 const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
@@ -10,49 +9,23 @@ const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 const menuItems = [
   {
     name: "Mock Tests",
-    href: "#",
+    href: "/student/mock-tests",
     icon: "📋",
-    submenu: [
-      {
-        name: "JEE Mocks",
-        href: "#",
-        submenu: [
-          { name: "Full Mock", href: "/jee/full-mock" },
-          { name: "Half Mock", href: "/jee/full-mock?mockType=half" },
-          { name: "Section-wise", href: "/jee" }
-        ]
-      },
-      {
-        name: "NEET Mocks",
-        href: "#",
-        submenu: [
-          { name: "Full Mock", href: "/neet/full-mock" },
-          { name: "Half Mock", href: "/neet/full-mock?mockType=half" },
-          { name: "Section-wise", href: "/neet" }
-        ]
-      }
-    ]
+    submenu: []
   },
   {
     name: "Practice Mode",
-    href: "/practice",
+    href: "/student/practice",
     icon: "✏️",
-    submenu: [
-      { name: "Physics", href: "/practice?subject=physics" },
-      { name: "Chemistry", href: "/practice?subject=chemistry" },
-      { name: "Zoology", href: "/practice?subject=zoology" },
-      { name: "Botany", href: "/practice?subject=botany" },
-      { name: "Maths", href: "/practice?subject=maths" }
-    ]
+    submenu: []
   },
-  { name: "Prepare Exam", href: "/examination/prepare-own", icon: "🛠️", submenu: [] },
-  { name: "Analytics", href: "/analytics", icon: "📊", submenu: [] },
-  { name: "Licenses", href: "/licenses", icon: "🎫", submenu: [] }
+  { name: "Prepare Exam", href: "/student/examination/prepare-own", icon: "🛠️", submenu: [] },
+  { name: "Analytics", href: "/student/analytics", icon: "📊", submenu: [] },
+  { name: "Licenses", href: "/student/licenses", icon: "🎫", submenu: [] }
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [profileName, setProfileName] = useState<string | null>(null);
@@ -91,7 +64,7 @@ export function Sidebar() {
     return () => window.removeEventListener("storage", handleStorageUpdate);
   }, []);
 
-  if (pathname === "/signup" || pathname === "/login" || pathname === "/" || pathname === "/jee/full-mock" || pathname === "/neet/full-mock") {
+  if (pathname === "/" || pathname.includes("/jee/full-mock") || pathname.includes("/neet/full-mock")) {
     return null;
   }
 
@@ -109,8 +82,8 @@ export function Sidebar() {
     return displayName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
   };
 
-  const getProfileImage = () => profilePhoto || session?.user?.image || null;
-  const getDisplayName = () => profileName || session?.user?.name || "User";
+  const getProfileImage = () => profilePhoto || null;
+  const getDisplayName = () => profileName || "Student";
 
   if (!mounted) return null;
 
@@ -122,7 +95,6 @@ export function Sidebar() {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           const isExpanded = expandedItems.includes(item.name);
           const hasSubmenu = item.submenu.length > 0;
-          const isPracticeMenu = item.name === "Practice Mode";
           const isMockMenu = item.name === "Mock Tests";
 
           return (
@@ -133,7 +105,7 @@ export function Sidebar() {
                 <Link
                   href={item.href}
                   onClick={(event) => {
-                    if (isPracticeMenu || isMockMenu) {
+                    if (hasSubmenu && isMockMenu) {
                       event.preventDefault();
                       toggleExpand(item.name);
                     }
@@ -215,17 +187,16 @@ export function Sidebar() {
       </nav>
 
       {/* Profile Section - Bottom */}
-      {session && (
-        <div className="border-t border-slate-200/80 dark:border-slate-800/80 px-2 py-2">
+      <div className="border-t border-slate-200/80 dark:border-slate-800/80 px-2 py-2">
           <Link
-            href="/profile/edit"
+            href="/student/profile/edit"
             className="flex items-center gap-2 px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group"
           >
             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white text-[10px] font-semibold overflow-hidden flex-shrink-0">
               {getProfileImage() ? (
                 <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
               ) : (
-                <span>{getInitials(session.user?.name)}</span>
+                <span>{getInitials(getDisplayName())}</span>
               )}
             </div>
             <div className="flex-1 min-w-0">
@@ -234,7 +205,6 @@ export function Sidebar() {
             </div>
           </Link>
         </div>
-      )}
     </aside>
   );
 }

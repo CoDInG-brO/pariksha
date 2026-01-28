@@ -223,7 +223,7 @@ export default function JEESubjectTest() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/jee")}
+              onClick={() => router.push("/student/jee")}
               className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white font-semibold"
             >
               Back to Dashboard
@@ -316,7 +316,7 @@ export default function JEESubjectTest() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/jee")}
+                onClick={() => router.push("/student/jee")}
                 className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg text-white font-semibold transition-all"
               >
                 Back to Dashboard →

@@ -105,8 +105,8 @@ export default function Dashboard() {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] text-slate-600 dark:text-slate-400">Complete Mock Test 3</span>
-                <button
-                  onClick={() => router.push("/neet/full-mock")}
+                  <button
+                    onClick={() => router.push("/student/neet/full-mock")}
                   className="h-[26px] px-2.5 text-[10px] font-medium text-white bg-emerald-500 hover:bg-emerald-600 rounded-md transition-colors"
                 >
                   Start
@@ -114,8 +114,8 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[11px] text-slate-600 dark:text-slate-400">Review Physics Chapter 5</span>
-                <button
-                  onClick={() => router.push("/analytics")}
+                  <button
+                    onClick={() => router.push("/student/analytics")}
                   className="h-[26px] px-2.5 text-[10px] font-medium text-white bg-sky-500 hover:bg-sky-600 rounded-md transition-colors"
                 >
                   Review
@@ -176,8 +176,8 @@ export default function Dashboard() {
                       </p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => router.push(`/analytics/review?id=${attempt.id}`)}
+                    <button
+                      onClick={() => router.push(`/student/analytics/review?id=${attempt.id}`)}
                     className={`h-[26px] px-2.5 text-[10px] font-medium text-white rounded-md transition-colors ${
                       attempt.examType === "JEE"
                         ? "bg-blue-500 hover:bg-blue-600"
@@ -194,13 +194,13 @@ export default function Dashboard() {
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-2.5">No exams attempted yet. Start your first mock test!</p>
               <div className="flex justify-center gap-2">
                 <button
-                  onClick={() => router.push("/jee/full-mock")}
+                  onClick={() => router.push("/student/jee/full-mock")}
                   className="h-[28px] px-3 text-[10px] font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-colors"
                 >
                   🧮 Take JEE Mock
                 </button>
-                <button
-                  onClick={() => router.push("/neet/full-mock")}
+                  <button
+                    onClick={() => router.push("/student/neet/full-mock")}
                   className="h-[28px] px-3 text-[10px] font-medium text-white bg-green-500 hover:bg-green-600 rounded-md transition-colors"
                 >
                   🔬 Take NEET Mock

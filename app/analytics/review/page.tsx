@@ -55,7 +55,7 @@ function ReviewContent() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => router.push("/analytics")}
+              onClick={() => router.push("/student/analytics")}
               className="h-8 px-3 rounded-md bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium"
             >
               Go to Analytics
@@ -83,7 +83,7 @@ function ReviewContent() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => router.push("/analytics")}
+              onClick={() => router.push("/student/analytics")}
               className="h-8 px-3 rounded-md bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium"
             >
               Go to Analytics
@@ -375,7 +375,7 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/analytics")}
+              onClick={() => router.push("/student/analytics")}
               className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-all text-xs"
               aria-label="Back"
             >

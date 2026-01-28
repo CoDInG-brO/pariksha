@@ -336,15 +336,15 @@ export default function Analytics() {
             <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
               <div className="flex items-center justify-between">
                 <span>Revise: Trigonometry, Organic Chem</span>
-                <button onClick={() => router.push("/practice")} className="btn-gradient-blue">Start practice</button>
+                <button onClick={() => router.push("/student/practice")} className="btn-gradient-blue">Start practice</button>
               </div>
               <div className="flex items-center justify-between">
                 <span>Attempt: {examType} Full Mock (timed)</span>
-                <button onClick={() => router.push(examType === "JEE" ? "/jee/full-mock" : "/neet/full-mock")} className="btn-gradient-green">Start mock</button>
+                <button onClick={() => router.push(examType === "JEE" ? "/student/jee/full-mock" : "/student/neet/full-mock")} className="btn-gradient-green">Start mock</button>
               </div>
               <div className="flex items-center justify-between">
                 <span>Review: Mistakes from last 3 tests</span>
-                <button onClick={() => router.push("/analytics/review")} className="btn-gradient-gray">Review</button>
+                <button onClick={() => router.push("/student/analytics/review")} className="btn-gradient-gray">Review</button>
               </div>
             </div>
           </div>
@@ -354,7 +354,7 @@ export default function Analytics() {
               {["Trigonometry", "Organic Chem", "Algebra"].map((topic) => (
                 <div key={topic} className="flex items-center justify-between">
                   <span className="text-slate-600 dark:text-slate-400">{topic}</span>
-                  <button onClick={() => router.push("/practice")} className="btn-gradient-blue">Practice</button>
+                  <button onClick={() => router.push("/student/practice")} className="btn-gradient-blue">Practice</button>
                 </div>
               ))}
             </div>

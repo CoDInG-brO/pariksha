@@ -21,7 +21,7 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   
   // Pages where sidebar should be hidden
-  const hideSidebar = pathname === "/signup" || pathname === "/login" || pathname === "/" || pathname === "/jee/full-mock" || pathname === "/neet/full-mock";
+  const hideSidebar = pathname === "/" || pathname.includes("/jee/full-mock") || pathname.includes("/neet/full-mock");
 
   return (
     <>

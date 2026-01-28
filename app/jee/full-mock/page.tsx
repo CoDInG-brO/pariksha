@@ -356,7 +356,7 @@ function JEEFullMockContent() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/jee")}
+                onClick={() => router.push("/student/dashboard")}
                 className="btn-gradient-gray"
               >
                 Dashboard
@@ -394,7 +394,7 @@ function JEEFullMockContent() {
           >
             <div className="flex items-center gap-2 mb-2">
               <button
-                onClick={() => router.push("/jee")}
+                onClick={() => router.push("/student/dashboard")}
                 className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
                 aria-label="Back"
               >
@@ -439,7 +439,7 @@ function JEEFullMockContent() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/jee")}
+                onClick={() => router.push("/student/dashboard")}
                 className="btn-gradient-gray-lg"
               >
                 Dashboard

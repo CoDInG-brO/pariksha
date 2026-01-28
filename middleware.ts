@@ -1,29 +1,30 @@
-import { withAuth } from "next-auth/middleware";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export default withAuth(
-  function middleware(req) {
-    // If user is authenticated, allow the request
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
-    pages: {
-      signIn: "/login",
-    },
-  }
-);
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-// Protect these routes - users must be logged in to access them
+  if (pathname === "/") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/student/dashboard";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname === "/student" || pathname === "/student/") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/student/dashboard";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/student")) {
+    const url = req.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/student/, "") || "/";
+    return NextResponse.rewrite(url);
+  }
+
+  return NextResponse.next();
+}
+
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/neet/:path*",
-    "/practice/:path*",
-    "/analytics/:path*",
-    "/profile/:path*",
-    "/take-test/:path*",
-  ],
+  matcher: ["/student/:path*"],
 };

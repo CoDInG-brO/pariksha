@@ -47,8 +47,7 @@ function PracticeContent() {
   const searchParams = useSearchParams();
   const [selectedExam, setSelectedExam] = useState<"JEE" | "NEET" | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-  const [subjectFromSidebar, setSubjectFromSidebar] = useState<string | null>(null);
-  const [practiceStep, setPracticeStep] = useState<"exam" | "subject" | "topic" | "subtopic" | "count" | "practice">("exam");
+  const [practiceStep, setPracticeStep] = useState<"exam" | "topic" | "subtopic" | "count" | "practice">("exam");
   
   const [topicInput, setTopicInput] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -77,18 +76,15 @@ function PracticeContent() {
     return null;
   };
 
-  const allowedExams = useMemo<("JEE" | "NEET")[]>(() => {
-    if (!selectedSubject || selectedSubject === "Random") return ["JEE", "NEET"];
-    if (selectedSubject === "Maths" || selectedSubject === "Mathematics") return ["JEE"];
-    if (selectedSubject === "Zoology" || selectedSubject === "Botany") return ["NEET"];
-    if (selectedSubject === "Physics" || selectedSubject === "Chemistry") return ["JEE", "NEET"];
-    return ["JEE", "NEET"];
-  }, [selectedSubject]);
+  const examSubjects: Record<"JEE" | "NEET", string[]> = {
+    JEE: ["Physics", "Chemistry", "Maths"],
+    NEET: ["Physics", "Chemistry", "Botany", "Zoology"]
+  };
 
-  // Get subjects based on exam
-  const getSubjects = () => {
-    if (selectedExam === "JEE") return ["Physics", "Chemistry", "Maths"];
-    return ["Physics", "Chemistry", "Zoology", "Botany"];
+  const getExamForSubject = (subject: string) => {
+    if (subject === "Maths") return "JEE" as const;
+    if (subject === "Botany" || subject === "Zoology") return "NEET" as const;
+    return "JEE" as const;
   };
 
   // Get all questions for current exam
@@ -161,15 +157,12 @@ function PracticeContent() {
     const subjectParam = normalizeSubject(searchParams.get("subject"));
     if (subjectParam) {
       setSelectedSubject(subjectParam);
-      setSubjectFromSidebar(subjectParam);
-      setSelectedExam(null);
-      setPracticeStep("exam");
+      setSelectedExam(getExamForSubject(subjectParam));
+      setPracticeStep("topic");
       setSelectedTopics([]);
       setSelectedSubtopics([]);
       setTopicInput("");
       setSubtopicInput("");
-    } else {
-      setSubjectFromSidebar(null);
     }
   }, [searchParams]);
 
@@ -209,18 +202,16 @@ function PracticeContent() {
 
   const handleExamSelect = (exam: "JEE" | "NEET") => {
     setSelectedExam(exam);
-    if (selectedSubject) {
-      setPracticeStep("topic");
-    } else {
-      setPracticeStep("subject");
-    }
-    if (!selectedSubject) {
-      setSelectedSubject(null);
-    }
+    setSelectedSubject(null);
     setSelectedTopics([]);
     setSelectedSubtopics([]);
     setTopicInput("");
     setSubtopicInput("");
+  };
+
+  const handleSubjectSelectFromExam = (exam: "JEE" | "NEET", subject: string) => {
+    setSelectedExam(exam);
+    handleSubjectSelect(subject);
   };
 
   const handleRestorePractice = () => {
@@ -344,7 +335,7 @@ function PracticeContent() {
     } else if (practiceStep === "count") {
       if (selectedSubject === "Random") {
         // For Random, go back to subject selection
-        setPracticeStep("subject");
+        setPracticeStep("exam");
         setSelectedSubject(null);
       } else {
         // For regular subjects, go back to subtopic selection
@@ -359,27 +350,12 @@ function PracticeContent() {
       setTopicInput("");
       setSubtopicInput("");
     } else if (practiceStep === "topic") {
-      if (subjectFromSidebar) {
-        setPracticeStep("exam");
-      } else {
-        setPracticeStep("subject");
-        setSelectedSubject(null);
-      }
-      setSelectedTopics([]);
-      setSelectedSubtopics([]);
-      setTopicInput("");
-      setSubtopicInput("");
-    } else if (practiceStep === "subject") {
       setPracticeStep("exam");
-      setSelectedExam(null);
       setSelectedSubject(null);
       setSelectedTopics([]);
       setSelectedSubtopics([]);
       setTopicInput("");
       setSubtopicInput("");
-      setQuestionCount(15);
-      clearPracticeProgress();
-      setSavedProgress(null);
     }
   };
 
@@ -392,14 +368,12 @@ function PracticeContent() {
       savedProgress.answeredQuestions.length < savedProgress.totalQuestions;
 
     return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-25">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-          <h1 className="text-3xl font-bold text-white mb-3">Practice Mode</h1>
-          <p className="text-gray-400 mb-8 text-base">
-            {selectedSubject
-              ? `Choose your exam for ${selectedSubject}`
-              : "Choose your exam to start practicing"}
-          </p>
+      <div className="bg-slate-100/60 dark:bg-slate-950 py-6 px-4">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl mx-auto">
+          <div className="text-center mb-6">
+            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Practice Mode</h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm">Select an exam and subject to begin.</p>
+          </div>
           
           {hasActivePractice && (
             <motion.div
@@ -432,85 +406,80 @@ function PracticeContent() {
             </motion.div>
           )}
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {allowedExams.includes("JEE") && (
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-                onClick={() => handleExamSelect("JEE")} aria-label="Start JEE Practice"
-                className="w-56 p-5 bg-surface rounded-2xl border border-orange-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
-                  <JeeIcon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-0.5">JEE</h3>
-                <p className="text-gray-300 text-sm">
-                  {selectedSubject && selectedSubject !== "Random" ? selectedSubject : "Physics, Chemistry & Mathematics"}
-                </p>
-              </motion.button>
-            )}
-
-            {allowedExams.includes("NEET") && (
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-                onClick={() => handleExamSelect("NEET")} aria-label="Start NEET Practice"
-                className="w-56 p-5 bg-surface rounded-2xl border border-green-300/20 hover:shadow-lg hover:-translate-y-1 transition-all transform-gpu group"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-md group-hover:scale-105 transition-transform">
-                  <NeetIcon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-0.5">NEET</h3>
-                <p className="text-gray-300 text-sm">
-                  {selectedSubject && selectedSubject !== "Random" ? selectedSubject : "Physics, Chemistry, Zoology & Botany"}
-                </p>
-              </motion.button>
-            )}
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  // Subject Selection
-  if (practiceStep === "subject") {
-    const subjects = getSubjects();
-    const isJEE = selectedExam === "JEE";
-
-    return (
-      <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl w-full">
-          <div className="mb-4">
-            <div className="flex items-center gap-2">
-              <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
-                ←
-              </button>
-              <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Select Subject</h1>
-            </div>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Choose a subject for {selectedExam} practice</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {subjects.map(subject => (
-              <motion.button
-                key={subject}
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-                onClick={() => handleSubjectSelect(subject)}
-                className="p-6 bg-surface rounded-xl border border-white/10 hover:border-accent/50 hover:bg-accent/10 transition-all text-center"
-              >
-                <h3 className="text-lg font-semibold text-white mb-2">{subject}</h3>
-                <p className="text-gray-400 text-sm">Practice {subject}</p>
-              </motion.button>
-            ))}
-            <motion.button
-              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}
-              onClick={() => handleSubjectSelect("Random")}
-              className="p-6 bg-surface rounded-xl border border-purple-300/20 hover:border-purple-500/50 hover:bg-purple-500/10 transition-all text-center"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className={`p-5 rounded-2xl border transition-all ${selectedExam === "JEE" ? "border-orange-400/40 bg-orange-500/5" : "border-white/10 bg-surface"}`}
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mx-auto mb-2">
-                🎲
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Random</h3>
-              <p className="text-gray-400 text-sm">Mixed from all subjects</p>
-            </motion.button>
+              <button
+                onClick={() => handleExamSelect("JEE")}
+                className="w-full text-left"
+                aria-label="Select JEE"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center shadow-md">
+                    <JeeIcon className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">JEE</h3>
+                    <p className="text-gray-300 text-sm">Physics, Chemistry & Mathematics</p>
+                  </div>
+                </div>
+              </button>
+
+              {selectedExam === "JEE" ? (
+                <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                  {examSubjects.JEE.map((subject) => (
+                    <button
+                      key={subject}
+                      onClick={() => handleSubjectSelectFromExam("JEE", subject)}
+                      className="px-3 py-1.5 text-xs rounded-full border border-orange-400/40 text-orange-700 bg-orange-50/80 hover:border-orange-400/70 hover:bg-orange-100/80 dark:text-orange-200 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-all"
+                    >
+                      {subject}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4 text-xs text-slate-400 text-center">Select JEE to view subjects</p>
+              )}
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className={`p-5 rounded-2xl border transition-all ${selectedExam === "NEET" ? "border-emerald-400/40 bg-emerald-500/5" : "border-white/10 bg-surface"}`}
+            >
+              <button
+                onClick={() => handleExamSelect("NEET")}
+                className="w-full text-left"
+                aria-label="Select NEET"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-md">
+                    <NeetIcon className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">NEET</h3>
+                    <p className="text-gray-300 text-sm">Physics, Chemistry, Zoology & Botany</p>
+                  </div>
+                </div>
+              </button>
+
+              {selectedExam === "NEET" ? (
+                <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                  {examSubjects.NEET.map((subject) => (
+                    <button
+                      key={subject}
+                      onClick={() => handleSubjectSelectFromExam("NEET", subject)}
+                      className="px-3 py-1.5 text-xs rounded-full border border-emerald-400/40 text-emerald-700 bg-emerald-50/80 hover:border-emerald-400/70 hover:bg-emerald-100/80 dark:text-emerald-200 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 transition-all"
+                    >
+                      {subject}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4 text-xs text-slate-400 text-center">Select NEET to view subjects</p>
+              )}
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -522,7 +491,7 @@ function PracticeContent() {
     const allTopicsSelected = selectedTopics.length === getAvailableTopics.length && getAvailableTopics.length > 0;
     return (
       <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full mx-auto">
           <div className="mb-4">
             <div className="flex items-center gap-2">
               <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
@@ -610,7 +579,7 @@ function PracticeContent() {
     const allSubtopicsSelected = selectedSubtopics.length === getAvailableSubtopics.length && getAvailableSubtopics.length > 0;
     return (
       <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full mx-auto">
           <div className="mb-4">
             <div className="flex items-center gap-2">
               <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
@@ -698,7 +667,7 @@ function PracticeContent() {
     const isRandom = selectedSubject === "Random";
     return (
       <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full mx-auto">
           <div className="mb-4">
             <div className="flex items-center gap-2">
               <button onClick={resetPractice} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors" aria-label="Back">
@@ -724,7 +693,7 @@ function PracticeContent() {
                   step="1"
                   value={questionCount}
                   onChange={(e) => setQuestionCount(parseInt(e.target.value))}
-                  className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-accent"
+                  className="w-full h-2 rounded-lg appearance-none cursor-pointer range-visible"
                 />
                 <div className="flex justify-between gap-3">
                   {[10, 15, 20, 25].map(num => (

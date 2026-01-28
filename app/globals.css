@@ -33,6 +33,43 @@
     height: 32px;
   }
 
+  .range-visible {
+    background: transparent;
+  }
+
+  .range-visible::-webkit-slider-runnable-track {
+    height: 6px;
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: 999px;
+  }
+
+  .range-visible::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #0ea5e9;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    margin-top: -4px;
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.15);
+  }
+
+  .range-visible::-moz-range-track {
+    height: 6px;
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: 999px;
+  }
+
+  .range-visible::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #0ea5e9;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.15);
+  }
+
   /* Labels */
   label {
     font-size: 11px;

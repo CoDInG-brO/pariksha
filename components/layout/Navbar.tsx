@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
-import { useTheme } from "next-themes";
 
 const PROFILE_PHOTO_KEY = "iyotaprep_profile_photo";
 const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
@@ -12,8 +10,6 @@ const PROFILE_STORAGE_KEY = "iyotaprep_user_profile";
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session } = useSession();
-  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
@@ -63,13 +59,13 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (pathname === "/signup" || pathname === "/login" || pathname === "/" || pathname === "/jee/full-mock" || pathname === "/neet/full-mock") {
+  if (pathname === "/" || pathname.includes("/jee/full-mock") || pathname.includes("/neet/full-mock")) {
     return null;
   }
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     setShowProfileMenu(false);
-    await signOut({ callbackUrl: "/login" });
+    router.push("/student/dashboard");
   };
 
   const getInitials = (name: string | null | undefined) => {
@@ -78,15 +74,15 @@ export function Navbar() {
     return displayName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
   };
 
-  const getDisplayName = () => profileName || session?.user?.name || "User";
-  const getProfileImage = () => profilePhoto || session?.user?.image || null;
+  const getDisplayName = () => profileName || "Student";
+  const getProfileImage = () => profilePhoto || null;
 
   return (
     <header className="sticky top-0 w-full z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200/80 dark:border-slate-800/80 h-10">
       <div className="h-full max-w-7xl mx-auto px-4">
         <div className="h-full flex items-center justify-between">
           {/* Logo & Brand */}
-          <Link href="/dashboard" className="flex items-center gap-2 group">
+          <Link href="/student/dashboard" className="flex items-center gap-2 group">
             <svg 
               width="24" 
               height="24" 
@@ -111,100 +107,89 @@ export function Navbar() {
 
           {/* Right Side Navigation */}
           <div className="flex items-center gap-1">
-            {session ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
-                >
-                  <span className="text-[13px]">🏠</span>
-                  <span>Dashboard</span>
-                </Link>
+            <Link
+              href="/student/dashboard"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+            >
+              <span className="text-[13px]">🏠</span>
+              <span>Dashboard</span>
+            </Link>
 
-                <Link
-                  href="/profile/edit"
-                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
-                >
-                  <span className="text-[13px]">✏️</span>
-                  <span>Profile</span>
-                </Link>
+            <Link
+              href="/student/profile/edit"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+            >
+              <span className="text-[13px]">✏️</span>
+              <span>Profile</span>
+            </Link>
 
-                <Link
-                  href="/profile/settings"
-                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
-                >
-                  <span className="text-[13px]">⚙️</span>
-                  <span>Settings</span>
-                </Link>
+            <Link
+              href="/student/profile/settings"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+            >
+              <span className="text-[13px]">⚙️</span>
+              <span>Settings</span>
+            </Link>
 
-                <button
-                  onClick={handleLogout}
-                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                >
-                  <span className="text-[13px]">🚪</span>
-                  <span>Logout</span>
-                </button>
+            <button
+              onClick={handleLogout}
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            >
+              <span className="text-[13px]">🚪</span>
+              <span>Logout</span>
+            </button>
 
-                {/* Profile Avatar */}
-                <div className="relative ml-1" ref={menuRef}>
-                  <button
-                    onClick={() => setShowProfileMenu(!showProfileMenu)}
-                    className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white text-[10px] font-semibold overflow-hidden hover:ring-2 hover:ring-sky-300 dark:hover:ring-sky-700 transition-all"
-                  >
-                    {getProfileImage() ? (
-                      <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
-                    ) : (
-                      <span>{getInitials(session.user?.name)}</span>
-                    )}
-                  </button>
-
-                  {/* Mobile Dropdown Menu */}
-                  {showProfileMenu && (
-                    <div className="absolute right-0 mt-1.5 w-44 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 shadow-lg overflow-hidden md:hidden">
-                      <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
-                        <p className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{getDisplayName().split(' ')[0]}</p>
-                        <p className="text-[9px] text-slate-500">Candidate</p>
-                      </div>
-
-                      <div className="py-1">
-                        <Link
-                          href="/profile/edit"
-                          onClick={() => setShowProfileMenu(false)}
-                          className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
-                        >
-                          <span className="text-[12px]">✏️</span>
-                          Edit Profile
-                        </Link>
-
-                        <Link
-                          href="/profile/settings"
-                          onClick={() => setShowProfileMenu(false)}
-                          className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
-                        >
-                          <span className="text-[12px]">⚙️</span>
-                          Settings
-                        </Link>
-
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                        >
-                          <span className="text-[12px]">🚪</span>
-                          Logout
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <Link
-                href="/login"
-                className="px-3 py-1 text-[11px] font-medium text-white bg-sky-500 hover:bg-sky-600 rounded-md transition-colors"
+            {/* Profile Avatar */}
+            <div className="relative ml-1" ref={menuRef}>
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="w-7 h-7 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white text-[10px] font-semibold overflow-hidden hover:ring-2 hover:ring-sky-300 dark:hover:ring-sky-700 transition-all"
               >
-                Sign In →
-              </Link>
-            )}
+                {getProfileImage() ? (
+                  <img src={getProfileImage()!} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <span>{getInitials(getDisplayName())}</span>
+                )}
+              </button>
+
+              {/* Mobile Dropdown Menu */}
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-1.5 w-44 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 shadow-lg overflow-hidden md:hidden">
+                  <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
+                    <p className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{getDisplayName().split(" ")[0]}</p>
+                    <p className="text-[9px] text-slate-500">Candidate</p>
+                  </div>
+
+                  <div className="py-1">
+                    <Link
+                      href="/student/profile/edit"
+                      onClick={() => setShowProfileMenu(false)}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    >
+                      <span className="text-[12px]">✏️</span>
+                      Edit Profile
+                    </Link>
+
+                    <Link
+                      href="/student/profile/settings"
+                      onClick={() => setShowProfileMenu(false)}
+                      className="flex items-center gap-2 px-3 py-1.5 text-[11px] text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    >
+                      <span className="text-[12px]">⚙️</span>
+                      Settings
+                    </Link>
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    >
+                      <span className="text-[12px]">🚪</span>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

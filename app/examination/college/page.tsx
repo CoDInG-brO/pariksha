@@ -14,7 +14,7 @@ export default function CollegeLevelExamination() {
       color: "from-blue-500 to-cyan-500",
       borderColor: "border-blue-300/20",
       hoverBorder: "hover:border-blue-500/50",
-      href: "/examination/practice-mock"
+      href: "/student/examination/practice-mock"
     },
     {
       id: "buy-mock",
@@ -24,7 +24,7 @@ export default function CollegeLevelExamination() {
       color: "from-amber-500 to-orange-500",
       borderColor: "border-amber-300/20",
       hoverBorder: "hover:border-amber-500/50",
-      href: "/examination/buy-mock"
+      href: "/student/examination/buy-mock"
     },
     {
       id: "prepare-own",
@@ -34,7 +34,7 @@ export default function CollegeLevelExamination() {
       color: "from-purple-500 to-pink-500",
       borderColor: "border-purple-300/20",
       hoverBorder: "hover:border-purple-500/50",
-      href: "/examination/prepare-own"
+      href: "/student/examination/prepare-own"
     }
   ];
 
