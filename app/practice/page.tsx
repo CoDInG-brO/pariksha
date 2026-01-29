@@ -818,8 +818,13 @@ function PracticeContent() {
                 aria-pressed={showHints[q.id]}
                 className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
                   showHints[q.id] 
+<<<<<<< HEAD
                     ? 'bg-slate-600 hover:bg-slate-700 text-white shadow-sm'
                     : 'bg-pink-600 hover:bg-pink-700 text-white shadow-sm'
+=======
+                    ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                    : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
                 }`}
               >
                 <span className="inline-flex items-center gap-2">
@@ -833,8 +838,13 @@ function PracticeContent() {
                   aria-pressed={showAnswers[q.id]}
                   className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
                     showAnswers[q.id]
+<<<<<<< HEAD
                       ? 'bg-slate-600 hover:bg-slate-700 text-white shadow-sm'
                       : 'bg-sky-600 hover:bg-sky-700 text-white shadow-sm'
+=======
+                      ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
                   }`}
                 >
                   <span className="inline-flex items-center gap-2">

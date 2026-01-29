@@ -354,7 +354,11 @@ function JEEFullMockContent() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => router.push("/student/dashboard")}
+<<<<<<< HEAD
                 className="px-3 py-1.5 text-xs bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold rounded-lg transition-all shadow-sm"
+=======
+                className="h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
               >
                 Dashboard
               </motion.button>
@@ -380,7 +384,11 @@ function JEEFullMockContent() {
                   startTimeRef.current = Date.now();
                   setTestStarted(true);
                 }}
+<<<<<<< HEAD
                 className="px-4 py-1.5 text-xs bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all shadow-sm"
+=======
+                className="ml-auto h-7 px-3 text-[10px] bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
               >
                 Start {mockType === "half" ? "Half" : "Full"} Mock →
               </motion.button>
@@ -452,7 +460,11 @@ function JEEFullMockContent() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => router.push("/student/dashboard")}
+<<<<<<< HEAD
                 className="px-5 py-2.5 text-sm bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white font-semibold rounded-lg transition-all shadow-sm"
+=======
+                className="h-8 px-4 text-[11px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
               >
                 Dashboard
               </motion.button>
@@ -562,10 +574,17 @@ function JEEFullMockContent() {
                     }
                     setMarkedForReview(newMarked);
                   }}
+<<<<<<< HEAD
                   className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all shadow-sm ${
                     markedForReview.has(currentQuestionIndex)
                       ? 'bg-orange-500 hover:bg-orange-600 text-white'
                       : 'bg-amber-500 hover:bg-amber-600 text-white'
+=======
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-1 border-0 cursor-pointer ${
+                    markedForReview.has(currentQuestionIndex)
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
                   }`}
                 >
                   {markedForReview.has(currentQuestionIndex) ? '★ Marked' : '☆ Mark for Review'}
@@ -598,7 +617,11 @@ function JEEFullMockContent() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleSubmitTest}
+<<<<<<< HEAD
                   className="ml-auto py-1.5 px-5 text-xs bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all shadow-sm"
+=======
+                  className="ml-auto py-2 px-5 text-sm bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
+>>>>>>> 102af106dce33f8b8ee2f034d0a6febbf8501e9f
                 >
                   Submit & Save
                 </motion.button>
