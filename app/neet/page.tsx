@@ -191,7 +191,7 @@ export default function NEETDashboard() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2 btn-gradient-green text-sm"
+                      className="px-5 py-2 text-sm bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium rounded-md transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                     >
                       Start →
                     </motion.button>

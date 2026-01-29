@@ -76,8 +76,7 @@ export default function SettingsPage() {
                 <p className="text-gray-400 text-sm mb-5">Your preferences have been updated successfully.</p>
                 <button
                   onClick={handleToastClose}
-                  className="w-full btn-gradient-gray"
-                  style={{padding: '0.625rem 1rem'}}
+                  className="w-full h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
                 >
                   Close
                 </button>
@@ -284,7 +283,7 @@ export default function SettingsPage() {
             </button>
             <button
               onClick={handleSave}
-              className="btn-gradient-cyan-md"
+              className="py-2 px-5 text-sm bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
             >
               Save Changes
             </button>

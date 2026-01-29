@@ -816,8 +816,11 @@ function PracticeContent() {
               <button
                 onClick={() => toggleHint(q.id)}
                 aria-pressed={showHints[q.id]}
-                className={showHints[q.id] ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                style={{padding: '0.4rem 0.9rem'}}
+                className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
+                  showHints[q.id] 
+                    ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                    : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                }`}
               >
                 <span className="inline-flex items-center gap-2">
                   {showHints[q.id] ? 'Hide Hint' : 'View Hint'}
@@ -828,8 +831,11 @@ function PracticeContent() {
                 <button
                   onClick={() => toggleAnswer(q.id)}
                   aria-pressed={showAnswers[q.id]}
-                  className={showAnswers[q.id] ? 'btn-gradient-gray' : 'btn-gradient-blue'}
-                  style={{padding: '0.4rem 0.9rem'}}
+                  className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
+                    showAnswers[q.id]
+                      ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswers[q.id] ? 'Hide Solution' : 'View Solution'}

@@ -573,8 +573,11 @@ export default function NEETSubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleShowAnswer}
-                  className={showAnswer ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
+                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
+                    showAnswer
+                      ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswer ? (
@@ -597,8 +600,11 @@ export default function NEETSubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
-                  className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
-                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
+                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
+                    markedForReview.has(currentQuestionIndex)
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked ✓' : '☆ Mark for Review'}</span>
@@ -632,7 +638,7 @@ export default function NEETSubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-sm"
+                  className="ml-auto px-4 py-1.5 text-xs bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-md transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                 >
                   Submit Practice
                 </motion.button>

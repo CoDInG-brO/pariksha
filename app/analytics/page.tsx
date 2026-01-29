@@ -336,15 +336,15 @@ export default function Analytics() {
             <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
               <div className="flex items-center justify-between">
                 <span>Revise: Trigonometry, Organic Chem</span>
-                <button onClick={() => router.push("/student/practice")} className="btn-gradient-blue">Start practice</button>
+                <button onClick={() => router.push("/student/practice")} className="h-7 px-3 text-[10px] bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0">Start practice</button>
               </div>
               <div className="flex items-center justify-between">
                 <span>Attempt: {examType} Full Mock (timed)</span>
-                <button onClick={() => router.push(examType === "JEE" ? "/student/jee/full-mock" : "/student/neet/full-mock")} className="btn-gradient-green">Start mock</button>
+                <button onClick={() => router.push(examType === "JEE" ? "/student/jee/full-mock" : "/student/neet/full-mock")} className="h-7 px-3 text-[10px] bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0">Start mock</button>
               </div>
               <div className="flex items-center justify-between">
                 <span>Review: Mistakes from last 3 tests</span>
-                <button onClick={() => router.push("/student/analytics/review")} className="btn-gradient-gray">Review</button>
+                <button onClick={() => router.push("/student/analytics/review")} className="h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0">Review</button>
               </div>
             </div>
           </div>
@@ -354,7 +354,7 @@ export default function Analytics() {
               {["Trigonometry", "Organic Chem", "Algebra"].map((topic) => (
                 <div key={topic} className="flex items-center justify-between">
                   <span className="text-slate-600 dark:text-slate-400">{topic}</span>
-                  <button onClick={() => router.push("/student/practice")} className="btn-gradient-blue">Practice</button>
+                  <button onClick={() => router.push("/student/practice")} className="h-7 px-3 text-[10px] bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0">Practice</button>
                 </div>
               ))}
             </div>

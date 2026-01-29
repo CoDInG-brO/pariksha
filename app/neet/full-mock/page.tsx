@@ -721,7 +721,7 @@ function NEETFullMockContent() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/student/dashboard")}
-                className="btn-gradient-gray"
+                className="h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
               >
                 Dashboard
               </motion.button>
@@ -732,7 +732,7 @@ function NEETFullMockContent() {
                   startTimeRef.current = Date.now();
                   setTestStarted(true);
                 }}
-                className="btn-gradient-blue ml-auto"
+                className="ml-auto h-7 px-3 text-[10px] bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
               >
                 Start {mockType === "half" ? "Half" : "Full"} Mock →
               </motion.button>
@@ -804,7 +804,7 @@ function NEETFullMockContent() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router.push("/student/dashboard")}
-                className="btn-gradient-gray-lg"
+                className="h-8 px-4 text-[11px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
               >
                 Dashboard
               </motion.button>
@@ -914,8 +914,11 @@ function NEETFullMockContent() {
                     }
                     setMarkedForReview(newMarked);
                   }}
-                  className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
-                  style={{padding: '0.25rem 0.75rem', fontSize: '0.75rem'}}
+                  className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-1 border-0 cursor-pointer ${
+                    markedForReview.has(currentQuestionIndex)
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-1">
                     <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked' : '☆ Mark'}</span>
@@ -949,7 +952,7 @@ function NEETFullMockContent() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-md"
+                  className="ml-auto py-2 px-5 text-sm bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                 >
                   Submit
                 </motion.button>

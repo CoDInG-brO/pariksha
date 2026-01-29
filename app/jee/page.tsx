@@ -209,7 +209,7 @@ export default function JEEDashboard() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2 btn-gradient-blue text-sm"
+                      className="px-5 py-2 text-sm bg-gradient-to-br from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-medium rounded-md transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                     >
                       Start →
                     </motion.button>

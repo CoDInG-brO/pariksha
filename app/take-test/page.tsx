@@ -176,7 +176,17 @@ export default function TakeTest() {
                     whileHover={{ x: selectedAnswer === null ? 4 : 0 }}
                     onClick={() => handleAnswerClick(index)}
                     disabled={showAnswer}
-                    className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 ${selectedAnswer === index ? (isCorrect ? 'option--correct' : 'option--incorrect') : (showAnswer && index === currentQuestion.correctAnswer ? 'option--correct' : 'bg-black/20 border-white/10 hover:border-accent/50')} ${selectedAnswer === null ? "cursor-pointer" : ""}`}
+                    className={`w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 ${
+                      selectedAnswer === index 
+                        ? (isCorrect 
+                            ? 'bg-emerald-500/8 border-emerald-500/25 text-emerald-500' 
+                            : 'bg-red-500/6 border-red-500/18 text-red-400'
+                          ) 
+                        : (showAnswer && index === currentQuestion.correctAnswer 
+                            ? 'bg-emerald-500/8 border-emerald-500/25 text-emerald-500' 
+                            : 'bg-black/20 border-white/10 hover:border-accent/50'
+                          )
+                    } ${selectedAnswer === null ? "cursor-pointer" : ""}`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-7 h-7 rounded-full border-2 flex items-center justify-center font-semibold text-xs ${
@@ -237,7 +247,7 @@ export default function TakeTest() {
                   <button
                     onClick={handleShowAnswer}
                     aria-pressed={showAnswer}
-                    className={`w-full py-2.5 px-4 rounded-xl text-white font-semibold transition-all duration-200 btn-toggle green`}
+                    className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500/8 to-emerald-500/4 border border-emerald-500/14 text-emerald-500 font-semibold transition-all duration-200 inline-flex items-center justify-center gap-3"
                   >
                     <span className="inline-flex items-center justify-center gap-3">
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
