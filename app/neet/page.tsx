@@ -90,7 +90,7 @@ export default function NEETDashboard() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -149,10 +149,10 @@ export default function NEETDashboard() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl mx-auto mb-8"
+        className="max-w-7xl mx-auto mb-4"
       >
-        <h2 className="text-lg font-bold text-slate-900 mb-5">Choose Subject to Practice</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Choose Subject to Practice</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {subjects.map((subject, index) => (
             <motion.div
               key={subject.id}
@@ -161,30 +161,30 @@ export default function NEETDashboard() {
               className="group"
             >
               <Link href={`/neet/${subject.id}`}>
-                <div className={`relative rounded-2xl p-6 border border-slate-200/50 bg-white transition-all duration-300 cursor-pointer h-full hover:shadow-lg shadow-sm`}>
+                <div className={`relative rounded-lg p-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 cursor-pointer h-full hover:shadow-md`}>
                   {/* subtle top stripe to indicate subject accent */}
-                  <div className={`absolute top-0 left-6 right-6 h-1.5 rounded-b-md ${subject.color}`} />
+                  <div className={`absolute top-0 left-6 right-6 h-1 rounded-b-md ${subject.color}`} />
 
                   {/* top-left icon */}
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-base bg-gradient-to-br from-green-50 to-green-100 shadow-sm mb-3">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-gradient-to-br from-green-50 to-green-100 dark:from-green-500/20 dark:to-green-600/20 shadow-sm mb-2">
                     {subject.icon}
                   </div>
 
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-base font-bold text-slate-900 leading-tight">{subject.name}</h3>
-                    <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-[11px] font-bold uppercase tracking-wider">{subject.totalMarks} Marks</span>
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">{subject.name}</h3>
+                    <span className="px-2 py-0.5 bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300 rounded-full text-[10px] font-bold uppercase tracking-wider">{subject.totalMarks} Marks</span>
                   </div>
 
-                  <p className="text-slate-600 text-xs mb-4 leading-snug">{subject.description}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mb-3 leading-snug">{subject.description}</p>
 
-                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-200">
-                    <div className="flex gap-4">
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="font-semibold text-slate-900">📝 {subject.totalQuestions} Qs</span>
+                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <div className="flex gap-3">
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">📝 {subject.totalQuestions} Qs</span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="font-semibold text-slate-900">📚 {subject.chapters} Ch</span>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">📚 {subject.chapters} Ch</span>
                       </div>
                     </div>
 
@@ -210,38 +210,38 @@ export default function NEETDashboard() {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="max-w-7xl mx-auto"
       >
-        <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
-          <h3 className="text-lg font-bold text-slate-900 mb-5">💡 NEET Preparation Tips</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">📚</span>
+        <div className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">💡 NEET Preparation Tips</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">📚</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">NCERT Focus</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">NCERT Focus</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">🧬</span>
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">🧬</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Biology Priority</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">50% of the exam is Biology. It's your scoring subject. Master it!</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Biology Priority</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">50% of the exam is Biology. It's your scoring subject. Master it!</p>
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">📊</span>
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">📊</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Balanced Approach</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Balanced Approach</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">⏰</span>
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">⏰</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Time Management</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Time Management</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
                 </div>
               </div>
             </div>

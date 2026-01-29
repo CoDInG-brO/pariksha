@@ -79,17 +79,17 @@ export default function Analytics() {
   const weaknesses = ["Trigonometry", "Organic Chem", "Algebra"];
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="max-w-7xl mx-auto"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Analytics</h1>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Actionable insights to guide your next study focus.</p>
+            <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">Analytics</h1>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Actionable insights to guide your next study focus.</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {(["JEE", "NEET"] as const).map(type => (
@@ -99,24 +99,24 @@ export default function Analytics() {
                 className={`h-8 px-3 rounded-md text-xs font-semibold transition-all ${
                   examType === type
                     ? (type === "JEE" ? "bg-blue-500 text-white" : "bg-green-500 text-white")
-                    : "bg-white/80 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-700 dark:text-slate-200"
+                    : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
                 }`}
               >
                 {type}
               </button>
             ))}
-            <select className="h-8 px-2 rounded-md text-xs bg-white/80 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+            <select className="h-8 px-2 rounded-md text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
               <option>Last 30 days</option>
               <option>Last 90 days</option>
               <option>All time</option>
             </select>
-            <select className="h-8 px-2 rounded-md text-xs bg-white/80 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+            <select className="h-8 px-2 rounded-md text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
               <option>All subjects</option>
               {subjectPerformance.map((item) => (
                 <option key={item.name}>{item.name}</option>
               ))}
             </select>
-            <select className="h-8 px-2 rounded-md text-xs bg-white/80 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-slate-700 dark:text-slate-200">
+            <select className="h-8 px-2 rounded-md text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
               <option>All difficulty</option>
               <option>Easy</option>
               <option>Medium</option>

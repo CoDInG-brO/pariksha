@@ -48,7 +48,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+    <div className="pt-2 pb-6 px-4">
       {/* Success Dialog */}
       <AnimatePresence>
         {showSuccessToast && (
@@ -68,12 +68,12 @@ export default function SettingsPage() {
               exit={{ opacity: 0, scale: 0.9 }}
               className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
             >
-              <div className="bg-elevated rounded-2xl border border-white/10 shadow-2xl p-6 text-center w-full max-w-sm pointer-events-auto">
-                <div className="w-14 h-14 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-green-400 text-2xl">✓</span>
+              <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xl p-4 text-center w-full max-w-sm pointer-events-auto">
+                <div className="w-12 h-12 bg-emerald-500/15 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-emerald-600 dark:text-emerald-400 text-xl">✓</span>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Settings Saved!</h3>
-                <p className="text-gray-400 text-sm mb-5">Your preferences have been updated successfully.</p>
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Settings Saved!</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-xs mb-4">Your preferences have been updated successfully.</p>
                 <button
                   onClick={handleToastClose}
                   className="w-full h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
@@ -89,32 +89,32 @@ export default function SettingsPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mx-auto px-4"
+        className="max-w-7xl mx-auto"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mb-2">
           <button
             onClick={() => router.back()}
-            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors text-lg"
             aria-label="Back"
           >
             ←
           </button>
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">⚙️ Settings</h1>
+          <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">⚙️ Settings</h1>
         </div>
-        <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 mb-4">Customize your experience</p>
+        <p className="text-slate-600 dark:text-slate-400 text-xs mb-3">Customize your experience</p>
 
-        <div className="space-y-6">
+        <div className="space-y-3">
           {/* Notifications */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
               🔔 Notifications
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <ToggleSetting
                 label="Email Notifications"
                 description="Receive updates and reminders via email"
@@ -147,49 +147,49 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
               🎨 Appearance
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {/* Theme Selector */}
-              <div className="py-2">
-                <p className="text-white font-medium mb-1">Theme</p>
-                <p className="text-gray-400 text-sm mb-4">Choose your preferred color scheme</p>
-                <div className="flex gap-3">
+              <div className="py-1">
+                <p className="text-slate-900 dark:text-slate-100 font-medium mb-1 text-xs">Theme</p>
+                <p className="text-slate-600 dark:text-slate-400 text-xs mb-3">Choose your preferred color scheme</p>
+                <div className="flex gap-2">
                   <button
                     onClick={() => setTheme("light")}
-                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                    className={`flex-1 flex flex-col items-center gap-1.5 p-3 rounded-lg border-2 transition-all ${
                       mounted && resolvedTheme === "light"
-                        ? "border-accent bg-accent/10"
-                        : "border-white/10 hover:border-white/20"
+                        ? "border-sky-500 bg-sky-500/10"
+                        : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
-                    <span className="text-3xl">☀️</span>
-                    <span className="text-white font-medium">Light</span>
+                    <span className="text-2xl">☀️</span>
+                    <span className="text-slate-900 dark:text-slate-100 font-medium text-xs">Light</span>
                   </button>
                   <button
                     onClick={() => setTheme("dark")}
-                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                    className={`flex-1 flex flex-col items-center gap-1.5 p-3 rounded-lg border-2 transition-all ${
                       mounted && resolvedTheme === "dark"
-                        ? "border-accent bg-accent/10"
-                        : "border-white/10 hover:border-white/20"
+                        ? "border-sky-500 bg-sky-500/10"
+                        : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
-                    <span className="text-3xl">🌙</span>
-                    <span className="text-white font-medium">Dark</span>
+                    <span className="text-2xl">🌙</span>
+                    <span className="text-slate-900 dark:text-slate-100 font-medium text-xs">Dark</span>
                   </button>
                   <button
                     onClick={() => setTheme("system")}
-                    className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                    className={`flex-1 flex flex-col items-center gap-1.5 p-3 rounded-lg border-2 transition-all ${
                       mounted && theme === "system"
-                        ? "border-accent bg-accent/10"
-                        : "border-white/10 hover:border-white/20"
+                        ? "border-sky-500 bg-sky-500/10"
+                        : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
-                    <span className="text-3xl">💻</span>
-                    <span className="text-white font-medium">System</span>
+                    <span className="text-2xl">💻</span>
+                    <span className="text-slate-900 dark:text-slate-100 font-medium text-xs">System</span>
                   </button>
                 </div>
               </div>
@@ -207,12 +207,12 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
               📝 Test Preferences
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <ToggleSetting
                 label="Auto Submit"
                 description="Automatically submit test when time runs out"
@@ -233,18 +233,18 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800"
           >
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3 flex items-center gap-2">
               🌍 Language & Region
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-gray-300 font-medium mb-2">Language</label>
+                <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Language</label>
                 <select
                   value={settings.language}
                   onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                 >
                   <option value="English">English</option>
                   <option value="Hindi">Hindi</option>
@@ -253,11 +253,11 @@ export default function SettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-gray-300 font-medium mb-2">Timezone</label>
+                <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Timezone</label>
                 <select
                   value={settings.timezone}
                   onChange={(e) => setSettings({ ...settings, timezone: e.target.value })}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                  className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                 >
                   <option value="Asia/Kolkata">India (IST)</option>
                   <option value="Asia/Dubai">Dubai (GST)</option>
@@ -273,17 +273,17 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex justify-end gap-3"
+            className="flex justify-end gap-2"
           >
             <button
               onClick={() => router.back()}
-              className="px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-lg text-white text-sm font-medium transition-all"
+              className="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-700 font-semibold transition-all text-xs dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="py-2 px-5 text-sm bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
+              className="py-2 px-4 text-xs bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
             >
               Save Changes
             </button>
@@ -306,15 +306,15 @@ function ToggleSetting({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between py-1.5">
+    <div className="flex items-center justify-between py-1">
       <div>
-        <p className="text-white font-medium text-sm">{label}</p>
-        <p className="text-gray-400 text-xs">{description}</p>
+        <p className="text-slate-900 dark:text-slate-100 font-medium text-xs">{label}</p>
+        <p className="text-slate-600 dark:text-slate-400 text-xs">{description}</p>
       </div>
       <button
         onClick={() => onChange(!checked)}
         className={`relative w-10 h-5 rounded-full transition-colors ${
-          checked ? "bg-accent" : "bg-white/20"
+          checked ? "bg-sky-500" : "bg-slate-300 dark:bg-slate-700"
         }`}
       >
         <span

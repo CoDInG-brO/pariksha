@@ -105,7 +105,7 @@ export default function JEEDashboard() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -159,10 +159,10 @@ export default function JEEDashboard() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl mx-auto mb-8"
+        className="max-w-7xl mx-auto mb-4"
       >
-        <h2 className="text-lg font-bold text-slate-900 mb-5">Available Sections</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Available Sections</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {sections.map((section, index) => (
             <motion.div
               key={section.id}
@@ -171,38 +171,38 @@ export default function JEEDashboard() {
               className="group"
             >
               <Link href={`/jee/${section.id}`}>
-                <div className={`relative rounded-2xl p-6 border border-blue-200/50 bg-white transition-all duration-300 cursor-pointer h-full hover:shadow-lg shadow-sm`}>
+                <div className={`relative rounded-lg p-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 cursor-pointer h-full hover:shadow-md`}>
                   {/* subtle top stripe to indicate section accent */}
-                  <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute top-0 left-8 right-8 h-1.5 rounded-b-md" />
+                  <div style={{background: `linear-gradient(90deg, ${section.accentFrom}, ${section.accentTo})`}} className="absolute top-0 left-6 right-6 h-1 rounded-b-md" />
 
                   {/* top-left icon */}
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-base bg-gradient-to-br from-blue-50 to-blue-100 shadow-sm mb-3">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-500/20 dark:to-blue-600/20 shadow-sm mb-2">
                     {section.icon}
                   </div>
 
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-base font-bold text-slate-900 leading-tight">{section.name}</h3>
-                    <span className="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full text-[11px] font-bold uppercase tracking-wider">{index + 1}/3</span>
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">{section.name}</h3>
+                    <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 rounded-full text-[10px] font-bold uppercase tracking-wider">{index + 1}/3</span>
                   </div>
 
-                  <p className="text-slate-600 text-xs mb-4 leading-snug">{section.description}</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mb-3 leading-snug">{section.description}</p>
 
-                  <div className="flex gap-2 flex-wrap mb-5">
+                  <div className="flex gap-2 flex-wrap mb-3">
                     {section.topics.map(t => (
                       <span key={t} className="text-[10px] px-3 py-1.5 rounded-lg font-semibold" style={{background: hexToRgba(section.accentFrom, 0.1), border: `1px solid ${hexToRgba(section.accentFrom, 0.2)}`, color: section.accentTo}}>{t}</span>
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-200">
-                    <div className="flex gap-4">
-                      <div className="flex items-center gap-2 text-xs">
-                        <ClockIcon className="w-4 h-4 text-slate-600" />
-                        <span className="font-semibold text-slate-900">{section.timeLimit} min</span>
+                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <div className="flex gap-3">
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <ClockIcon className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">{section.timeLimit} min</span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-xs">
-                        <QuestionIcon className="w-4 h-4 text-slate-600" />
-                        <span className="font-semibold text-slate-900">{section.totalQuestions} Qs</span>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <QuestionIcon className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                        <span className="font-semibold text-slate-900 dark:text-slate-100">{section.totalQuestions} Qs</span>
                       </div>
                     </div>
 
@@ -228,38 +228,38 @@ export default function JEEDashboard() {
         transition={{ duration: 0.5, delay: 0.6 }}
         className="max-w-7xl mx-auto"
       >
-        <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
-          <h3 className="text-lg font-bold text-slate-900 mb-5">💡 JEE Preparation Tips</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">⏰</span>
+        <div className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">💡 JEE Preparation Tips</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">⏰</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Time Management</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">Split 180 minutes into 55-60 min blocks per subject and carry buffer for Section B numericals.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Time Management</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">Split 180 minutes into 55-60 min blocks per subject and carry buffer for Section B numericals.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">🎯</span>
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">🎯</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Strategic Approach</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">Attempt all single-correct MCQs first, then move to numerical section for assured marks.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Strategic Approach</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">Attempt all single-correct MCQs first, then move to numerical section for assured marks.</p>
                 </div>
               </div>
             </div>
-            <div className="space-y-4">
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">📊</span>
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">📊</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Negative Marking</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">-1 hurts quickly. Fix threshold rules: skip if solving time crosses 2 minutes without progress.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Negative Marking</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">-1 hurts quickly. Fix threshold rules: skip if solving time crosses 2 minutes without progress.</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                <span className="text-xl flex-shrink-0">🔒</span>
+              <div className="flex gap-2">
+                <span className="text-base flex-shrink-0">🔒</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-sm">Formula Discipline</p>
-                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">Keep condensed formula sheets for last-mile revision—especially for Electrostatics and Organic Chemistry.</p>
+                  <p className="text-slate-900 dark:text-slate-100 font-semibold text-xs">Formula Discipline</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 leading-snug">Keep condensed formula sheets for last-mile revision—especially for Electrostatics and Organic Chemistry.</p>
                 </div>
               </div>
             </div>

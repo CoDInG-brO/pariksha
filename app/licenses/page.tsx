@@ -24,21 +24,21 @@ export default function LicensesPage() {
   const usagePercent = Math.round((mocksUsed / mocksTotal) * 100);
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-3">
           <button
             onClick={() => router.back()}
-            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors text-lg"
             aria-label="Back"
           >
             ←
           </button>
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Licenses & Subscription</h1>
+          <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">Licenses & Subscription</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
-          <div className="lg:col-span-2 bg-surface rounded-lg border border-slate-200/60 dark:border-slate-800 p-4">
+          <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div>
                 <p className="text-xs text-slate-500">Current Plan</p>
@@ -75,7 +75,7 @@ export default function LicensesPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
-          <div className="bg-surface rounded-lg border border-slate-200/60 dark:border-slate-800 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">License Details</h2>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div>
@@ -105,7 +105,7 @@ export default function LicensesPage() {
             </div>
           </div>
 
-          <div className="bg-surface rounded-lg border border-slate-200/60 dark:border-slate-800 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Feature Access</h2>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {featureAccess.map((feature) => (
@@ -123,7 +123,7 @@ export default function LicensesPage() {
             </div>
           </div>
 
-          <div className="bg-surface rounded-lg border border-slate-200/60 dark:border-slate-800 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
             <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Usage Stats</h2>
             <div className="space-y-2 text-xs">
               <div>
@@ -155,7 +155,7 @@ export default function LicensesPage() {
           <button className="h-8 px-3 rounded-md text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-800">Download Invoice</button>
         </div>
 
-        <div className="bg-surface rounded-lg border border-slate-200/60 dark:border-slate-800 p-4">
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
           <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">License History</h2>
           <div className="grid grid-cols-4 text-xs text-slate-500 mb-2">
             <span>Plan</span>

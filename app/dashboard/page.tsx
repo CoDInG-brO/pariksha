@@ -59,15 +59,15 @@ export default function Dashboard() {
   const displayedAttempts = showAllExams ? attempts : attempts.slice(0, 3);
 
   return (
-    <div className="min-h-screen py-3 px-2">
-      <div className="max-w-6xl mx-auto space-y-3">
+    <div className="pt-2 pb-6 px-4">
+      <div className="max-w-7xl mx-auto space-y-3">
         {/* Top Row: Notifications, Feeds/News, Actionable Items */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {/* Notifications Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">🔔</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Notifications</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">🔔</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Notifications</h2>
             </div>
             <div className="space-y-1.5">
               {notifications.map((notification) => (
@@ -82,10 +82,10 @@ export default function Dashboard() {
           </div>
 
           {/* Feeds/News Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">📰</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Feeds/News</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">📰</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Feeds/News</h2>
             </div>
             <div className="space-y-1.5">
               {feedsNews.map((news) => (
@@ -97,10 +97,10 @@ export default function Dashboard() {
           </div>
 
           {/* Actionable Items Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">✅</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Actionable Items</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">✅</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Actionable Items</h2>
             </div>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
@@ -132,11 +132,11 @@ export default function Dashboard() {
         </div>
 
         {/* My Recent Exams - Full Width */}
-        <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-          <div className="flex items-center justify-between mb-2.5">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[15px]">📋</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">My Recent Exams</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">📋</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">My Recent Exams</h2>
             </div>
             {attempts.length > 3 && (
               <button
@@ -213,10 +213,10 @@ export default function Dashboard() {
         {/* Bottom Row: Quote, Joke, Challenges */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {/* Motivational Quote Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">💬</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Quote</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">💬</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Quote</h2>
             </div>
             <p className="text-[11px] text-slate-600 dark:text-slate-400 italic leading-[1.4] mb-1">
               "{dailyQuote.quote}"
@@ -225,19 +225,19 @@ export default function Dashboard() {
           </div>
 
           {/* Joke Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">😄</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Joke</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">😄</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Joke</h2>
             </div>
             <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-[1.4]">{dailyJoke}</p>
           </div>
 
           {/* Challenges Card */}
-          <div className="bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800/80 p-3">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <span className="text-[15px]">🧩</span>
-              <h2 className="text-[13px] font-medium text-slate-700 dark:text-slate-200">Challenges</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">🧩</span>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Challenges</h2>
             </div>
             <div className="space-y-1.5">
               {challenges.slice(0, 2).map((challenge) => (

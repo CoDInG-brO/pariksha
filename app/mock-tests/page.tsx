@@ -133,15 +133,15 @@ export default function MockTestsPage() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-5xl mx-auto"
       >
-        <div className="text-center mb-6">
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Mock Tests</h1>
-          <p className="text-slate-600 dark:text-slate-400 text-sm">Pick an exam and choose the mock type.</p>
+        <div className="mb-4">
+          <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">Mock Tests</h1>
+          <p className="text-slate-600 dark:text-slate-400 text-xs">Pick an exam and choose the mock type.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

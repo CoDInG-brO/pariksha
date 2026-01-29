@@ -224,25 +224,25 @@ export default function PrepareOwn() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6 px-4">
+    <div className="pt-2 pb-6 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-4"
+          className="mb-3"
         >
           <div className="flex items-center gap-2">
             <button
               onClick={() => router.back()}
-              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors text-lg"
               aria-label="Back"
             >
               ←
             </button>
-            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Prepare My Own Question Paper</h1>
+            <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">Prepare My Own Question Paper</h1>
           </div>
-          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Create custom question papers for your preparation</p>
+          <p className="text-slate-600 dark:text-slate-400 text-xs mt-1">Create custom question papers for your preparation</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -251,8 +251,8 @@ export default function PrepareOwn() {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-2 space-y-4"
           >
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Class & Difficulty</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Class & Difficulty</h2>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-3">
                 {classes.map((grade) => (
                   <button
@@ -271,8 +271,8 @@ export default function PrepareOwn() {
               <p className="text-slate-600 dark:text-slate-400 text-sm mt-2">Difficulty: <span className="text-slate-900 dark:text-white font-semibold">{difficultyLabel(selectedClass)}</span></p>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Select Subjects</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Select Subjects</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {subjects.map((subject) => {
                   const active = selectedSubjects.includes(subject);
@@ -297,8 +297,8 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Topics & Subtopics</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Topics & Subtopics</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Topics</p>
@@ -376,9 +376,9 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Question Types</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Question Types</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {questionTypes.map((type) => {
                   const active = selectedTypes.includes(type);
                   return (
@@ -402,9 +402,9 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Duration & Questions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Duration & Questions</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
                   <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Time Limit (minutes)</p>
                   <input
@@ -465,8 +465,8 @@ export default function PrepareOwn() {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-4"
           >
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Generated Paper</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Generated Paper</h2>
               {generationNote && (
                 <p className="text-xs text-red-600 dark:text-red-400 mb-3">{generationNote}</p>
               )}

@@ -113,7 +113,7 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
+    <div className="pt-2 pb-6 px-4">
       {/* Success Dialog */}
       <AnimatePresence>
         {showSuccessDialog && (
@@ -133,12 +133,12 @@ export default function EditProfilePage() {
               exit={{ opacity: 0, scale: 0.9 }}
               className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
             >
-              <div className="bg-elevated rounded-2xl border border-white/10 shadow-2xl p-6 text-center w-full max-w-sm pointer-events-auto">
-                <div className="w-14 h-14 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-green-400 text-2xl">✓</span>
+              <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xl p-4 text-center w-full max-w-sm pointer-events-auto">
+                <div className="w-12 h-12 bg-emerald-500/15 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <span className="text-emerald-600 dark:text-emerald-400 text-xl">✓</span>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Profile Updated!</h3>
-                <p className="text-gray-400 text-sm mb-5">Your profile has been updated successfully.</p>
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Profile Updated!</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-xs mb-4">Your profile has been updated successfully.</p>
                 <button
                   onClick={handleDialogClose}
                   className="w-full h-7 px-3 text-[10px] bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center shadow-sm hover:shadow-md cursor-pointer border-0"
@@ -154,21 +154,21 @@ export default function EditProfilePage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mx-auto px-4"
+        className="max-w-7xl mx-auto"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mb-2">
           <button
             onClick={() => router.back()}
-            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors"
+            className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition-colors text-lg"
             aria-label="Back"
           >
             ←
           </button>
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">✏️ Edit Profile</h1>
+          <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">✏️ Edit Profile</h1>
         </div>
-        <p className="text-slate-600 dark:text-slate-400 text-sm mt-1 mb-4">Update your personal information</p>
+        <p className="text-slate-600 dark:text-slate-400 text-xs mb-3">Update your personal information</p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {/* Profile Picture Section */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -176,17 +176,17 @@ export default function EditProfilePage() {
             transition={{ delay: 0.1 }}
             className="lg:col-span-1"
           >
-            <div className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-6 border border-white/10 sticky top-28">
-              <h3 className="text-white font-bold mb-4">Profile Picture</h3>
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800 sticky top-28">
+              <h3 className="text-slate-900 dark:text-slate-100 font-semibold mb-3 text-sm">Profile Picture</h3>
               <div className="flex flex-col items-center">
                 {profilePhoto ? (
                   <img
                     src={profilePhoto}
                     alt="Profile"
-                    className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-white/20"
+                    className="w-28 h-28 rounded-full object-cover mb-3 border-4 border-slate-200 dark:border-slate-800"
                   />
                 ) : (
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-accent to-blue-600 flex items-center justify-center text-white font-bold text-4xl mb-4 border-4 border-white/20">
+                  <div className="w-28 h-28 rounded-full bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-bold text-3xl mb-3 border-4 border-slate-200 dark:border-slate-800">
                     {formData.name.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -200,7 +200,7 @@ export default function EditProfilePage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-4 py-2 bg-accent/20 hover:bg-accent/30 rounded-lg text-accent font-medium transition-colors mb-2"
+                  className="px-3 py-1.5 bg-sky-500/10 hover:bg-sky-500/20 rounded-lg text-sky-600 dark:text-sky-400 font-medium transition-colors mb-2 text-xs"
                 >
                   {profilePhoto ? "Change Photo" : "Upload Photo"}
                 </button>
@@ -208,12 +208,12 @@ export default function EditProfilePage() {
                   <button
                     type="button"
                     onClick={handleRemovePhoto}
-                    className="px-4 py-2 text-red-400 hover:text-red-300 text-sm transition-colors"
+                    className="px-3 py-1.5 text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 text-xs transition-colors"
                   >
                     Remove Photo
                   </button>
                 )}
-                <p className="text-gray-500 text-xs mt-2 text-center">Max size: 2MB</p>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] mt-2 text-center">Max size: 2MB</p>
               </div>
             </div>
           </motion.div>
@@ -225,64 +225,64 @@ export default function EditProfilePage() {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <form onSubmit={handleSubmit} className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-8 border border-white/10">
-              <div className="space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+              <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Full Name</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Full Name</label>
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Email Address</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Email Address</label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Phone Number</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Phone Number</label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Address</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Address</label>
                   <input
                     type="text"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Date of Birth</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Date of Birth</label>
                   <input
                     type="date"
                     value={formData.dateOfBirth}
                     onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-medium mb-2">Target Exam</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1.5 text-xs">Target Exam</label>
                   <select
                     value={formData.targetExam}
                     onChange={(e) => setFormData({ ...formData, targetExam: e.target.value })}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-accent transition-colors"
+                    className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-colors"
                   >
                     <option value="JEE">JEE</option>
                     <option value="NEET">NEET</option>
@@ -291,17 +291,17 @@ export default function EditProfilePage() {
                 </div>
               </div>
 
-              <div className="flex gap-4 mt-8 pt-6 border-t border-white/10">
+              <div className="flex gap-2 mt-4 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="submit"
-                  className="flex-1 py-2 px-5 text-sm bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
+                  className="flex-1 py-2 px-4 text-xs bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                 >
                   💾 Save Changes
                 </button>
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-lg text-white font-semibold transition-all"
+                  className="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg text-slate-700 font-semibold transition-all text-xs dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>

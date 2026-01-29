@@ -208,16 +208,16 @@ export default function JEESubjectTest() {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-32">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-10 border border-white/10"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-10 border border-slate-200 dark:border-slate-800 shadow-sm"
           >
             <p className="text-5xl mb-4">🛠️</p>
-            <h2 className="text-2xl font-bold text-white mb-2">Question bank loading</h2>
-            <p className="text-gray-400 text-sm mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">Question bank loading</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
               We&apos;re refreshing the {sectionData.name} deck. Please check back in a moment or pick another subject.
             </p>
             <motion.button
@@ -452,11 +452,6 @@ export default function JEESubjectTest() {
                       ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
                       : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
                   }`}
-                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
-                    showAnswer
-                      ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
-                      : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
-                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswer ? (
@@ -479,11 +474,6 @@ export default function JEESubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
-                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
-                    markedForReview.has(currentQuestionIndex)
-                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
-                      : 'bg-gradient-to-br from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
-                  }`}
                   className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
                     markedForReview.has(currentQuestionIndex)
                       ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
