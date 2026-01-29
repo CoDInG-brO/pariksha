@@ -99,15 +99,15 @@ export default function NEETDashboard() {
         className="max-w-7xl mx-auto mb-8"
       >
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center text-3xl shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center text-2xl shadow-sm">
             🔬
           </div>
-          <h1 className="text-3xl font-bold text-slate-900">NEET Subject-wise Tests</h1>
+          <h1 className="text-xl font-bold text-slate-900">NEET Subject-wise Tests</h1>
         </div>
-        <p className="text-slate-600 text-base mb-4">Choose a subject to practice. Each subject has dedicated questions - just like the real exam.</p>
+        <p className="text-slate-600 text-sm mb-4">Choose a subject to practice. Each subject has dedicated questions - just like the real exam.</p>
         
         <div className="px-4 py-2.5 rounded-lg bg-amber-50 border border-amber-200">
-          <p className="text-amber-900 text-sm leading-snug font-medium">
+          <p className="text-amber-900 text-xs leading-snug font-medium">
             <strong>⚠️ Important:</strong> Biology (90 questions, 360 marks) is 50% of the exam. Master this to excel!
           </p>
         </div>
@@ -123,23 +123,23 @@ export default function NEETDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Questions</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">180</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">MCQ format</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">180</p>
+            <p className="text-[10px] text-slate-600 mt-1 font-medium">MCQ format</p>
           </div>
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Marks</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">720</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">+4, -1, 0 scoring</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">720</p>
+            <p className="text-[10px] text-slate-600 mt-1 font-medium">+4, -1, 0 scoring</p>
           </div>
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Exam Duration</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">180 Min</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">3 hours</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">180 Min</p>
+            <p className="text-[10px] text-slate-600 mt-1 font-medium">3 hours</p>
           </div>
           <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all">
             <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Total Chapters</p>
-            <p className="text-3xl font-bold text-slate-900 mt-2">85</p>
-            <p className="text-[11px] text-slate-600 mt-1 font-medium">NCERT covered</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">85</p>
+            <p className="text-[10px] text-slate-600 mt-1 font-medium">NCERT covered</p>
           </div>
         </div>
       </motion.div>
@@ -151,7 +151,7 @@ export default function NEETDashboard() {
         animate="visible"
         className="max-w-7xl mx-auto mb-8"
       >
-        <h2 className="text-2xl font-bold text-slate-900 mb-5">Choose Subject to Practice</h2>
+        <h2 className="text-lg font-bold text-slate-900 mb-5">Choose Subject to Practice</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {subjects.map((subject, index) => (
             <motion.div
@@ -166,24 +166,24 @@ export default function NEETDashboard() {
                   <div className={`absolute top-0 left-6 right-6 h-1.5 rounded-b-md ${subject.color}`} />
 
                   {/* top-left icon */}
-                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-xl bg-gradient-to-br from-green-50 to-green-100 shadow-sm mb-3">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-base bg-gradient-to-br from-green-50 to-green-100 shadow-sm mb-3">
                     {subject.icon}
                   </div>
 
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">{subject.name}</h3>
+                    <h3 className="text-base font-bold text-slate-900 leading-tight">{subject.name}</h3>
                     <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-[11px] font-bold uppercase tracking-wider">{subject.totalMarks} Marks</span>
                   </div>
 
-                  <p className="text-slate-600 text-sm mb-4 leading-snug">{subject.description}</p>
+                  <p className="text-slate-600 text-xs mb-4 leading-snug">{subject.description}</p>
 
                   <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-200">
                     <div className="flex gap-4">
-                      <div className="flex items-center gap-2 text-sm">
+                      <div className="flex items-center gap-2 text-xs">
                         <span className="font-semibold text-slate-900">📝 {subject.totalQuestions} Qs</span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm">
+                      <div className="flex items-center gap-2 text-xs">
                         <span className="font-semibold text-slate-900">📚 {subject.chapters} Ch</span>
                       </div>
                     </div>
@@ -191,7 +191,7 @@ export default function NEETDashboard() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-5 py-2 btn-gradient-green text-sm"
+                      className="px-5 py-2 text-xs bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium rounded-md transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer border-0"
                     >
                       Start →
                     </motion.button>
@@ -211,37 +211,37 @@ export default function NEETDashboard() {
         className="max-w-7xl mx-auto"
       >
         <div className="bg-white rounded-2xl p-6 border border-slate-200/50 shadow-sm hover:shadow-lg transition-all">
-          <h3 className="text-2xl font-bold text-slate-900 mb-5">💡 NEET Preparation Tips</h3>
+          <h3 className="text-lg font-bold text-slate-900 mb-5">💡 NEET Preparation Tips</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="space-y-4">
               <div className="flex gap-3">
-                <span className="text-2xl flex-shrink-0">📚</span>
+                <span className="text-xl flex-shrink-0">📚</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-base">NCERT Focus</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
+                  <p className="text-slate-900 font-semibold text-sm">NCERT Focus</p>
+                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">90% of NEET questions come from NCERT. Master every concept thoroughly.</p>
                 </div>
               </div>
               <div className="flex gap-3">
-                <span className="text-2xl flex-shrink-0">🧬</span>
+                <span className="text-xl flex-shrink-0">🧬</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-base">Biology Priority</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">50% of the exam is Biology. It's your scoring subject. Master it!</p>
+                  <p className="text-slate-900 font-semibold text-sm">Biology Priority</p>
+                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">50% of the exam is Biology. It's your scoring subject. Master it!</p>
                 </div>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex gap-3">
-                <span className="text-2xl flex-shrink-0">📊</span>
+                <span className="text-xl flex-shrink-0">📊</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-base">Balanced Approach</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
+                  <p className="text-slate-900 font-semibold text-sm">Balanced Approach</p>
+                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">All three subjects equally important. Don't ignore Physics or Chemistry.</p>
                 </div>
               </div>
               <div className="flex gap-3">
-                <span className="text-2xl flex-shrink-0">⏰</span>
+                <span className="text-xl flex-shrink-0">⏰</span>
                 <div>
-                  <p className="text-slate-900 font-semibold text-base">Time Management</p>
-                  <p className="text-slate-600 text-sm mt-0.5 leading-snug">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
+                  <p className="text-slate-900 font-semibold text-sm">Time Management</p>
+                  <p className="text-slate-600 text-xs mt-0.5 leading-snug">180 minutes for 180 questions. Pace yourself at 1 min per question average.</p>
                 </div>
               </div>
             </div>

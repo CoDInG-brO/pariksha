@@ -239,75 +239,75 @@ export default function JEESubjectTest() {
 
   if (testSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
-        <div className="max-w-4xl mx-auto px-6">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
+            transition={{ duration: 0.3 }}
+            className="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm"
           >
             <div className="text-6xl mb-4">
               {score.rawScore >= score.maxScore * 0.7 ? "🎉" : "📊"}
             </div>
 
-            <h2 className="text-4xl font-bold text-white mb-2">Test Completed!</h2>
-            <p className="text-gray-400 text-lg mb-8">{sectionData.name}</p>
+            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">Test Completed!</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-lg mb-8">{sectionData.name}</p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-green-500/10 border border-green-500/30 rounded-lg p-4"
+                className="bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-xl p-4"
               >
-                <p className="text-gray-400 text-sm">Correct</p>
-                <p className="text-3xl font-bold text-green-400">{score.correct}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Correct</p>
+                <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{score.correct}</p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-red-500/10 border border-red-500/30 rounded-lg p-4"
+                className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-xl p-4"
               >
-                <p className="text-gray-400 text-sm">Incorrect</p>
-                <p className="text-3xl font-bold text-red-400">{score.incorrect}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Incorrect</p>
+                <p className="text-3xl font-bold text-red-600 dark:text-red-400">{score.incorrect}</p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4"
+                className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 rounded-xl p-4"
               >
-                <p className="text-gray-400 text-sm">Skipped</p>
-                <p className="text-3xl font-bold text-yellow-400">{score.unanswered}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Skipped</p>
+                <p className="text-3xl font-bold text-amber-600 dark:text-amber-400">{score.unanswered}</p>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4"
+                className="bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/30 rounded-xl p-4"
               >
-                <p className="text-gray-400 text-sm">Raw Score</p>
-                <p className="text-3xl font-bold text-blue-400">{score.rawScore}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm">Raw Score</p>
+                <p className="text-3xl font-bold text-sky-600 dark:text-sky-400">{score.rawScore}</p>
               </motion.div>
             </div>
 
-            <div className="mb-8 p-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg border border-blue-500/30">
-              <p className="text-gray-400 text-sm mb-2">Score Percentage</p>
-              <p className="text-5xl font-bold text-white">{score.percentage}%</p>
-              <p className="text-gray-300 text-xs mt-1">Out of {score.maxScore} marks</p>
-              <p className="text-gray-400 text-sm mt-4">
+            <div className="mb-8 p-6 bg-gradient-to-r from-cyan-50 to-purple-50 dark:from-cyan-500/10 dark:to-purple-500/10 rounded-xl border border-cyan-200 dark:border-cyan-500/30">
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">Score Percentage</p>
+              <p className="text-5xl font-bold text-slate-900 dark:text-white">{score.percentage}%</p>
+              <p className="text-slate-600 dark:text-slate-300 text-xs mt-1">Out of {score.maxScore} marks</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm mt-4">
                 {parseFloat(score.percentage) >= 70
                   ? "🎯 Excellent performance! Keep practicing."
                   : parseFloat(score.percentage) >= 50
                   ? "👍 Good attempt! Focus on weak areas."
                   : "📚 Need more practice. Review concepts."}
               </p>
-              <p className="text-cyan-200 text-sm font-semibold mt-3">
+              <p className="text-cyan-600 dark:text-cyan-300 text-sm font-semibold mt-3">
                 Estimated Percentile: {score.estimatedPercentile}%ile
               </p>
             </div>
@@ -339,7 +339,7 @@ export default function JEESubjectTest() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Header */}
       <div className={`bg-gradient-to-r ${sectionData.color} fixed top-0 left-0 right-0 z-50 border-b border-white/10`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -363,8 +363,8 @@ export default function JEESubjectTest() {
         </div>
       </div>
 
-      <div className="pt-6 pb-4">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-2 items-start">
+      <div className="pt-24 pb-4">
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-4 gap-4 items-start">
           {/* Main Question Area */}
           <div className="lg:col-span-3">
             <motion.div
@@ -372,16 +372,16 @@ export default function JEESubjectTest() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-4 border border-white/10"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm"
             >
               {/* Question */}
-              <div className="mb-1.5">
-                <p className="text-gray-400 text-[10px] mb-0.5">Question {currentQuestionIndex + 1}</p>
-                <h2 className="text-base font-semibold text-white leading-tight">{currentQuestion.question}</h2>
+              <div className="mb-3">
+                <p className="text-slate-500 dark:text-slate-400 text-xs mb-1">Question {currentQuestionIndex + 1}</p>
+                <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100 leading-snug">{currentQuestion.question}</h2>
               </div>
 
               {/* Options */}
-              <div className="space-y-0.5 mb-1.5">
+              <div className="space-y-1.5 mb-3">
                 {currentQuestion.options.map((option, index) => {
                   const isSelected = selectedAnswers[currentQuestionIndex] === index;
                   const isCorrect = index === currentQuestion.correctAnswer;
@@ -391,36 +391,36 @@ export default function JEESubjectTest() {
                   return (
                     <motion.button
                       key={index}
-                      whileHover={{ x: 4 }}
+                      whileHover={{ x: 2 }}
                       onClick={() => handleAnswerClick(index)}
                       disabled={testSubmitted}
-                      className={`w-full p-3 rounded-lg border-2 text-left transition-all ${
+                      className={`w-full p-2.5 rounded-lg border text-left transition-all ${
                         showCorrect
-                          ? "bg-green-500/20 border-green-500 text-green-300"
+                          ? "bg-emerald-50 dark:bg-emerald-500/20 border-emerald-400 dark:border-emerald-500 text-emerald-800 dark:text-emerald-200"
                           : showIncorrect
-                          ? "bg-red-500/20 border-red-500 text-red-300"
+                          ? "bg-red-50 dark:bg-red-500/20 border-red-400 dark:border-red-500 text-red-800 dark:text-red-200"
                           : isSelected
-                          ? "bg-blue-500/20 border-blue-500 text-blue-300"
-                          : "bg-white/5 border-white/20 text-white hover:bg-white/10"
+                          ? "bg-sky-50 dark:bg-sky-500/20 border-sky-400 dark:border-sky-500 text-sky-800 dark:text-sky-200"
+                          : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-bold ${
+                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                             showCorrect
-                              ? "bg-green-500 border-green-500"
+                              ? "bg-emerald-500 border-emerald-500 text-white"
                               : showIncorrect
-                              ? "bg-red-500 border-red-500"
+                              ? "bg-red-500 border-red-500 text-white"
                               : isSelected
-                              ? "bg-blue-500 border-blue-500"
-                              : "border-gray-500"
+                              ? "bg-sky-500 border-sky-500 text-white"
+                              : "border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400"
                           }`}
                         >
                           {isSelected ? "✓" : String.fromCharCode(65 + index)}
                         </div>
-                        <span>{option}</span>
-                        {showCorrect && <span className="ml-auto">✓ Correct</span>}
-                        {showIncorrect && <span className="ml-auto">✗ Incorrect</span>}
+                        <span className="text-xs">{option}</span>
+                        {showCorrect && <span className="ml-auto text-xs">✓ Correct</span>}
+                        {showIncorrect && <span className="ml-auto text-xs">✗ Incorrect</span>}
                       </div>
                     </motion.button>
                   );
@@ -433,22 +433,25 @@ export default function JEESubjectTest() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="mb-8 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg"
+                  className="mb-3 p-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-lg"
                 >
-                  <p className="text-blue-200 text-sm">
+                  <p className="text-emerald-800 dark:text-emerald-300 text-xs">
                     <strong>Explanation:</strong> {currentQuestion.explanation}
                   </p>
                 </motion.div>
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-2 flex-wrap">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleShowAnswer}
-                  className={showAnswer ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
+                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
+                    showAnswer
+                      ? 'bg-gradient-to-br from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswer ? (
@@ -471,8 +474,11 @@ export default function JEESubjectTest() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleMarkForReview}
-                  className={markedForReview.has(currentQuestionIndex) ? "btn-gradient-orange" : "btn-gradient-yellow"}
-                  style={{padding: '0.35rem 0.85rem', fontSize: '0.85rem'}}
+                  className={`px-3.5 py-1.5 text-[13.6px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center gap-2 border-0 cursor-pointer ${
+                    markedForReview.has(currentQuestionIndex)
+                      ? 'bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                      : 'bg-gradient-to-br from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-sm hover:shadow-md hover:-translate-y-px'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     <span>{markedForReview.has(currentQuestionIndex) ? '★ Marked ✓' : '☆ Mark for Review'}</span>
@@ -481,13 +487,13 @@ export default function JEESubjectTest() {
               </div>
 
               {/* Navigation */}
-              <div className="flex gap-2 mt-3 pt-3 border-t border-white/10">
+              <div className="flex gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
-                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
+                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-slate-700 dark:text-slate-300 text-xs font-medium transition-all"
                 >
                   ← Previous
                 </motion.button>
@@ -497,16 +503,16 @@ export default function JEESubjectTest() {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleNext}
                   disabled={currentQuestionIndex === questions.length - 1}
-                  className="px-2 py-0.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-white text-[11px] font-semibold transition-all"
+                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-slate-700 dark:text-slate-300 text-xs font-medium transition-all"
                 >
                   Next →
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitTest}
-                  className="ml-auto btn-gradient-cyan-sm"
+                  className="ml-auto px-5 py-1.5 text-xs bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-all shadow-sm"
                 >
                   Submit & Save
                 </motion.button>
@@ -516,9 +522,9 @@ export default function JEESubjectTest() {
 
           {/* Question Navigator */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-gradient-to-br from-surface to-elevated rounded-2xl p-2 border border-white/10 space-y-2">
-              <h3 className="text-white font-bold mb-4 text-xs">Questions</h3>
-              <div className="flex flex-wrap gap-0.5">
+            <div className="sticky top-24 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+              <h3 className="text-slate-900 dark:text-white font-bold mb-3 text-sm">Questions</h3>
+              <div className="flex flex-wrap gap-1">
                 {questions.map((_, index) => {
                   const answered = selectedAnswers[index] !== null;
                   const isCurrent = index === currentQuestionIndex;
@@ -527,17 +533,17 @@ export default function JEESubjectTest() {
                   return (
                     <motion.button
                       key={index}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleJumpToQuestion(index)}
-                      className={`w-5 h-5 rounded inline-flex items-center justify-center text-[9px] font-bold transition-all border ${
+                      className={`w-7 h-7 rounded-md inline-flex items-center justify-center text-xs font-bold transition-all border ${
                         isCurrent
-                          ? "bg-blue-500 border-blue-500 text-white"
+                          ? "bg-sky-500 border-sky-500 text-white"
                           : answered
-                          ? "bg-green-500/30 border-green-500 text-green-300"
+                          ? "bg-emerald-100 dark:bg-emerald-500/30 border-emerald-400 dark:border-emerald-500 text-emerald-700 dark:text-emerald-300"
                           : isMarked
-                          ? "bg-yellow-500/30 border-yellow-500 text-yellow-300"
-                          : "bg-white/5 border-white/20 text-gray-500 hover:bg-white/10"
+                          ? "bg-amber-100 dark:bg-amber-500/30 border-amber-400 dark:border-amber-500 text-amber-700 dark:text-amber-300"
+                          : "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
                       }`}
                     >
                       {index + 1}
@@ -547,16 +553,16 @@ export default function JEESubjectTest() {
               </div>
 
               {/* Stats */}
-              <div className="mt-6 space-y-3 pt-6 border-t border-white/10">
-                <div>
-                  <p className="text-gray-400 text-xs">Answered</p>
-                  <p className="text-lg font-bold text-green-400">
+              <div className="mt-4 grid grid-cols-2 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                <div className="bg-emerald-50 dark:bg-emerald-500/10 rounded-lg p-3 text-center">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mb-1">Answered</p>
+                  <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                     {selectedAnswers.filter((a) => a !== null).length}/{questions.length}
                   </p>
                 </div>
-                <div>
-                  <p className="text-gray-400 text-xs">Marked</p>
-                  <p className="text-lg font-bold text-yellow-400">{markedForReview.size}</p>
+                <div className="bg-amber-50 dark:bg-amber-500/10 rounded-lg p-3 text-center">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mb-1">Marked</p>
+                  <p className="text-xl font-bold text-amber-600 dark:text-amber-400">{markedForReview.size}</p>
                 </div>
               </div>
             </div>

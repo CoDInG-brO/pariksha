@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 const STORAGE_KEY = "mock_credits_v1";
 const DEFAULT_CREDITS = {
   JEE: {
-    full: 2,
-    half: 2
+    full: 3,
+    half: 3
   },
   NEET: {
-    full: 2,
-    half: 2
+    full: 3,
+    half: 3
   }
 };
 
@@ -117,23 +117,18 @@ export default function MockTestsPage() {
     if (!mounted) return;
     const links = mockLinks[exam];
     const target = type === "section" ? links.section : type === "full" ? links.full : links.half;
+    
+    // For section-wise, just navigate (it's free)
     if (type === "section") {
       router.push(target);
       return;
     }
 
+    // For full/half mock, check if credits available before navigating
     const remaining = credits[exam][type];
     if (remaining <= 0) return;
 
-    const updated = {
-      ...credits,
-      [exam]: {
-        ...credits[exam],
-        [type]: Math.max(0, remaining - 1)
-      }
-    };
-    setCredits(updated);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    // Navigate to test page - credit will be decremented when test starts
     router.push(target);
   };
 
@@ -165,8 +160,8 @@ export default function MockTestsPage() {
                     {exam === "JEE" ? "📘" : "🧬"}
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-white">{exam} Mocks</h2>
-                    <p className="text-gray-300 text-sm">Full, half and section-wise practice</p>
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{exam} Mocks</h2>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">Full, half and section-wise practice</p>
                   </div>
                 </div>
 

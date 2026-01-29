@@ -379,9 +379,9 @@ function PracticeContent() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 p-4 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30 rounded-2xl"
+              className="mb-8 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/10 dark:to-indigo-500/10 border border-blue-200 dark:border-blue-400/30 rounded-2xl"
             >
-              <p className="text-blue-300 mb-3 text-sm font-medium">You have an active {savedProgress.examType} practice session</p>
+              <p className="text-blue-700 dark:text-blue-300 mb-3 text-sm font-medium">You have an active {savedProgress.examType} practice session</p>
               <div className="flex justify-center gap-3">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -398,7 +398,7 @@ function PracticeContent() {
                     clearPracticeProgress();
                     setSavedProgress(null);
                   }}
-                  className="px-6 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-lg font-semibold text-sm transition-all border border-red-500/30"
+                  className="px-6 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg font-semibold text-sm transition-all border border-rose-200 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30"
                 >
                   Start New
                 </motion.button>
@@ -409,7 +409,7 @@ function PracticeContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             <motion.div
               whileHover={{ scale: 1.01 }}
-              className={`p-5 rounded-2xl border transition-all ${selectedExam === "JEE" ? "border-orange-400/40 bg-orange-500/5" : "border-white/10 bg-surface"}`}
+              className={`p-5 rounded-2xl border transition-all ${selectedExam === "JEE" ? "border-orange-400/40 bg-orange-50 dark:bg-orange-500/10" : "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/80"}`}
             >
               <button
                 onClick={() => handleExamSelect("JEE")}
@@ -421,8 +421,8 @@ function PracticeContent() {
                     <JeeIcon className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">JEE</h3>
-                    <p className="text-gray-300 text-sm">Physics, Chemistry & Mathematics</p>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">JEE</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">Physics, Chemistry & Mathematics</p>
                   </div>
                 </div>
               </button>
@@ -433,20 +433,20 @@ function PracticeContent() {
                     <button
                       key={subject}
                       onClick={() => handleSubjectSelectFromExam("JEE", subject)}
-                      className="px-3 py-1.5 text-xs rounded-full border border-orange-400/40 text-orange-700 bg-orange-50/80 hover:border-orange-400/70 hover:bg-orange-100/80 dark:text-orange-200 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-all"
+                      className="px-3 py-1.5 text-xs rounded-full border border-orange-300/60 text-orange-700 bg-orange-50 hover:border-orange-400/70 hover:bg-orange-100 dark:text-orange-200 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 transition-all"
                     >
                       {subject}
                     </button>
                   ))}
                 </div>
               ) : (
-                <p className="mt-4 text-xs text-slate-400 text-center">Select JEE to view subjects</p>
+                <p className="mt-4 text-xs text-slate-500 dark:text-slate-400 text-center">Select JEE to view subjects</p>
               )}
             </motion.div>
 
             <motion.div
               whileHover={{ scale: 1.01 }}
-              className={`p-5 rounded-2xl border transition-all ${selectedExam === "NEET" ? "border-emerald-400/40 bg-emerald-500/5" : "border-white/10 bg-surface"}`}
+              className={`p-5 rounded-2xl border transition-all ${selectedExam === "NEET" ? "border-emerald-400/40 bg-emerald-50 dark:bg-emerald-500/10" : "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/80"}`}
             >
               <button
                 onClick={() => handleExamSelect("NEET")}
@@ -458,8 +458,8 @@ function PracticeContent() {
                     <NeetIcon className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">NEET</h3>
-                    <p className="text-gray-300 text-sm">Physics, Chemistry, Zoology & Botany</p>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">NEET</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">Physics, Chemistry, Zoology & Botany</p>
                   </div>
                 </div>
               </button>
@@ -470,14 +470,14 @@ function PracticeContent() {
                     <button
                       key={subject}
                       onClick={() => handleSubjectSelectFromExam("NEET", subject)}
-                      className="px-3 py-1.5 text-xs rounded-full border border-emerald-400/40 text-emerald-700 bg-emerald-50/80 hover:border-emerald-400/70 hover:bg-emerald-100/80 dark:text-emerald-200 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 transition-all"
+                      className="px-3 py-1.5 text-xs rounded-full border border-emerald-300/60 text-emerald-700 bg-emerald-50 hover:border-emerald-400/70 hover:bg-emerald-100 dark:text-emerald-200 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 transition-all"
                     >
                       {subject}
                     </button>
                   ))}
                 </div>
               ) : (
-                <p className="mt-4 text-xs text-slate-400 text-center">Select NEET to view subjects</p>
+                <p className="mt-4 text-xs text-slate-500 dark:text-slate-400 text-center">Select NEET to view subjects</p>
               )}
             </motion.div>
           </div>
@@ -502,7 +502,7 @@ function PracticeContent() {
             <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Select a topic you want to practice today</p>
           </div>
 
-          <div className="bg-surface rounded-2xl p-8 border border-white/10">
+          <div className="bg-white dark:bg-slate-900/80 rounded-2xl p-8 border border-slate-200/60 dark:border-slate-800/70">
             <div className="relative">
               <input
                 type="text"
@@ -513,27 +513,27 @@ function PracticeContent() {
                   setTopicDropdownOpen(true);
                 }}
                 onFocus={() => setTopicDropdownOpen(true)}
-                className="w-full px-4 py-3 rounded-lg bg-black/30 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/40 transition-all"
+                className="w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-400/60 focus:ring-2 focus:ring-sky-200/60 dark:focus:ring-sky-500/20 transition-all"
               />
               
               {topicDropdownOpen && filteredTopics.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-surface border border-white/10 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto"
                 >
                   {filteredTopics.map(topic => (
                     <motion.button
                       key={topic}
-                      whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                      whileHover={{ backgroundColor: "rgba(148, 163, 184, 0.15)" }}
                       onClick={() => {
                         handleTopicToggle(topic);
                         setTopicDropdownOpen(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
+                      className="w-full px-4 py-3 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border-b border-slate-100 dark:border-slate-800 last:border-b-0"
                     >
                       <div className="flex items-center justify-between">
                         <span>{topic}</span>
-                        {selectedTopics.includes(topic) && <span className="text-accent">✓</span>}
+                        {selectedTopics.includes(topic) && <span className="text-sky-500">✓</span>}
                       </div>
                     </motion.button>
                   ))}
@@ -543,7 +543,7 @@ function PracticeContent() {
 
             <div className="mt-4 flex flex-wrap gap-2">
               {selectedTopics.map(topic => (
-                <span key={topic} className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs">
+                <span key={topic} className="px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs dark:bg-sky-500/10 dark:border-sky-500/30 dark:text-sky-300">
                   {topic}
                 </span>
               ))}
@@ -552,7 +552,7 @@ function PracticeContent() {
             <div className="mt-6 flex flex-wrap gap-3">
               <button
                 onClick={() => setSelectedTopics(allTopicsSelected ? [] : getAvailableTopics)}
-                className="px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 transition-all"
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 transition-all dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {allTopicsSelected ? "Clear Topics" : "Select All Topics"}
               </button>
@@ -561,8 +561,8 @@ function PracticeContent() {
                 disabled={selectedTopics.length === 0}
                 className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                   selectedTopics.length === 0
-                    ? "bg-white/5 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-accent to-blue-600 text-white"
+                    ? "bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-800/60 dark:text-slate-500"
+                    : "bg-sky-600 hover:bg-sky-700 text-white"
                 }`}
               >
                 Continue
@@ -590,7 +590,7 @@ function PracticeContent() {
             <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Select a sub topic you want to practice today</p>
           </div>
 
-          <div className="bg-surface rounded-2xl p-8 border border-white/10">
+          <div className="bg-white dark:bg-slate-900/80 rounded-2xl p-8 border border-slate-200/60 dark:border-slate-800/70">
             <div className="relative">
               <input
                 type="text"
@@ -601,27 +601,27 @@ function PracticeContent() {
                   setSubtopicDropdownOpen(true);
                 }}
                 onFocus={() => setSubtopicDropdownOpen(true)}
-                className="w-full px-4 py-3 rounded-lg bg-black/30 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/40 transition-all"
+                className="w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-400/60 focus:ring-2 focus:ring-sky-200/60 dark:focus:ring-sky-500/20 transition-all"
               />
               
               {subtopicDropdownOpen && filteredSubtopics.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-surface border border-white/10 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto"
                 >
                   {filteredSubtopics.map(subtopic => (
                     <motion.button
                       key={subtopic}
-                      whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                      whileHover={{ backgroundColor: "rgba(148, 163, 184, 0.15)" }}
                       onClick={() => {
                         handleSubtopicToggle(subtopic);
                         setSubtopicDropdownOpen(false);
                       }}
-                      className="w-full px-4 py-3 text-left text-white hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
+                      className="w-full px-4 py-3 text-left text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors border-b border-slate-100 dark:border-slate-800 last:border-b-0"
                     >
                       <div className="flex items-center justify-between">
                         <span>{subtopic}</span>
-                        {selectedSubtopics.includes(subtopic) && <span className="text-accent">✓</span>}
+                        {selectedSubtopics.includes(subtopic) && <span className="text-sky-500">✓</span>}
                       </div>
                     </motion.button>
                   ))}
@@ -631,7 +631,7 @@ function PracticeContent() {
 
             <div className="mt-4 flex flex-wrap gap-2">
               {selectedSubtopics.map(subtopic => (
-                <span key={subtopic} className="px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs">
+                <span key={subtopic} className="px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs dark:bg-sky-500/10 dark:border-sky-500/30 dark:text-sky-300">
                   {subtopic}
                 </span>
               ))}
@@ -640,7 +640,7 @@ function PracticeContent() {
             <div className="mt-6 flex flex-wrap gap-3">
               <button
                 onClick={() => setSelectedSubtopics(allSubtopicsSelected ? [] : getAvailableSubtopics)}
-                className="px-4 py-2 rounded-lg text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 transition-all"
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 transition-all dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 {allSubtopicsSelected ? "Clear Subtopics" : "Select All Subtopics"}
               </button>
@@ -649,8 +649,8 @@ function PracticeContent() {
                 disabled={selectedSubtopics.length === 0}
                 className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                   selectedSubtopics.length === 0
-                    ? "bg-white/5 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-accent to-blue-600 text-white"
+                    ? "bg-slate-200 text-slate-400 cursor-not-allowed dark:bg-slate-800/60 dark:text-slate-500"
+                    : "bg-sky-600 hover:bg-sky-700 text-white"
                 }`}
               >
                 Continue
@@ -682,9 +682,9 @@ function PracticeContent() {
             </p>
           </div>
 
-          <div className="bg-surface rounded-2xl p-8 border border-white/10 space-y-8">
+          <div className="bg-white dark:bg-slate-900/80 rounded-2xl p-8 border border-slate-200/60 dark:border-slate-800/70 space-y-8">
             <div>
-              <h2 className="text-xl font-semibold text-white mb-4">Selected: <span className="text-accent">{questionCount}</span> questions</h2>
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">Selected: <span className="text-sky-600 dark:text-sky-400">{questionCount}</span> questions</h2>
               <div className="space-y-4">
                 <input
                   type="range"
@@ -693,7 +693,7 @@ function PracticeContent() {
                   step="1"
                   value={questionCount}
                   onChange={(e) => setQuestionCount(parseInt(e.target.value))}
-                  className="w-full h-2 rounded-lg appearance-none cursor-pointer range-visible"
+                  className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-800 accent-sky-500"
                 />
                 <div className="flex justify-between gap-3">
                   {[10, 15, 20, 25].map(num => (
@@ -703,8 +703,8 @@ function PracticeContent() {
                       onClick={() => setQuestionCount(num)}
                       className={`flex-1 py-2 px-3 rounded-lg font-medium transition-all ${
                         questionCount === num
-                          ? "bg-accent/20 border border-accent/50 text-accent"
-                          : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                          ? "bg-sky-50 border border-sky-200 text-sky-700 dark:bg-sky-500/10 dark:border-sky-500/30 dark:text-sky-300"
+                          : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
                       }`}
                     >
                       {num}
@@ -717,7 +717,7 @@ function PracticeContent() {
             <motion.button
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
               onClick={handleStartPractice}
-              className="w-full py-3 px-6 rounded-lg font-semibold bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 text-white transition-all"
+              className="w-full py-3 px-6 rounded-lg font-semibold bg-sky-600 hover:bg-sky-700 text-white transition-all"
             >
               Start Practice
             </motion.button>
@@ -733,17 +733,17 @@ function PracticeContent() {
 
   return (
     <div className="max-w-4xl mx-auto pb-6 pt-4 px-4">
-      <div className="flex items-center justify-between mb-3 sticky top-10 bg-background/80 backdrop-blur-lg py-2 z-10 border-b border-white/10">
+      <div className="flex items-center justify-between mb-3 sticky top-10 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg py-2 z-10 border-b border-slate-200/60 dark:border-slate-800/60">
         <div className="flex items-center gap-2">
-          <button onClick={resetPractice} className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Back">
+          <button onClick={resetPractice} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/60 rounded-md transition-colors" aria-label="Back">
             ←
           </button>
           <div>
-            <h1 className="text-lg font-semibold text-white">{selectedExam} - {selectedSubject} - {topicLabel}</h1>
-            <p className="text-xs text-gray-400 mt-1">{subtopicLabel}</p>
+            <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{selectedExam} - {selectedSubject} - {topicLabel}</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{subtopicLabel}</p>
           </div>
         </div>
-        <div className={`px-3 py-1.5 rounded-lg text-sm ${selectedExam === "JEE" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"}`}>
+        <div className={`px-3 py-1.5 rounded-lg text-sm ${selectedExam === "JEE" ? "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300" : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"}`}>
           {questions.length} Questions
         </div>
       </div>
@@ -757,15 +757,15 @@ function PracticeContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.02 }}
-            className="bg-surface rounded-xl p-4 border border-white/10"
+            className="bg-white dark:bg-slate-900/80 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800/60"
           >
             <div className="flex gap-3 mb-3">
               <span className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
-                selectedExam === "JEE" ? "bg-orange-500/20 text-orange-300" : "bg-green-500/20 text-green-300"
+                selectedExam === "JEE" ? "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300" : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
               }`}>
                 {index + 1}
               </span>
-              <p className="text-white text-base leading-snug">{q.question}</p>
+              <p className="text-slate-900 dark:text-slate-100 text-base leading-snug">{q.question}</p>
             </div>
 
             <div className="space-y-1.5 ml-10 mb-3">
@@ -783,27 +783,27 @@ function PracticeContent() {
                     className={`flex items-center gap-3 p-2.5 rounded-lg border transition-all cursor-pointer ${
                       showingAnswer
                         ? isCorrect
-                          ? "bg-green-500/20 border-green-500/50 text-green-300"
+                          ? "bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/15 dark:border-emerald-500/40 dark:text-emerald-300"
                           : isSelected && !isCorrect
-                          ? "bg-red-500/20 border-red-500/50 text-red-300"
-                          : "bg-black/30 border-white/10 text-gray-400"
+                          ? "bg-rose-100 border-rose-200 text-rose-700 dark:bg-rose-500/15 dark:border-rose-500/40 dark:text-rose-300"
+                          : "bg-slate-50 border-slate-200 text-slate-400 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-400"
                         : isSelected
-                        ? "bg-accent/20 border-accent/50 text-white"
-                        : "bg-black/30 border-white/10 text-gray-300 hover:bg-white/5 hover:border-white/20"
+                        ? "bg-sky-100 border-sky-200 text-slate-900 dark:bg-sky-500/20 dark:border-sky-500/40 dark:text-slate-100"
+                        : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100 hover:border-slate-300 dark:bg-slate-950/40 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-900/60"
                     }`}
                   >
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs ${isSelected ? 'bg-white/5' : 'bg-transparent text-gray-400'}`}>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center font-semibold text-xs ${isSelected ? 'bg-sky-600 text-white' : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-200'}`}>
                       {String.fromCharCode(65 + optIndex)}
                     </div>
                     <div className="flex-1 text-sm leading-snug">{option}</div>
 
                     {isSelected && !isCorrect && (
-                      <svg className="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     )}
                     {((isCorrect && showingAnswer) || (!showingAnswer && isSelected && isCorrect)) && (
-                      <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     )}
@@ -816,8 +816,11 @@ function PracticeContent() {
               <button
                 onClick={() => toggleHint(q.id)}
                 aria-pressed={showHints[q.id]}
-                className={showHints[q.id] ? 'btn-gradient-gray' : 'btn-gradient-pink'}
-                style={{padding: '0.4rem 0.9rem'}}
+                className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
+                  showHints[q.id] 
+                    ? 'bg-slate-600 hover:bg-slate-700 text-white shadow-sm'
+                    : 'bg-pink-600 hover:bg-pink-700 text-white shadow-sm'
+                }`}
               >
                 <span className="inline-flex items-center gap-2">
                   {showHints[q.id] ? 'Hide Hint' : 'View Hint'}
@@ -828,8 +831,11 @@ function PracticeContent() {
                 <button
                   onClick={() => toggleAnswer(q.id)}
                   aria-pressed={showAnswers[q.id]}
-                  className={showAnswers[q.id] ? 'btn-gradient-gray' : 'btn-gradient-blue'}
-                  style={{padding: '0.4rem 0.9rem'}}
+                  className={`px-3.5 py-1.5 text-[10px] font-medium rounded-md transition-all duration-200 inline-flex items-center justify-center border-0 cursor-pointer ${
+                    showAnswers[q.id]
+                      ? 'bg-slate-600 hover:bg-slate-700 text-white shadow-sm'
+                      : 'bg-sky-600 hover:bg-sky-700 text-white shadow-sm'
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2">
                     {showAnswers[q.id] ? 'Hide Solution' : 'View Solution'}
@@ -842,10 +848,10 @@ function PracticeContent() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-3 ml-10 p-3 rounded-lg bg-black/30 border border-blue-400/30"
+                className="mt-3 ml-10 p-3 rounded-lg bg-slate-50 border border-slate-200 dark:bg-slate-950/40 dark:border-slate-800"
               >
-                <p className="text-sm text-gray-300">
-                  <span className="text-blue-400 font-medium">Hint: </span>
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-sky-600 dark:text-sky-400 font-medium">Hint: </span>
                   {hintBank[q.id] || "Think about the key concepts related to this question."}
                 </p>
               </motion.div>
@@ -855,10 +861,10 @@ function PracticeContent() {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-3 ml-10 p-3 rounded-lg bg-black/30 border border-accent/20"
+                className="mt-3 ml-10 p-3 rounded-lg bg-slate-50 border border-slate-200 dark:bg-slate-950/40 dark:border-slate-800"
               >
-                <p className="text-sm text-gray-300">
-                  <span className="text-accent font-medium">Solution: </span>
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  <span className="text-sky-600 dark:text-sky-400 font-medium">Solution: </span>
                   {q.explanation}
                 </p>
               </motion.div>
@@ -873,7 +879,7 @@ function PracticeContent() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 px-4 py-3 bg-gradient-to-r from-accent to-blue-600 hover:from-accent/90 hover:to-blue-600/90 rounded-lg text-white font-medium shadow-lg shadow-accent/30 transition-all flex items-center gap-2 z-50"
+          className="fixed bottom-6 right-6 px-4 py-3 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-medium shadow-lg shadow-sky-600/30 transition-all flex items-center gap-2 z-50"
         >
           ↑ Back to Top
         </motion.button>
@@ -887,7 +893,7 @@ export default function Practice() {
     <Suspense fallback={
       <div className="bg-slate-100/60 dark:bg-slate-950 pt-4 pb-6">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-accent" />
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-sky-500" />
         </div>
       </div>
     }>

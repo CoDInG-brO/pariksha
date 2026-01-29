@@ -121,7 +121,7 @@ function ReviewContent() {
 
   if (filteredQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
         <ReviewHeader attempt={attempt} router={router} />
         <div className="max-w-4xl mx-auto px-6">
           <FilterButtons 
@@ -133,11 +133,11 @@ function ReviewContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-surface to-elevated rounded-2xl p-12 border border-white/10 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-12 border border-slate-200 dark:border-slate-800 shadow-sm text-center"
           >
             <p className="text-6xl mb-4">🔍</p>
-            <h3 className="text-xl font-bold text-white mb-2">No Questions Found</h3>
-            <p className="text-gray-400">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No Questions Found</h3>
+            <p className="text-slate-600 dark:text-slate-400">
               No questions match the current filter. Try selecting a different filter.
             </p>
           </motion.div>
@@ -153,7 +153,7 @@ function ReviewContent() {
   const isUnanswered = userAnswer === null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background pt-32 pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-8">
       <ReviewHeader attempt={attempt} router={router} />
 
       <div className="max-w-6xl mx-auto px-6">
@@ -199,18 +199,18 @@ function ReviewContent() {
                   );
                 })}
               </div>
-              <div className="mt-2 pt-2 border-t border-white/10 space-y-1 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-sm bg-green-500/30 border border-green-500"></div>
-                  <span className="text-gray-400 text-xs">Correct</span>
+              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-sm bg-emerald-100 dark:bg-emerald-500/30 border border-emerald-400 dark:border-emerald-500"></div>
+                  <span className="text-slate-600 dark:text-slate-400 text-xs">Correct</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-sm bg-red-500/30 border border-red-500"></div>
-                  <span className="text-gray-400 text-xs">Incorrect</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-sm bg-red-100 dark:bg-red-500/30 border border-red-400 dark:border-red-500"></div>
+                  <span className="text-slate-600 dark:text-slate-400 text-xs">Incorrect</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-sm bg-gray-500/30 border border-gray-500"></div>
-                  <span className="text-gray-400 text-xs">Unanswered</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-sm bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></div>
+                  <span className="text-slate-600 dark:text-slate-400 text-xs">Unanswered</span>
                 </div>
               </div>
             </div>
@@ -222,28 +222,28 @@ function ReviewContent() {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-3"
           >
-            <div className="bg-gradient-to-br from-surface to-elevated rounded-lg p-3 border border-white/10">
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
               {/* Question Header */}
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <span className={`px-1.5 py-0.5 rounded text-xs font-bold ${
-                    attempt.examType === "JEE" ? "bg-cyan-500/20 text-cyan-300" : "bg-green-500/20 text-green-300"
+                  <span className={`px-2 py-1 rounded text-xs font-bold ${
+                    attempt.examType === "JEE" ? "bg-cyan-100 dark:bg-cyan-500/30 text-cyan-700 dark:text-cyan-300" : "bg-emerald-100 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-300"
                   }`}>
                     Q{originalIndex + 1}
                   </span>
                   {currentQuestion.section && (
-                    <span className="text-gray-500 text-xs">{currentQuestion.section}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-xs">{currentQuestion.section}</span>
                   )}
                   {currentQuestion.subject && (
-                    <span className="text-gray-500 text-xs">{currentQuestion.subject}</span>
+                    <span className="text-slate-500 dark:text-slate-400 text-xs">{currentQuestion.subject}</span>
                   )}
                 </div>
-                <div className={`px-2 py-0.5 rounded text-xs font-bold ${
+                <div className={`px-3 py-1 rounded text-xs font-bold ${
                   isCorrect 
-                    ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                    ? "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30"
                     : isUnanswered
-                    ? "bg-gray-500/20 text-gray-400 border border-gray-500/30"
-                    : "bg-red-500/20 text-red-400 border border-red-500/30"
+                    ? "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+                    : "bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-500/30"
                 }`}>
                   {isCorrect ? "✓ Correct" : isUnanswered ? "○ Skipped" : "✗ Incorrect"}
                 </div>
@@ -255,47 +255,47 @@ function ReviewContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h2 className="text-sm font-bold text-white mb-2 leading-snug">
+                <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 leading-relaxed">
                   {currentQuestion.question}
                 </h2>
 
                 {/* Options */}
-                <div className="space-y-1 mb-3">
+                <div className="space-y-2 mb-4">
                   {currentQuestion.options.map((option, index) => {
                     const isThisCorrect = index === currentQuestion.correctAnswer;
                     const isUserChoice = index === userAnswer;
 
-                    let optionStyle = "bg-white/5 border-white/20 text-gray-400";
+                    let optionStyle = "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300";
                     
                     if (isThisCorrect) {
-                      optionStyle = "bg-green-500/15 border-green-500/40 text-green-200";
+                      optionStyle = "bg-emerald-50 dark:bg-emerald-500/20 border-emerald-400 dark:border-emerald-500 text-emerald-800 dark:text-emerald-200";
                     } else if (isUserChoice && !isThisCorrect) {
-                      optionStyle = "bg-red-500/15 border-red-500/40 text-red-200";
+                      optionStyle = "bg-red-50 dark:bg-red-500/20 border-red-400 dark:border-red-500 text-red-800 dark:text-red-200";
                     }
 
                     return (
                       <div
                         key={index}
-                        className={`p-2 rounded border transition-all text-sm ${optionStyle}`}
+                        className={`p-3 rounded-lg border transition-all text-sm ${optionStyle}`}
                       >
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-3">
                           <div
-                            className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                            className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                               isThisCorrect
-                                ? "bg-green-500 border-green-500 text-white"
+                                ? "bg-emerald-500 border-emerald-500 text-white"
                                 : isUserChoice
                                 ? "bg-red-500 border-red-500 text-white"
-                                : "border-gray-500 text-gray-500"
+                                : "border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400"
                             }`}
                           >
                             {isThisCorrect ? "✓" : isUserChoice ? "✗" : String.fromCharCode(65 + index)}
                           </div>
-                          <span className="flex-1 text-xs">{option}</span>
+                          <span className="flex-1 text-sm">{option}</span>
                           {(isThisCorrect || (isUserChoice && isThisCorrect)) && (
-                            <span className="text-green-400 font-semibold text-xs flex-shrink-0">Correct</span>
+                            <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs flex-shrink-0">Correct</span>
                           )}
                           {isUserChoice && !isThisCorrect && (
-                            <span className="text-red-400 font-semibold text-xs flex-shrink-0">Your Answer</span>
+                            <span className="text-red-600 dark:text-red-400 font-semibold text-xs flex-shrink-0">Your Answer</span>
                           )}
                         </div>
                       </div>
@@ -307,48 +307,48 @@ function ReviewContent() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-2.5 rounded border ${
+                  className={`p-4 rounded-lg border ${
                     attempt.examType === "JEE"
-                      ? "bg-cyan-500/10 border-cyan-500/30"
-                      : "bg-green-500/10 border-green-500/30"
+                      ? "bg-cyan-50 dark:bg-cyan-500/10 border-cyan-200 dark:border-cyan-500/30"
+                      : "bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30"
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-sm">💡</span>
-                    <h4 className={`font-bold text-xs ${
-                      attempt.examType === "JEE" ? "text-cyan-300" : "text-green-300"
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-base">💡</span>
+                    <h4 className={`font-bold text-sm ${
+                      attempt.examType === "JEE" ? "text-cyan-700 dark:text-cyan-300" : "text-emerald-700 dark:text-emerald-300"
                     }`}>
                       Explanation
                     </h4>
                   </div>
-                  <p className="text-gray-200 text-xs leading-snug">{currentQuestion.explanation}</p>
+                  <p className="text-slate-700 dark:text-slate-200 text-sm leading-relaxed">{currentQuestion.explanation}</p>
                 </motion.div>
               </motion.div>
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between pt-2 mt-2 border-t border-white/10">
+              <div className="flex justify-between pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setCurrentQuestionIndex(Math.max(0, currentQuestionIndex - 1))}
                   disabled={currentQuestionIndex === 0}
-                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white text-xs font-semibold transition-all"
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-slate-700 dark:text-slate-300 text-sm font-semibold transition-all"
                 >
                   ← Prev
                 </motion.button>
 
-                <span className="text-gray-400 text-xs self-center">
+                <span className="text-slate-600 dark:text-slate-400 text-sm self-center">
                   {currentQuestionIndex + 1} / {filteredQuestions.length}
                 </span>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() =>
                     setCurrentQuestionIndex(Math.min(filteredQuestions.length - 1, currentQuestionIndex + 1))
                   }
                   disabled={currentQuestionIndex === filteredQuestions.length - 1}
-                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed rounded text-white text-xs font-semibold transition-all"
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-slate-700 dark:text-slate-300 text-sm font-semibold transition-all"
                 >
                   Next →
                 </motion.button>
@@ -383,7 +383,7 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
             </motion.button>
             <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Review</h1>
             <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-              attempt.examType === "JEE" ? "bg-cyan-500/20 text-cyan-300" : "bg-green-500/20 text-green-300"
+              attempt.examType === "JEE" ? "bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300" : "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300"
             }`}>
               {attempt.examType}
             </span>
@@ -393,23 +393,23 @@ function ReviewHeader({ attempt, router }: { attempt: TestAttempt; router: Retur
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-gradient-to-r from-surface to-elevated p-2 rounded border border-white/10">
+        <div className="flex items-center gap-2 bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="text-center">
-            <p className="text-base font-bold text-accent">{attempt.percentage}%</p>
-            <p className="text-xs text-gray-400">Score</p>
+            <p className="text-base font-bold text-sky-600 dark:text-sky-400">{attempt.percentage}%</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Score</p>
           </div>
-          <div className="w-px h-8 bg-white/10"></div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700"></div>
           <div className="text-center">
-            <p className="text-base font-bold text-green-400">{attempt.correct}</p>
-            <p className="text-xs text-gray-400">Correct</p>
-          </div>
-          <div className="text-center">
-            <p className="text-base font-bold text-red-400">{attempt.incorrect}</p>
-            <p className="text-xs text-gray-400">Wrong</p>
+            <p className="text-base font-bold text-emerald-600 dark:text-emerald-400">{attempt.correct}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Correct</p>
           </div>
           <div className="text-center">
-            <p className="text-base font-bold text-gray-400">{attempt.unanswered}</p>
-            <p className="text-xs text-gray-400">Skipped</p>
+            <p className="text-base font-bold text-red-600 dark:text-red-400">{attempt.incorrect}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Wrong</p>
+          </div>
+          <div className="text-center">
+            <p className="text-base font-bold text-slate-600 dark:text-slate-400">{attempt.unanswered}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400">Skipped</p>
           </div>
         </div>
       </div>
@@ -450,16 +450,16 @@ function FilterButtons({
               setFilterType(filter.key);
               setCurrentQuestionIndex(0);
             }}
-            className={`px-2 py-1 rounded font-semibold text-xs transition-all flex items-center gap-1 ${
+            className={`px-2 py-1 rounded font-semibold text-xs transition-all flex items-center gap-1 border ${
               filterType === filter.key
                 ? filter.color === "accent"
-                  ? "bg-accent text-white"
+                  ? "bg-sky-500 border-sky-500 text-white"
                   : filter.color === "green"
-                  ? "bg-green-500 text-white"
+                  ? "bg-emerald-500 border-emerald-500 text-white"
                   : filter.color === "red"
-                  ? "bg-red-500 text-white"
-                  : "bg-gray-500 text-white"
-                : "bg-white/10 text-gray-400 hover:bg-white/20"
+                  ? "bg-red-500 border-red-500 text-white"
+                  : "bg-slate-500 border-slate-500 text-white"
+                : "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
             }`}
           >
             {filter.label}

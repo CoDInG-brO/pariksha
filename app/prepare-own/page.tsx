@@ -251,28 +251,28 @@ export default function PrepareOwn() {
             animate={{ opacity: 1, y: 0 }}
             className="lg:col-span-2 space-y-4"
           >
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Class & Difficulty</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Class & Difficulty</h2>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-3">
                 {classes.map((grade) => (
                   <button
                     key={grade}
                     onClick={() => setSelectedClass(grade)}
-                    className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all border ${
                       selectedClass === grade
-                        ? "bg-accent/20 border border-accent/50 text-accent"
-                        : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                        ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                        : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                     }`}
                   >
                     Class {grade}
                   </button>
                 ))}
               </div>
-              <p className="text-gray-400 text-sm mt-2">Difficulty: <span className="text-white">{difficultyLabel(selectedClass)}</span></p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm mt-2">Difficulty: <span className="text-slate-900 dark:text-white font-semibold">{difficultyLabel(selectedClass)}</span></p>
             </div>
 
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Select Subjects</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Select Subjects</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {subjects.map((subject) => {
                   const active = selectedSubjects.includes(subject);
@@ -284,10 +284,10 @@ export default function PrepareOwn() {
                           prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject]
                         );
                       }}
-                      className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                      className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all border ${
                         active
-                          ? "bg-accent/20 border border-accent/50 text-accent"
-                          : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                          ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                          : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                       }`}
                     >
                       {subject}
@@ -297,22 +297,22 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Topics & Subtopics</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Topics & Subtopics</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Topics</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Topics</p>
                   <div className="mb-2 flex gap-2">
                     <button
                       onClick={() => setSelectedTopics(allTopicsSelected ? [] : availableTopics)}
-                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                     >
                       {allTopicsSelected ? "Clear All" : "Select All"}
                     </button>
                   </div>
                   <div className="space-y-2 max-h-40 overflow-y-auto">
                     {availableTopics.length === 0 && (
-                      <p className="text-gray-500 text-xs">Select subjects first</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-xs">Select subjects first</p>
                     )}
                     {availableTopics.map((topic) => {
                       const active = selectedTopics.includes(topic);
@@ -324,10 +324,10 @@ export default function PrepareOwn() {
                               prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
                             );
                           }}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                          className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-all border ${
                             active
-                              ? "bg-accent/20 border border-accent/50 text-accent"
-                              : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                              ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                              : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                           }`}
                         >
                           {topic}
@@ -338,18 +338,18 @@ export default function PrepareOwn() {
                 </div>
 
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Subtopics</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Subtopics</p>
                   <div className="mb-2 flex gap-2">
                     <button
                       onClick={() => setSelectedSubtopics(allSubtopicsSelected ? [] : availableSubtopics)}
-                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                     >
                       {allSubtopicsSelected ? "Clear All" : "Select All"}
                     </button>
                   </div>
                   <div className="space-y-2 max-h-40 overflow-y-auto">
                     {availableSubtopics.length === 0 && (
-                      <p className="text-gray-500 text-xs">Select topics first</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-xs">Select topics first</p>
                     )}
                     {availableSubtopics.map((subtopic) => {
                       const active = selectedSubtopics.includes(subtopic);
@@ -361,10 +361,10 @@ export default function PrepareOwn() {
                               prev.includes(subtopic) ? prev.filter((s) => s !== subtopic) : [...prev, subtopic]
                             );
                           }}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                          className={`w-full text-left px-3 py-2 rounded-lg text-sm font-semibold transition-all border ${
                             active
-                              ? "bg-accent/20 border border-accent/50 text-accent"
-                              : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                              ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                              : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                           }`}
                         >
                           {subtopic}
@@ -376,8 +376,8 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Question Types</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Question Types</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {questionTypes.map((type) => {
                   const active = selectedTypes.includes(type);
@@ -389,10 +389,10 @@ export default function PrepareOwn() {
                           prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
                         );
                       }}
-                      className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                      className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all border ${
                         active
-                          ? "bg-accent/20 border border-accent/50 text-accent"
-                          : "bg-black/30 border border-white/10 text-gray-300 hover:border-white/20"
+                          ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                          : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                       }`}
                     >
                       {type}
@@ -402,29 +402,29 @@ export default function PrepareOwn() {
               </div>
             </div>
 
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Duration & Questions</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Duration & Questions</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Time Limit (minutes)</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Time Limit (minutes)</p>
                   <input
                     type="number"
                     min={30}
                     max={180}
                     value={duration}
                     onChange={(e) => setDuration(parseInt(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg bg-black/30 border border-white/10 text-gray-200"
+                    className="w-full px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100"
                   />
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm mb-2">Number of Questions</p>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-2">Number of Questions</p>
                   <input
                     type="number"
                     min={10}
                     max={90}
                     value={questionCount}
                     onChange={(e) => setQuestionCount(parseInt(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg bg-black/30 border border-white/10 text-gray-200"
+                    className="w-full px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100"
                   />
                 </div>
               </div>
@@ -432,20 +432,20 @@ export default function PrepareOwn() {
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
                   onClick={handleGeneratePaper}
-                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-accent to-blue-600 text-white"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-sm hover:shadow-md transition-all"
                 >
                   Generate Paper
                 </button>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-400 text-sm">Paper Format:</span>
+                  <span className="text-slate-600 dark:text-slate-400 text-sm">Paper Format:</span>
                   {(["auto", "JEE", "NEET"] as const).map((format) => (
                     <button
                       key={format}
                       onClick={() => setPaperFormat(format)}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-all border ${
                         paperFormat === format
-                          ? "bg-accent/20 border border-accent/50 text-accent"
-                          : "bg-black/30 border border-white/10 text-gray-300"
+                          ? "bg-sky-100 dark:bg-sky-500/20 border-sky-500 dark:border-sky-500 text-sky-700 dark:text-sky-300"
+                          : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                       }`}
                     >
                       {format.toUpperCase()}
@@ -454,7 +454,7 @@ export default function PrepareOwn() {
                 </div>
               </div>
 
-              <p className="text-gray-500 text-xs mt-3">
+              <p className="text-slate-500 dark:text-slate-400 text-xs mt-3">
                 Sections: {paperSections.join(" • ")}
               </p>
             </div>
@@ -465,23 +465,23 @@ export default function PrepareOwn() {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-4"
           >
-            <div className="bg-surface rounded-2xl border border-white/10 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Generated Paper</h2>
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Generated Paper</h2>
               {generationNote && (
-                <p className="text-xs text-red-400 mb-3">{generationNote}</p>
+                <p className="text-xs text-red-600 dark:text-red-400 mb-3">{generationNote}</p>
               )}
               <div className="space-y-3 max-h-[420px] overflow-y-auto">
                 {generatedQuestions.length === 0 && !generationNote && (
-                  <p className="text-gray-500 text-xs">Generate to preview questions</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">Generate to preview questions</p>
                 )}
                 {generatedQuestions.map((q, index) => (
-                  <div key={q.id} className="bg-black/30 border border-white/10 rounded-lg p-3">
-                    <p className="text-xs text-gray-400 mb-1">Q{index + 1} · {q.subject} · {q.type}</p>
-                    <p className="text-sm text-white leading-snug mb-2">{q.question}</p>
+                  <div key={q.id} className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Q{index + 1} · {q.subject} · {q.type}</p>
+                    <p className="text-sm text-slate-900 dark:text-white leading-snug mb-2">{q.question}</p>
                     {q.options && (
-                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                      <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-300">
                         {q.options.map((opt) => (
-                          <span key={opt} className="bg-white/5 rounded px-2 py-1">{opt}</span>
+                          <span key={opt} className="bg-slate-100 dark:bg-slate-700 rounded px-2 py-1">{opt}</span>
                         ))}
                       </div>
                     )}
@@ -491,7 +491,7 @@ export default function PrepareOwn() {
               {generatedQuestions.length > 0 && (
                 <button
                   onClick={() => router.push("/student/take-test")}
-                  className="mt-4 w-full px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-emerald-500 to-teal-600 text-white"
+                  className="mt-4 w-full px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-sm hover:shadow-md transition-all"
                 >
                   Start Test
                 </button>
